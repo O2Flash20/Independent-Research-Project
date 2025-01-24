@@ -10,9 +10,31 @@
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    
+    <script src="sketch.js" defer></script>
   </head>
 
   <body>
-    <script src="sketch.js"></script>
+    <div id="3dCanvasHolder"></div>
+    <br>
+    <button id="flipCoin">Flip!</button>
+    <div class="group">
+        <h2>Initial Conditions</h2>
+        <span>Force Position (click and drag base and tip of vector): </span>
+        <div id="forcePositionCanvasHolder"></div>
+        <br>
+        <span>Force Angle: </span>
+        <div id="forceAngleCanvasHolder"></div>
+        <input type="range" id="forceDirXAxis" value="0" step="1" min="0" max="90">
+        <span id="forceDirXAxisDisplay">0</span><span>°</span>
+        <br><br>
+        <span>Force Magnitude: </span>
+        <input type="number" id="forceMagnitude" value="1" step="0.1" min="0">
+        <span>N</span>
+        <br>
+        <span>Initial Velocity: </span>
+        <input type="number" id="initialVelocity" value="3" step="0.5" min="0">
+        <span>m/s</span>
+    </div>
   </body>
 </html>
