@@ -10,12 +10,12 @@ let groundTexture
 let vectorModel
 
 function preload() {
-    coinModel = loadModel("coin assets/coin.obj")
-    coinTexture = loadImage("coin assets/coinTexture.png")
+    coinModel = loadModel("assets/coin assets/coin.obj")
+    coinTexture = loadImage("assets/coin assets/coinTexture.png")
 
-    groundTexture = loadImage("ground.png")
+    groundTexture = loadImage("assets/ground.png")
 
-    vectorModel = loadModel("vector.stl")
+    vectorModel = loadModel("assets/vector.stl")
 }
 
 function setup() {
