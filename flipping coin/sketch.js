@@ -70,13 +70,15 @@ function setup() {
     camera.roll(PI)
     camera.frustum(-width / 20, width / 20, -height / 20, height / 20, 0.1 * 800, 30 * 800)
 
+    setCamera(camera)
+
     noStroke()
     textureWrap(REPEAT)
     specularMaterial(125)
 
 
 
-    coinPos = createVector(0, 0, 0); coinLinVel = createVector(0, 0, 0); coinRotVel = createVector(0, 0, 0); coinInitialUpVel = 3; forceDir = createVector(0, 1, 0); forceDirXAxis = 0, forceDirYAxis = 0; forceMag = 1; forcePos = createVector(0, 0, 0)
+    coinPos = createVector(0, 0.0008, 0); coinLinVel = createVector(0, 0, 0); coinRotVel = createVector(0, 0, 0); coinInitialUpVel = 3; forceDir = createVector(0, 1, 0); forceDirXAxis = 0, forceDirYAxis = 0; forceMag = 1; forcePos = createVector(0, 0, 0)
 }
 
 
@@ -120,7 +122,7 @@ document.getElementById("forcePositionCanvasHolder").addEventListener("mousemove
     }
 
     else if (forceTipGrabbed) {
-        const angle = PI-getForceCanvasPos().sub(clickPos).heading()
+        const angle = PI - getForceCanvasPos().sub(clickPos).heading()
         forceDirYAxis = angle
         updateForceDir()
     }
@@ -149,7 +151,26 @@ document.getElementById("flipCoin").addEventListener("click", flipCoin)
 
 
 let t = 0
+let startedFalling = false
+let endAlert = 0
 function draw() {
+
+    if (endAlert !== 0) {
+        // send the alert
+        alert(endAlert == 1 ? "Heads!" : "Tails!")
+        endAlert = 0
+
+
+        // now reset everything
+        coinLinVel = createVector(0, 0, 0)
+        coinPos = createVector(0, 0.0008, 0)
+        coinRotVel = createVector(0, 0, 0)
+
+        renderMode = "start"
+    }
+
+
+
     forcePositionCanvas.background(0)
 
     forcePositionCanvas.stroke(0)
@@ -208,17 +229,25 @@ function draw() {
     const dt = 0.004
     t += dt
 
-    if (coinPos.y > 0.0008) {
+    // rotation axis of the coin
+    const axis = coinRotVel.copy().normalize()
+    const coinRotationMatrix = getRotationMatrix(axis, coinRotVel.mag() * t)
+
+
+
+    if (renderMode === "fly" && coinPos.y < 0.02 && startedFalling) { //fell back down and it's now time to stop the simulation, set up the camera to get a look at the result and prepare an alert
+
+        camera.setPosition(0, 800, -1)
+        camera.lookAt(0, 0, 0)
+
+        const upVector = vectorMatrixMult(coinRotationMatrix, createVector(0, 1, 0))
+        endAlert = upVector.y > 0 ? 1 : 2
+    }
+    else if (renderMode == "fly") {
         coinLinVel.add(createVector(0, -9.81 * dt, 0))
+        coinPos.add(coinLinVel.copy().mult(dt))
+        if (coinLinVel.y < 0) { startedFalling = true }
     }
-    else {
-        // !check which side is up, by applying the rotation matrix to (0, 1, 0)
-        coinLinVel = createVector(0, 0, 0)
-        coinPos = createVector(0, 0.0008, 0)
-        coinRotVel = createVector(0, 0, 0)
-        renderMode = "start"
-    }
-    coinPos.add(coinLinVel.copy().mult(dt))
 
 
 
@@ -231,15 +260,12 @@ function draw() {
 
 
 
-    // rotation axis of the coin
-    const axis = coinRotVel.copy().normalize()
-
     shininess(100)
     texture(coinTexture)
     push()
 
     // drawing the coin
-    applyMatrix(getRotationMatrix(axis, coinRotVel.mag() * t))
+    applyMatrix(coinRotationMatrix)
     model(coinModel)
 
     // drawing the normal vector of the coin
@@ -292,6 +318,7 @@ function draw() {
 // gets the coin moving
 function flipCoin() {
     t = 0
+    startedFalling = false
     renderMode = "fly"
 
     coinPos = createVector(0, 0.00081, 0)
@@ -325,6 +352,15 @@ function getRotationMatrix(axis, angle) {
         t * x * z - s * y, t * y * z + s * x, t * z * z + c, 0,
         0, 0, 0, 1
     ]
+}
+
+// used for applying 4x4 matrices like above to vectors
+function vectorMatrixMult(matrix, vector) {
+    return createVector(
+        matrix[0] * vector.x + matrix[1] * vector.y + matrix[2] * vector.z,
+        matrix[4] * vector.x + matrix[5] * vector.y + matrix[6] * vector.z,
+        matrix[8] * vector.x + matrix[9] * vector.y + matrix[10] * vector.z
+    )
 }
 
 // returns a matrix that points a 3d object from +z to the given direction
