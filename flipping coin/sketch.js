@@ -69,6 +69,8 @@ function setup() {
     camera = createCamera()
     camera.roll(PI)
     camera.frustum(-width / 20, width / 20, -height / 20, height / 20, 0.1 * 800, 30 * 800)
+    camera.setPosition(0, 200, 800)
+    camera.lookAt(0, 0, 0)
 
     setCamera(camera)
 
