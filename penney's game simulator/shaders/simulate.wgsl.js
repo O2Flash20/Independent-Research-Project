@@ -2,6 +2,8 @@ export default /*wgsl*/ `
 
 const workgroups1D = _WORKGROUPS1D;
 const timeOffset = _TIMEOFFSET;
+const sequenceLength = _SEQUENCELENGTH;
+const valueOptions = _VALUEOPTIONS;
 
 @group(0) @binding(0) var <storage, read_write> bins: array<atomic<u32>>;
 
@@ -26,8 +28,22 @@ fn random(i: u32) -> f32 {
     return f32(r3) * 2.3283064365387e-10;
 }
 
-fn sequenceMatches(s1: array<bool, 3>, s2: array<bool, 3>) -> bool {
-    return s1[0] == s2[0] && s1[1] == s2[1] && s1[2] && s2[2];
+fn pickValue(random: f32) -> u32 {
+    return u32(random*valueOptions);
+}
+
+fn shiftSequence(oldSequence: array<u32, sequenceLength>, newValue: u32) -> array<u32, sequenceLength> {
+    var newSequence = array<u32, sequenceLength>();
+    for (var i = 0; i < sequenceLength-1; i++) {
+        newSequence[i] = oldSequence[i+1];
+    }
+    newSequence[sequenceLength-1] = newValue;
+
+    return newSequence;
+}
+
+fn sequenceMatches(s1: array<u32, sequenceLength>, s2: array<u32, sequenceLength>) -> bool {
+    return _SEQUENCECOMPARE;
 }
 
 @compute @workgroup_size(16, 16) fn simulateGames(
@@ -36,21 +52,20 @@ fn sequenceMatches(s1: array<bool, 3>, s2: array<bool, 3>) -> bool {
     let binIndex = id.x*workgroups1D*workgroups1D + id.y*workgroups1D + id.z;
     let randomIndex = index + 1000*(binIndex+1) + timeOffset;
 
-    var sequence = array<bool, 3>(false, false, false); // [before-last, last, this]
+    var sequence = array<u32, sequenceLength>(); // [before-last, last, this]
     var i: u32 = 0;
     while (true) {
         i++;
-        let thisFlip = random(randomIndex + i) > 0.5; //true (heads) if the random number is greater than 0.5
-        sequence[0] = sequence[1];
-        sequence[1] = sequence[2];
-        sequence[2] = thisFlip;
 
-        if (i >= 3) {
-            if (sequenceMatches(sequence, array<bool, 3>(true, true, true))) {
+        let thisFlip = pickValue(random(randomIndex+i));
+        sequence = shiftSequence(sequence, thisFlip);
+
+        if (i >= sequenceLength) {
+            if (sequenceMatches(sequence, array<u32, sequenceLength>(_SEQUENCE1))) {
                 atomicAdd(&bins[binIndex], 1);
                 break;
             }
-            else if (sequenceMatches(sequence, array<bool, 3>(false, true, true))) {
+            if (sequenceMatches(sequence, array<u32, sequenceLength>(_SEQUENCE2))) {
                 atomicAdd(&bins[binIndex], 0);
                 break;
             }
