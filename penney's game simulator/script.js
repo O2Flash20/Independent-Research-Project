@@ -4,26 +4,26 @@ import sumCode from "./shaders/sum.wgsl.js"
 
 
 // it will use workgroups set up in 3d, so this is one dimension of the cube of workgroups
-const simulateWorkgroups1D = 322 //max 322
+const simulateWorkgroups1D = 150 //max 322
 
 
 // turns the js array into input for a wgsl array
 function formatSequence(sequence) {
     let output = ""
-    for (let i = 0; i < sequence.length-1; i++) {
+    for (let i = 0; i < sequence.length - 1; i++) {
         output += `${sequence[i]}, `
     }
-    output += `${sequence[sequence.length-1]}`
+    output += `${sequence[sequence.length - 1]}`
 
     return output
 }
 
 function generateComparison(sequenceLength) {
     let output = ""
-    for (let i = 0; i < sequenceLength-1; i++) {
+    for (let i = 0; i < sequenceLength - 1; i++) {
         output += `(s1[${i}] == s2[${i}]) && `
     }
-    output += `(s1[${sequenceLength-1}] == s2[${sequenceLength-1}])`
+    output += `(s1[${sequenceLength - 1}] == s2[${sequenceLength - 1}])`
 
     return output
 }
@@ -42,7 +42,7 @@ async function simulate(sequence1, sequence2, valueOptions) {
         label: "penney's game simulating module",
         code: simulateCode
             .replace("_WORKGROUPS1D", simulateWorkgroups1D)
-            .replace("_TIMEOFFSET", Date.now()%100000) //a time offset for the random number so that it's different on each run
+            .replace("_TIMEOFFSET", Date.now() % 100000) //a time offset for the random number so that it's different on each run
             .replace("_SEQUENCELENGTH", sequence1.length)
             .replace("_VALUEOPTIONS", valueOptions)
             .replace("_SEQUENCE1", formatSequence(sequence1))
@@ -98,7 +98,7 @@ async function simulate(sequence1, sequence2, valueOptions) {
     pass.setPipeline(sumPipeline)
 
     const numSteps = Math.ceil(Math.log2(simulateWorkgroups1D ** 3)) //the number of steps it will take to get that done
-    for (let i = 0; i < numSteps-1; i++) {
+    for (let i = 0; i < numSteps - 1; i++) {
         const sumUniformArray = new Uint32Array(2)
         const thisStride = 2 ** i
         const sumWorkgroupsSize = Math.ceil(simulateWorkgroups1D / Math.pow(thisStride * 2, 1 / 3)) //the workgroups are called as a cube, this finds the dimensions of the cube needed to have enough to sum the entire buffer
@@ -136,7 +136,7 @@ async function simulate(sequence1, sequence2, valueOptions) {
 
 
     encoder.copyBufferToBuffer(binsBuffer, 0, resultBuffer1, 0, 4)
-    encoder.copyBufferToBuffer(binsBuffer, 2**(numSteps+1), resultBuffer2, 0, 4) //*because of integer overflow, we cant do the last step on the gpu. the last addition happens on the cpu where it can be handled properly by javascript
+    encoder.copyBufferToBuffer(binsBuffer, 2 ** (numSteps + 1), resultBuffer2, 0, 4) //*because of integer overflow, we cant do the last step on the gpu. the last addition happens on the cpu where it can be handled properly by javascript
 
     device.queue.submit([encoder.finish()])
 
@@ -151,39 +151,76 @@ async function simulate(sequence1, sequence2, valueOptions) {
     return (result1 + result2) / (simulateWorkgroups1D ** 3 * 256)
 }
 
-// console.log(await simulate([1, 0, 0], [0, 0, 0], 2))
+function indexToSequence(index, sequenceLength, valueOptions) {
+    let result = []
+    for (let i = sequenceLength - 1; i >= 0; i--) {
+        result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
+    }
+    return result
+}
 
-document.addEventListener("click", async function(){
-    console.log(
-        await simulate([0, 1, 0, 1], [1, 0, 1, 1], 2)
-    )
-})
+// creates an html table for every possible match up of sequences
+async function createResultsTable(sequenceLength, valueOptions) {
+    const numSequences = Math.pow(valueOptions, sequenceLength)
 
-function toNearestFraction(num, maxDenominator = 1000) {
-    let bestNumerator = 1;
-    let bestDenominator = 1;
-    let bestError = Math.abs(num - bestNumerator / bestDenominator);
+    const table = document.createElement("table")
+    document.body.append(table)
+
+    const headerRow = document.createElement("tr")
+    table.append(headerRow)
+
+    headerRow.append(document.createElement("td"))
+    for (let i = 0; i < numSequences; i++) {
+        const thisSequence = indexToSequence(i, sequenceLength, valueOptions)
+        const thisCell = document.createElement("td")
+        thisCell.innerText = thisSequence.join(", ")
+        headerRow.append(thisCell)
+    }
+
+    for (let i = 0; i < numSequences; i++) {
+        const rowSequence = indexToSequence(i, sequenceLength, valueOptions)
+
+        const thisRow = document.createElement("tr")
+        table.append(thisRow)
+
+        const rowHeader = document.createElement("td")
+        rowHeader.innerText = rowSequence.join(", ")
+        thisRow.append(rowHeader)
+
+        for (let j = 0; j < numSequences; j++) {
+            const columnSequence = indexToSequence(j, sequenceLength, valueOptions)
+
+            const thisCell = document.createElement("td")
+            if (i !== j) {
+                const thisProbability = await simulate(rowSequence, columnSequence, valueOptions)
+                thisCell.innerText = toNearestFraction(thisProbability)
+                thisCell.style = `background-color: rgb(${thisProbability*255}, ${thisProbability*255}, ${thisProbability*255});`
+            }
+            else {
+                thisCell.innerText = "-"
+            }
+            thisRow.append(thisCell)
+        }
+    }
+}
+
+createResultsTable(3, 2)
+
+function toNearestFraction(num, maxDenominator = 50) {
+    let bestNumerator = 1
+    let bestDenominator = 1
+    let bestError = Math.abs(num - bestNumerator / bestDenominator)
 
     for (let denominator = 1; denominator <= maxDenominator; denominator++) {
-        const numerator = Math.round(num * denominator);
-        const error = Math.abs(num - numerator / denominator);
+        const numerator = Math.round(num * denominator)
+        const error = Math.abs(num - numerator / denominator)
 
         if (error < bestError) {
-            bestNumerator = numerator;
-            bestDenominator = denominator;
-            bestError = error;
+            bestNumerator = numerator
+            bestDenominator = denominator
+            bestError = error
         }
     }
 
-    return `${bestNumerator}/${bestDenominator}`;
+    return `${bestNumerator}/${bestDenominator}`
 }
-
-/*
-the compute shader runs to play games for two sequences against each other
-    each work group plays n games, adds 1 to atomicInt shared value if player 1 wins and 0 if player 2 wins
-    then, one of the work groups stores that total to a buffer
-    then do the shader big adding thing to sum all of them up
-    the chance of player 1 winning is [that number]/[total games simulated]
-
-in js, it runs the shader for each combination
-*/
