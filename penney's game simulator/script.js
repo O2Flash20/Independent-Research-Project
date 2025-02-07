@@ -159,11 +159,38 @@ function indexToSequence(index, sequenceLength, valueOptions) {
     return result
 }
 
-// creates an html table for every possible match up of sequences
-async function createResultsTable(sequenceLength, valueOptions) {
+generateResultsTable(4, 2)
+
+async function generateResultsTable(sequenceLength, valueOptions) {
+    if (document.getElementById("resultsTable")){document.getElementById("resultsTable").remove()}
+    generateHTMLTable(sequenceLength, valueOptions)
+
+    // compared to the html table to be displayed, this one starts at the top right, and fills in right to left then top to bottom
+    // it will only contain the top right triangle of the table, because the rest is flipped
+    let output = []
+
+    const numSequences = Math.pow(valueOptions, sequenceLength)
+    for (let row = 0; row < numSequences; row++) {
+        output.push([])
+        for (let col = 0; col < numSequences - 1 - row; col++) { //the weird end condition is to make the triangle
+            output[row].push(
+                await simulate(
+                    indexToSequence(row, sequenceLength, valueOptions),
+                    indexToSequence(numSequences - 1 - col, sequenceLength, valueOptions), valueOptions
+                )
+            )
+            updateHTMLTable(output, numSequences)
+        }
+    }
+
+    return output
+}
+
+function generateHTMLTable(sequenceLength, valueOptions) {
     const numSequences = Math.pow(valueOptions, sequenceLength)
 
     const table = document.createElement("table")
+    table.id="resultsTable"
     document.body.append(table)
 
     const headerRow = document.createElement("tr")
@@ -192,9 +219,8 @@ async function createResultsTable(sequenceLength, valueOptions) {
 
             const thisCell = document.createElement("td")
             if (i !== j) {
-                const thisProbability = await simulate(rowSequence, columnSequence, valueOptions)
-                thisCell.innerText = toNearestFraction(thisProbability)
-                thisCell.style = `background-color: rgb(${thisProbability*255}, ${thisProbability*255}, ${thisProbability*255});`
+                thisCell.id = `${i}_${j}`
+                thisCell.innerText = "Calculating"
             }
             else {
                 thisCell.innerText = "-"
@@ -204,7 +230,23 @@ async function createResultsTable(sequenceLength, valueOptions) {
     }
 }
 
-createResultsTable(3, 2)
+function updateHTMLTable(jsTable, numSequences) {
+    for (let row = 0; row < jsTable.length; row++) {
+        for (let i = 0; i < jsTable[row].length; i++) {
+            const col = numSequences - 1 - i
+
+            const topTriangle = document.getElementById(`${row}_${col}`)
+            const topTriangleProb = jsTable[row][i]
+            topTriangle.innerText = toNearestFraction(topTriangleProb)
+            topTriangle.style = `background: rgba(${topTriangleProb*255}, ${topTriangleProb*255}, ${topTriangleProb*255}, 255)`
+
+            const bottomTriangle = document.getElementById(`${col}_${row}`)
+            const bottomTriangleProb = 1-topTriangleProb
+            bottomTriangle.innerText = toNearestFraction(bottomTriangleProb)
+            bottomTriangle.style = `background: rgba(${bottomTriangleProb*255}, ${bottomTriangleProb*255}, ${bottomTriangleProb*255}, 255)`
+        }
+    }
+}
 
 function toNearestFraction(num, maxDenominator = 50) {
     let bestNumerator = 1
@@ -224,3 +266,11 @@ function toNearestFraction(num, maxDenominator = 50) {
 
     return `${bestNumerator}/${bestDenominator}`
 }
+
+/*
+Todo:
+make the table more clear with labels
+use the fact that the table is practically diagonally symmetrical with 1-p so do half the calculations
+add ui to change the settings
+add multiple players and multiple sequences per player
+*/
