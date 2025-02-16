@@ -6,30 +6,42 @@ import sumCode from "./shaders/sum.wgsl.js"
 // it will use workgroups set up in 3d, so this is one dimension of the cube of workgroups
 const simulateWorkgroups1D = 150 //max 322
 
-
-// turns the js array into input for a wgsl array
-function formatSequence(sequence) {
+function formatSequences(sequences) {
     let output = ""
-    for (let i = 0; i < sequence.length - 1; i++) {
-        output += `${sequence[i]}, `
+
+    for (let i = 0; i < sequences.length; i++) {
+        output += "array("
+        for (let j = 0; j < sequences[0].length; j++) {
+            output += `${sequences[i][j]},`
+        }
+        output += "),"
     }
-    output += `${sequence[sequence.length - 1]}`
 
     return output
 }
 
-function generateComparison(sequenceLength) {
+function formatProbabilities(probabilities) {
     let output = ""
-    for (let i = 0; i < sequenceLength - 1; i++) {
-        output += `(s1[${i}] == s2[${i}]) && `
+    for (let i = 0; i < probabilities.length; i++) {
+        output += `${probabilities[i]},`
     }
-    output += `(s1[${sequenceLength - 1}] == s2[${sequenceLength - 1}])`
-
     return output
 }
 
-// for a coin, valueOptions is 2; for a regular die, valueOptions is 6
-async function simulate(sequence1, sequence2, valueOptions) {
+// console.log(await getWinProbabilities([[0, 0, 1], [1, 0, 1], [0, 1, 0]], [0.2, 0.8]))
+console.log(await getWinProbabilities([[2, 0, 1, 2], [1, 2, 1, 2], [0, 1, 0, 0], [1, 2, 2, 1]], [0.2, 0.7, 0.1]))
+
+async function getWinProbabilities(sequences, probabilities) {
+    let winRates = []
+    for (let i = 0; i < sequences.length; i++) {
+        winRates.push(await simulate(sequences, probabilities, i))
+    }
+
+    return winRates
+}
+
+// return the win rate of one sequence, the one at countedSequence
+async function simulate(sequences, probabilities, countedSequence) {
     const adapter = await navigator.gpu?.requestAdapter()
     const device = await adapter?.requestDevice()
     if (!device) {
@@ -43,12 +55,25 @@ async function simulate(sequence1, sequence2, valueOptions) {
         code: simulateCode
             .replace("_WORKGROUPS1D", simulateWorkgroups1D)
             .replace("_TIMEOFFSET", Date.now() % 100000) //a time offset for the random number so that it's different on each run
-            .replace("_SEQUENCELENGTH", sequence1.length)
-            .replace("_VALUEOPTIONS", valueOptions)
-            .replace("_SEQUENCE1", formatSequence(sequence1))
-            .replace("_SEQUENCE2", formatSequence(sequence2))
-            .replace("_SEQUENCECOMPARE", generateComparison(sequence1.length))
+            .replace("_SEQUENCELENGTH", sequences[0].length)
+            .replace("_VALUEOPTIONS", probabilities.length)
+            .replace("_SEQUENCES", formatSequences(sequences))
+            .replace("_NUMSEQUENCES", sequences.length)
+            .replace("_PROBABILITIES", formatProbabilities(probabilities))
+            .replace("_COUNTEDSEQUENCE", countedSequence)
     })
+
+    console.log(
+        simulateCode
+            .replace("_WORKGROUPS1D", simulateWorkgroups1D)
+            .replace("_TIMEOFFSET", Date.now() % 100000) //a time offset for the random number so that it's different on each run
+            .replace("_SEQUENCELENGTH", sequences[0].length)
+            .replace("_VALUEOPTIONS", probabilities.length)
+            .replace("_SEQUENCES", formatSequences(sequences))
+            .replace("_NUMSEQUENCES", sequences.length)
+            .replace("_PROBABILITIES", formatProbabilities(probabilities))
+            .replace("_COUNTEDSEQUENCE", 0)
+    )
 
     const simulatePipeline = device.createComputePipeline({
         label: "penney's game simulating pipeline",
@@ -159,7 +184,7 @@ function indexToSequence(index, sequenceLength, valueOptions) {
     return result
 }
 
-generateResultsTable(4, 2)
+// generateResultsTable(3, 2)
 
 async function generateResultsTable(sequenceLength, valueOptions) {
     if (document.getElementById("resultsTable")){document.getElementById("resultsTable").remove()}

@@ -4,6 +4,11 @@ const workgroups1D = _WORKGROUPS1D;
 const timeOffset = _TIMEOFFSET;
 const sequenceLength = _SEQUENCELENGTH;
 const valueOptions = _VALUEOPTIONS;
+const numSequences = _NUMSEQUENCES;
+const countedSequence: u32 = _COUNTEDSEQUENCE; //the sequence we're counting the wins for
+
+const sequences: array<array<u32, sequenceLength>, numSequences> = array(_SEQUENCES);
+const probabilities: array<f32, valueOptions> = array(_PROBABILITIES);
 
 @group(0) @binding(0) var <storage, read_write> bins: array<atomic<u32>>;
 
@@ -28,8 +33,16 @@ fn random(i: u32) -> f32 {
     return f32(r3) * 2.3283064365387e-10;
 }
 
-fn pickValue(random: f32) -> u32 {
-    return u32(random*valueOptions);
+fn pickValueWeighted(random: f32, probabilities: array<f32, valueOptions>) -> u32 {
+    var a = random;
+    for (var i: u32 = 0; i < valueOptions; i++) {
+        a -= probabilities[i];
+        if (a <= 0) {
+            return i;
+        }
+    }
+
+    return 0;
 }
 
 fn shiftSequence(oldSequence: array<u32, sequenceLength>, newValue: u32) -> array<u32, sequenceLength> {
@@ -42,32 +55,39 @@ fn shiftSequence(oldSequence: array<u32, sequenceLength>, newValue: u32) -> arra
     return newSequence;
 }
 
-fn sequenceMatches(s1: array<u32, sequenceLength>, s2: array<u32, sequenceLength>) -> bool {
-    return _SEQUENCECOMPARE;
+fn sequencesMatch(s1: array<u32, sequenceLength>, s2: array<u32, sequenceLength>) -> bool {
+    for (var i = 0; i < sequenceLength; i++) {
+        if (s1[i] != s2[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 @compute @workgroup_size(16, 16) fn simulateGames(
     @builtin(workgroup_id) id: vec3u, @builtin(local_invocation_index) index: u32 //the position of this workgroup (same for all within a workgroup)
 ) {
     let binIndex = id.x*workgroups1D*workgroups1D + id.y*workgroups1D + id.z;
-    let randomIndex = index + 1000*(binIndex+1) + timeOffset;
+    let randomIndex = index + 1000*(binIndex+1) + timeOffset; // multiplied by 1000 so that there can be up to 1000 flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
 
     var sequence = array<u32, sequenceLength>(); // [before-last, last, this]
     var i: u32 = 0;
     while (true) {
         i++;
 
-        let thisFlip = pickValue(random(randomIndex+i));
+        // let thisFlip = pickValue(random(randomIndex+i));
+        let thisFlip = pickValueWeighted(random(randomIndex+i), probabilities);
         sequence = shiftSequence(sequence, thisFlip);
 
         if (i >= sequenceLength) {
-            if (sequenceMatches(sequence, array<u32, sequenceLength>(_SEQUENCE1))) {
-                atomicAdd(&bins[binIndex], 1);
-                break;
-            }
-            if (sequenceMatches(sequence, array<u32, sequenceLength>(_SEQUENCE2))) {
-                atomicAdd(&bins[binIndex], 0);
-                break;
+
+            // if the current sequence from the flips matches with the sequence we're counting the wins for, increase the number of wins
+            // if it matches another one, do nothing but end the loop
+            for (var i: u32 = 0; i < numSequences; i++) {
+                if (sequencesMatch(sequence, sequences[i])) {
+                    if (i == countedSequence) { atomicAdd(&bins[binIndex], 1); }
+                    return;
+                }
             }
         }
     }
