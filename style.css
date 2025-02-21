@@ -1,14 +1,15 @@
 body {
-    background-color: rgb(10,11,12);
+    background-color: rgb(10, 11, 12);
     color: white;
     margin: 10px;
     font-family: "Rubik", sans-serif;
-    font-size:large;
+    font-size: large;
 }
+
 div.group {
     background-color: rgb(25, 26, 27);
-    background: linear-gradient(0deg, rgba(20,21,22,1) 0%, rgba(25,26,27) 100%);
-    border:solid 1px rgb(30, 31, 32);
+    background: linear-gradient(0deg, rgba(20, 21, 22, 1) 0%, rgba(25, 26, 27) 100%);
+    border: solid 1px rgb(30, 31, 32);
     border-radius: 20px;
     box-shadow: 0px 0px 5px black;
     margin-top: 15px;
@@ -16,22 +17,31 @@ div.group {
     padding: 15px;
     width: 500px;
 }
-h1, h2, h3 {
+
+h1,
+h2,
+h3 {
     text-shadow: 0px 0px 5px black;
 }
-img, video {
-    border-radius:10px;
+
+img,
+video {
+    border-radius: 10px;
     box-shadow: 0px 0px 5px black;
 }
+
 canvas {
-    border-radius:10px;
+    border-radius: 10px;
     box-shadow: 0px 0px 5px black;
     display: inline-block !important;
 }
+
 a {
     color: rgb(255, 96, 255);
 }
-input[type="text"], input[type="number"] {
+
+input[type="text"],
+input[type="number"] {
     border-radius: 5px;
     border: solid 1px rgb(30, 31, 32);
     padding: 5px;
@@ -41,6 +51,7 @@ input[type="text"], input[type="number"] {
     font-size: large;
     text-align: center;
 }
+
 button {
     border-radius: 5px;
     border: solid 1px rgb(255, 255, 255);
@@ -48,12 +59,14 @@ button {
     background-color: rgb(12, 13, 14);
     color: white;
     font-size: large;
-    width: 100px;
-    height: 50px;
+    /* width: 100px;
+    height: 50px; */
 }
+
 #flipCoin {
     margin: 20px;
 }
+
 td {
     border: 1px solid white;
     width: 60px;
@@ -62,6 +75,26 @@ td {
     text-align: center;
     font-size: 12px;
 }
+
 table {
     border-collapse: collapse;
+}
+
+
+.outcomeProbabilityDiv {
+    background-color: rgb(58, 58, 58);
+    display: inline;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.sequenceEntryDiv {
+    display: inline;
+}
+.playerDiv {
+    background-color: rgb(58, 58, 58);
+    display: inline-block;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
 }

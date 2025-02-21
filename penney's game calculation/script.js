@@ -141,32 +141,32 @@ function getReturn(sequenceAppeared, thisSequence, probabilities) {
 function getNetProfit(sequenceAppeared, thisSequence, sequences, probabilities) {
     const n = sequences.length
 
-    let otherSequencesSum = 0;
+    let otherSequencesSum = 0
     for (let k = 1; k <= n; k++) {
-        otherSequencesSum += getReturn(sequenceAppeared, sequences[k-1], probabilities)
+        otherSequencesSum += getReturn(sequenceAppeared, sequences[k - 1], probabilities)
     }
-    return 1/(n-1) * (n*getReturn(sequenceAppeared, thisSequence, probabilities) - otherSequencesSum)
+    return 1 / (n - 1) * (n * getReturn(sequenceAppeared, thisSequence, probabilities) - otherSequencesSum)
 }
 
 function getWinProbabilities(sequences, probabilities) {
     const n = sequences.length
 
     let M = new Matrix(n, sequences.length)
-    for (let row = 0; row < n-1; row++) {
-        for (let col = 0; col < n; col++){
+    for (let row = 0; row < n - 1; row++) {
+        for (let col = 0; col < n; col++) {
             M.entries[row][col] = getNetProfit(sequences[col], sequences[row], sequences, probabilities)
         }
     }
     // fill in the last row with 1
-    for (let col = 0; col < n; col ++) {
-        M.entries[n-1][col] = 1
+    for (let col = 0; col < n; col++) {
+        M.entries[n - 1][col] = 1
     }
 
     let V = new Matrix(n, 1)
-    for (let i = 0; i < n-1; i++) {
+    for (let i = 0; i < n - 1; i++) {
         V.entries[i][0] = 0
     }
-    V.entries[n-1][0] = 1
+    V.entries[n - 1][0] = 1
 
     const solutionsVector = M.inverse().multiplyVector(V)
     let solutions = []
@@ -177,11 +177,6 @@ function getWinProbabilities(sequences, probabilities) {
     return solutions
 }
 
-function getWinRate(sequence1, sequence2, probabilities) {
-    return (getReturn(sequence2, sequence2, probabilities) - getReturn(sequence2, sequence1, probabilities)) /
-        (getReturn(sequence1, sequence1, probabilities) - getReturn(sequence1, sequence2, probabilities) + getReturn(sequence2, sequence2, probabilities) - getReturn(sequence2, sequence1, probabilities))
-}
-
 function indexToSequence(index, sequenceLength, valueOptions) {
     let result = []
     for (let i = sequenceLength - 1; i >= 0; i--) {
@@ -190,15 +185,45 @@ function indexToSequence(index, sequenceLength, valueOptions) {
     return result
 }
 
+// finds if two players are playing the same sequence
+function sequencesMatch() {
+    for (let i = 0; i < sequences.length; i++) {
+        for (let j = 0; j < sequences.length - 1; j++) {
+            if (i == j) { j++ }
+            else {
+                let sequencesMatch = true
+                for (let k = 0; k < sequences[0].length; k++) {
+                    if (sequences[i][k] !== sequences[j][k]) { sequencesMatch = false }
+                }
+                if (sequencesMatch) { return true }
+            }
+        }
+    }
+
+    return false
+}
+
+// add a warning if two sequences are the same
+function sequenceMatchWarning() {
+    if (sequencesMatch()) {
+        document.getElementById("sequencesMatchWarning").innerText = "Warning: two players are playing the same sequence!"
+    }
+    else {
+        document.getElementById("sequencesMatchWarning").innerText = ""
+    }
+}
+
+
+//! delete?
 function generateTable(sequenceLength, probabilities) {
-    if (document.getElementById("resultsTable")) {document.getElementById("resultsTable").remove()}
+    if (document.getElementById("resultsTable")) { document.getElementById("resultsTable").remove() }
 
     const valueOptions = probabilities.length
 
     const numSequences = Math.pow(valueOptions, sequenceLength)
 
     const table = document.createElement("table")
-    table.id="resultsTable"
+    table.id = "resultsTable"
     document.body.append(table)
 
     const headerRow = document.createElement("tr")
@@ -231,7 +256,7 @@ function generateTable(sequenceLength, probabilities) {
             if (i !== j) {
                 const winRate = getWinRate(rowSequence, colSequence, probabilities)
                 thisCell.innerText = winRate.toFixed(2)
-                thisCell.style = `background: rgba(${winRate*255}, ${winRate*255}, ${winRate*255}, 255)`
+                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255)`
             }
             else {
                 thisCell.innerText = "-"
@@ -241,9 +266,170 @@ function generateTable(sequenceLength, probabilities) {
     }
 }
 
-document.getElementById("probInput").addEventListener("input", function(e){
-    const p = parseFloat(e.target.value)
-    generateTable(5, [p, (1-p)])
 
-    console.log([p, 1-p])
-}) 
+
+document.getElementById("numOutcomesInput").addEventListener("input", function (e) {
+    setupProbabilitiesInputs(e.target.value)
+    setupPlayersInputs()
+})
+
+let outcomesProbabilities = []
+setupProbabilitiesInputs(2)
+function setupProbabilitiesInputs(numProbabilities) {
+    const H = document.getElementById("outcomesProbabilitiesHolder")
+    H.innerHTML = ""
+
+    outcomesProbabilities = []
+
+    const n = numProbabilities
+    for (let i = 0; i < n; i++) {
+        const div = document.createElement("div")
+        div.classList.add("outcomeProbabilityDiv")
+        H.append(div)
+
+        const label = document.createElement("span")
+        label.innerText = `${i}: `
+        div.append(label)
+
+        const input = document.createElement("input")
+        input.type = "number"
+        input.value = 100 / n
+        input.min = 0
+        input.max = 100
+        input.step = 0.1
+        div.append(input)
+
+        input.addEventListener("input", function (e) {
+            outcomesProbabilities[i] = e.target.value / 100
+
+            let sum = 0
+            for (let i = 0; i < n; i++) {
+                sum += outcomesProbabilities[i]
+            }
+            if (Math.abs(sum - 1) >= 0.001) {
+                document.getElementById("outcomesProbabilitiesWarning").innerText = "Warning: these probabilities do not add to 100%!"
+            }
+            else {
+                document.getElementById("outcomesProbabilitiesWarning").innerText = ""
+            }
+
+            sequenceMatchWarning()
+        })
+
+        const percent = document.createElement("span")
+        percent.innerText = "%"
+        div.append(percent)
+
+        outcomesProbabilities[i] = 1 / n
+    }
+}
+
+
+
+document.getElementById("numPlayersInput").addEventListener("input", function (e) {
+    setupPlayersInputs()
+})
+document.getElementById("sequenceLengthInput").addEventListener("input", function (e) {
+    setupPlayersInputs()
+})
+
+let sequences = []
+setupPlayersInputs(2)
+function setupPlayersInputs() {
+    const numPlayers = document.getElementById("numPlayersInput").value
+    const sequenceLength = document.getElementById("sequenceLengthInput").value
+    const outcomePossibilities = outcomesProbabilities.length
+
+    const H = document.getElementById("playerSequencesHolder")
+    H.innerHTML = ""
+
+    const oldSequences = sequences //keep sequences we used to have there if still valid
+    sequences = []
+
+    for (let i = 0; i < numPlayers; i++) {
+        const playerDiv = document.createElement("div")
+        playerDiv.classList.add("playerDiv")
+        H.append(playerDiv)
+
+        const playerLabel = document.createElement("span")
+        playerLabel.innerText = `Player ${i + 1}: `
+        playerDiv.append(playerLabel)
+
+        const thisPlayerSequence = indexToSequence(i, sequenceLength, outcomePossibilities) //used in case the old sequence doesnt exist or isnt valid anymore
+
+        sequences.push([])
+
+        for (let j = 0; j < sequenceLength; j++) {
+            const sequenceEntryDiv = document.createElement("div")
+            sequenceEntryDiv.classList.add("sequenceEntryDiv")
+            playerDiv.append(sequenceEntryDiv)
+
+            const input = document.createElement("input")
+            let thisValue = 0
+            if (oldSequences[i] && oldSequences[i][j]) {
+                thisValue = Math.min(oldSequences[i][j], outcomePossibilities - 1)
+            }
+            else {
+                thisValue = thisPlayerSequence[j]
+            }
+            input.value = thisValue
+            input.type = "number"
+            input.min = 0
+            input.max = outcomePossibilities - 1
+            sequenceEntryDiv.append(input)
+
+            input.addEventListener("input", function (e) {
+                sequences[i][j] = parseInt(e.target.value)
+
+                sequenceMatchWarning()
+            })
+
+            if (j !== sequenceLength - 1) {
+                const separator = document.createElement("span")
+                separator.innerText = ", "
+                sequenceEntryDiv.append(separator)
+            }
+
+            sequences[i].push(thisValue)
+        }
+
+        H.append(document.createElement("br"))
+    }
+    sequenceMatchWarning()
+}
+
+
+document.getElementById("calculateChancesButton").addEventListener("click", function () {
+    displayWinChances()
+})
+function displayWinChances() {
+    const chances = getWinProbabilities(sequences, outcomesProbabilities)
+    const H = document.getElementById("winChancesDisplay")
+    H.innerHTML = ""
+
+    for (let i = 0; i < chances.length; i++) {
+        const elt = document.createElement("p")
+        const F = toNearestFraction(chances[i], 100)
+        elt.innerText = `Player ${i + 1}: ${parseFloat((chances[i] * 100).toFixed(5))}% chance of winning (${F.error > 0.00001 ? "~" : ""}${F.fraction})`
+        H.append(elt)
+    }
+}
+
+function toNearestFraction(num, maxDenominator = 50) {
+    let bestNumerator = 1
+    let bestDenominator = 1
+    let bestError = Math.abs(num - bestNumerator / bestDenominator)
+
+    for (let denominator = 1; denominator <= maxDenominator; denominator++) {
+        const numerator = Math.round(num * denominator)
+        const error = Math.abs(num - numerator / denominator)
+
+        if (error < bestError) {
+            bestNumerator = numerator
+            bestDenominator = denominator
+            bestError = error
+        }
+    }
+
+    return { fraction: `${bestNumerator}/${bestDenominator}`, error: bestError }
+}

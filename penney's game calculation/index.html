@@ -5,9 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penney's Game Calculation</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="./script.js" defer></script>
 </head>
 <body>
-    <input id="probInput" type="range" value="0.5" min="0" max="1" step="0.01">
+    <!-- <input id="probInput" type="range" value="0.5" min="0" max="1" step="0.01"> -->
+
+    <span>Number of Players: </span><input id="numPlayersInput" type="number" value="2" min="2"><br>
+    <span>Sequence Length per Player: </span><input id="sequenceLengthInput" type="number" value="3" min="2"><br>
+    <br>
+    <span>Number of Possible Flip Outcomes: </span><input id="numOutcomesInput" type="number" value="2" min="2"><br>
+    
+    <br>
+
+    <div id="outcomesProbabilitiesHolder"></div><p id="outcomesProbabilitiesWarning" style="color: red"></p>
+
+    <br>
+
+    <!-- if number of players is two, offer to make a table of all the sequences -->
+
+    <div id="playerSequencesHolder"></div><p id="sequencesMatchWarning" style="color: red;"></p>
+
+    <br>
+
+    <button id="calculateChancesButton" style="width: 150px; height: 90px;">Calculate Win Chances!</button>
+
+    <div id="winChancesDisplay"></div>
+
+    <script src="./script.js"></script>
 </body>
 </html>
