@@ -179,7 +179,7 @@ function getWinProbabilities(sequences, probabilities) {
 
 function indexToSequence(index, sequenceLength, valueOptions) {
     let result = []
-    for (let i = sequenceLength - 1; i >= 0; i--) {
+    for (let i = 0; i < sequenceLength; i++) {
         result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
     }
     return result
@@ -210,59 +210,6 @@ function sequenceMatchWarning() {
     }
     else {
         document.getElementById("sequencesMatchWarning").innerText = ""
-    }
-}
-
-
-//! delete?
-function generateTable(sequenceLength, probabilities) {
-    if (document.getElementById("resultsTable")) { document.getElementById("resultsTable").remove() }
-
-    const valueOptions = probabilities.length
-
-    const numSequences = Math.pow(valueOptions, sequenceLength)
-
-    const table = document.createElement("table")
-    table.id = "resultsTable"
-    document.body.append(table)
-
-    const headerRow = document.createElement("tr")
-    table.append(headerRow)
-
-    const topLeftCell = document.createElement("td")
-    topLeftCell.innerText = "P2↓ / P1→"
-    headerRow.append(topLeftCell)
-    for (let i = 0; i < numSequences; i++) {
-        const thisSequence = indexToSequence(i, sequenceLength, valueOptions)
-        const thisCell = document.createElement("td")
-        thisCell.innerText = thisSequence.join(", ")
-        headerRow.append(thisCell)
-    }
-
-    for (let i = 0; i < numSequences; i++) {
-        const rowSequence = indexToSequence(i, sequenceLength, valueOptions)
-
-        const thisRow = document.createElement("tr")
-        table.append(thisRow)
-
-        const rowHeader = document.createElement("td")
-        rowHeader.innerText = rowSequence.join(", ")
-        thisRow.append(rowHeader)
-
-        for (let j = 0; j < numSequences; j++) {
-            const colSequence = indexToSequence(j, sequenceLength, valueOptions)
-
-            const thisCell = document.createElement("td")
-            if (i !== j) {
-                const winRate = getWinRate(rowSequence, colSequence, probabilities)
-                thisCell.innerText = winRate.toFixed(2)
-                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255)`
-            }
-            else {
-                thisCell.innerText = "-"
-            }
-            thisRow.append(thisCell)
-        }
     }
 }
 
@@ -339,6 +286,12 @@ function setupPlayersInputs() {
     const numPlayers = document.getElementById("numPlayersInput").value
     const sequenceLength = document.getElementById("sequenceLengthInput").value
     const outcomePossibilities = outcomesProbabilities.length
+
+    // sets up or removes the button to create a results table depending on if there are two players
+    document.getElementById("tableCreatorDiv").innerHTML = ""
+    if (numPlayers == 2 && Math.pow(sequenceLength, outcomePossibilities) < 150) { //* 50 is the max table size
+        addCreateTableButton()
+    }
 
     const H = document.getElementById("playerSequencesHolder")
     H.innerHTML = ""
@@ -433,3 +386,112 @@ function toNearestFraction(num, maxDenominator = 50) {
 
     return { fraction: `${bestNumerator}/${bestDenominator}`, error: bestError }
 }
+
+
+
+function addCreateTableButton(){
+    const H = document.getElementById("tableCreatorDiv")
+
+    const button = document.createElement("button")
+    button.innerText="Create table for all possible games"
+    button.addEventListener("click", function(){
+        createTable()
+    })
+
+    H.append(button)
+}
+
+function createTable(){
+    const H = document.getElementById("tableCreatorDiv")
+    H.innerHTML="" //clear the element
+    addCreateTableButton() //add the button back
+
+    const table = document.createElement("table")
+    H.append(table)
+
+    const sequenceLength = sequences[0].length
+    const valueOptions = outcomesProbabilities.length
+    const numSequences = Math.pow(valueOptions, sequenceLength)
+
+    for (let i = 0; i < numSequences; i++) {
+        const rowSequence = indexToSequence(i, sequenceLength, valueOptions)
+
+        const thisRow = document.createElement("tr")
+        table.append(thisRow)
+
+        for (let j = 0; j < numSequences; j++) {
+            const colSequence = indexToSequence(j, sequenceLength, valueOptions)
+
+            const thisCell = document.createElement("td")
+            if (i !== j) {
+                const winRate = getWinProbabilities([rowSequence, colSequence], outcomesProbabilities)[0]
+                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: ${(winRate*100).toFixed(2)}% chance of winning`
+                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500/numSequences}px; height: ${500/numSequences}px;`
+            }
+            else {
+                thisCell.title = ""
+            }
+            thisRow.append(thisCell)
+        }
+    }
+
+    const info = document.createElement("p")
+    info.innerText = "Hover over a square to see the game it represents."
+    H.append(info)
+}
+
+function getBestSequence(opponentSequence, outcomePossibilities) {
+    const sequenceLength = opponentSequence.length
+
+    let thisSequence = []
+    for (let i = 0; i < sequenceLength; i++) {
+        let iA = 0
+        for (let j = 0; j < sequenceLength; j++) {
+            iA += opponentSequence[j]*Math.pow(outcomePossibilities, j+1)
+        }
+        thisSequence.push(
+            (Math.floor((iA % Math.pow(outcomePossibilities, sequenceLength))/Math.pow(outcomePossibilities, i)) % outcomePossibilities)
+        )
+    }
+
+    return thisSequence
+}
+
+function iB(opponentSequence, outcomePossibilities) {
+    let sum = 0
+    for (let i = 0; i < opponentSequence.length; i++){
+        sum += opponentSequence[i]*Math.pow(outcomePossibilities, i)
+    }
+
+    return (outcomePossibilities * sum ) % Math.pow(outcomePossibilities, opponentSequence.length)
+}
+
+function iBToSequence(iB, sequenceLength, outcomePossibilities) {
+    let thisSequence = []
+    for (let i = 0; i < sequenceLength; i++){
+        thisSequence.push(
+            Math.floor(iB/Math.pow(outcomePossibilities, i))%outcomePossibilities
+        )
+    }
+
+    return thisSequence
+}
+
+function actualBestTest(opponentSequence, outcomePossibilities) {
+    let probabilities = []
+    for (let i = 0; i < outcomePossibilities; i++) {
+        probabilities.push(1/outcomePossibilities)
+    }
+
+    for (let i = 0; i < outcomePossibilities; i++) {
+        // const S = iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities)
+        // getWinProbabilities([S, opponentSequence])
+        console.log(
+            `${i}: ${getWinProbabilities([
+                iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities), 
+                opponentSequence
+            ], probabilities)[0]}`
+        )
+    }
+}
+// do this for all sequences and visualize whether offset 0, 1, 2, ... is the best
