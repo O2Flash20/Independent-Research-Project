@@ -177,13 +177,21 @@ function getWinProbabilities(sequences, probabilities) {
     return solutions
 }
 
-function indexToSequence(index, sequenceLength, valueOptions) {
+function indexToSequence(index, sequenceLength, outcomePossibilities) {
     let result = []
     for (let i = 0; i < sequenceLength; i++) {
-        result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
+        result.push(Math.floor(index / Math.pow(outcomePossibilities, i)) % outcomePossibilities)
     }
     return result
 }
+
+// function indexToSequenceBackwards(index, sequenceLength, valueOptions) {
+//     let result = []
+//     for (let i = sequenceLength - 1; i >= 0; i--) {
+//         result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
+//     }
+//     return result
+// }
 
 // finds if two players are playing the same sequence
 function sequencesMatch() {
@@ -389,21 +397,21 @@ function toNearestFraction(num, maxDenominator = 50) {
 
 
 
-function addCreateTableButton(){
+function addCreateTableButton() {
     const H = document.getElementById("tableCreatorDiv")
 
     const button = document.createElement("button")
-    button.innerText="Create table for all possible games"
-    button.addEventListener("click", function(){
+    button.innerText = "Create table for all possible games"
+    button.addEventListener("click", function () {
         createTable()
     })
 
     H.append(button)
 }
 
-function createTable(){
+function createTable() {
     const H = document.getElementById("tableCreatorDiv")
-    H.innerHTML="" //clear the element
+    H.innerHTML = "" //clear the element
     addCreateTableButton() //add the button back
 
     const table = document.createElement("table")
@@ -425,8 +433,8 @@ function createTable(){
             const thisCell = document.createElement("td")
             if (i !== j) {
                 const winRate = getWinProbabilities([rowSequence, colSequence], outcomesProbabilities)[0]
-                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: ${(winRate*100).toFixed(2)}% chance of winning`
-                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500/numSequences}px; height: ${500/numSequences}px;`
+                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: ${(winRate * 100).toFixed(2)}% chance of winning`
+                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500 / numSequences}px; height: ${500 / numSequences}px;`
             }
             else {
                 thisCell.title = ""
@@ -440,6 +448,7 @@ function createTable(){
     H.append(info)
 }
 
+// not exactly right
 function getBestSequence(opponentSequence, outcomePossibilities) {
     const sequenceLength = opponentSequence.length
 
@@ -447,51 +456,116 @@ function getBestSequence(opponentSequence, outcomePossibilities) {
     for (let i = 0; i < sequenceLength; i++) {
         let iA = 0
         for (let j = 0; j < sequenceLength; j++) {
-            iA += opponentSequence[j]*Math.pow(outcomePossibilities, j+1)
+            iA += opponentSequence[j] * Math.pow(outcomePossibilities, j + 1)
         }
         thisSequence.push(
-            (Math.floor((iA % Math.pow(outcomePossibilities, sequenceLength))/Math.pow(outcomePossibilities, i)) % outcomePossibilities)
+            (Math.floor((iA % Math.pow(outcomePossibilities, sequenceLength)) / Math.pow(outcomePossibilities, i)) % outcomePossibilities)
         )
     }
 
     return thisSequence
 }
 
+// gives each sequence a number
 function iB(opponentSequence, outcomePossibilities) {
     let sum = 0
-    for (let i = 0; i < opponentSequence.length; i++){
-        sum += opponentSequence[i]*Math.pow(outcomePossibilities, i)
+    for (let i = 0; i < opponentSequence.length; i++) {
+        sum += opponentSequence[i] * Math.pow(outcomePossibilities, i)
     }
 
-    return (outcomePossibilities * sum ) % Math.pow(outcomePossibilities, opponentSequence.length)
+    return (outcomePossibilities * sum) % Math.pow(outcomePossibilities, opponentSequence.length)
 }
 
+// index back to sequence
 function iBToSequence(iB, sequenceLength, outcomePossibilities) {
     let thisSequence = []
-    for (let i = 0; i < sequenceLength; i++){
+    for (let i = 0; i < sequenceLength; i++) {
         thisSequence.push(
-            Math.floor(iB/Math.pow(outcomePossibilities, i))%outcomePossibilities
+            Math.floor(iB / Math.pow(outcomePossibilities, i)) % outcomePossibilities
         )
     }
 
     return thisSequence
 }
 
-function actualBestTest(opponentSequence, outcomePossibilities) {
+// gets the index offset from the simple prediction for the best sequence for player 2
+function bestOffset(opponentSequence, outcomePossibilities) {
     let probabilities = []
     for (let i = 0; i < outcomePossibilities; i++) {
-        probabilities.push(1/outcomePossibilities)
+        probabilities.push(1 / outcomePossibilities)
     }
 
+    let bestWinRate = 0
+    let bestIndex = -1
     for (let i = 0; i < outcomePossibilities; i++) {
-        // const S = iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities)
-        // getWinProbabilities([S, opponentSequence])
-        console.log(
-            `${i}: ${getWinProbabilities([
-                iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities), 
-                opponentSequence
-            ], probabilities)[0]}`
-        )
+        let thisWinRate = getWinProbabilities([
+            iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities),
+            opponentSequence
+        ], probabilities)[0]
+        if (thisWinRate > bestWinRate) {
+            bestWinRate = thisWinRate
+            bestIndex = i
+        }
     }
+
+    return bestIndex
+}
+
+// gets the offset for each sequence in the two player game
+function actualBest(sequenceLength, outcomePossibilities) {
+    let points = ""
+    for (let i = 0; i < Math.pow(outcomePossibilities, sequenceLength); i++) {
+        const thisSequence = indexToSequence(i, sequenceLength, outcomePossibilities)
+        const offset = bestOffset(thisSequence, outcomePossibilities)
+
+        points += `(${i}, ${offset}), `
+    }
+
+    console.log(points)
 }
 // do this for all sequences and visualize whether offset 0, 1, 2, ... is the best
+
+// gets the win rate of player 1's sequence assuming player 2 chooses the optimal sequence in response, in other words: the worst possible win rate for player 1
+function player1SequenceWinRate(sequence, outcomePossibilities) {
+    let probabilities = []
+    for (let i = 0; i < outcomePossibilities; i++) {
+        probabilities.push(1 / outcomePossibilities)
+    }
+
+    let lowestWinChance = 1
+    for (let i = 0; i < Math.pow(outcomePossibilities, sequence.length); i++) {
+        const opponentSequence = indexToSequence(i, sequence.length, outcomePossibilities)
+
+        let sequencesAreSame = true
+        for (let j = 0; j < sequence.length; j++) {
+            if (sequence[j] !== opponentSequence[j]) { sequencesAreSame = false; break }
+        }
+        if (!sequencesAreSame) {
+            lowestWinChance = Math.min(
+                lowestWinChance,
+                getWinProbabilities([sequence, opponentSequence], probabilities)[0]
+            )
+        }
+
+    }
+
+    return lowestWinChance
+}
+
+function getPlayer1BestStrategy(sequenceLength, outcomePossibilities) {
+    let highestWinRate = 0
+    let bestSequences = []
+    for (let i = 0; i < Math.pow(outcomePossibilities, sequenceLength); i++) {
+        const thisSequence = indexToSequence(i, sequenceLength, outcomePossibilities)
+        const thisSequenceWinRate = player1SequenceWinRate(thisSequence, outcomePossibilities)
+        if (thisSequenceWinRate > highestWinRate) {
+            highestWinRate = thisSequenceWinRate
+            bestSequences = [thisSequence]
+        }
+        else if (thisSequenceWinRate == highestWinRate) {
+            bestSequences.push(thisSequence)
+        }
+    }
+
+    return [highestWinRate, bestSequences]
+}
