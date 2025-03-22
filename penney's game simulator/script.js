@@ -4,15 +4,15 @@ import sumCode from "./shaders/sum.wgsl.js"
 
 
 // it will use workgroups set up in 3d, so this is one dimension of the cube of workgroups
-const simulateWorkgroups1D = 150 //max 322
+const simulateWorkgroups1D = 30 //max 322
 
-function formatSequences(sequences) {
+function formatSequences(sequences, maxSequenceLength) {
     let output = ""
 
     for (let i = 0; i < sequences.length; i++) {
         output += "array("
-        for (let j = 0; j < sequences[0].length; j++) {
-            output += `${sequences[i][j]},`
+        for (let j = 0; j < maxSequenceLength; j++) {
+            output += `${sequences[i][j] | 0},`
         }
         output += "),"
     }
@@ -20,28 +20,59 @@ function formatSequences(sequences) {
     return output
 }
 
-function formatProbabilities(probabilities) {
+function formatWgslArray(array) {
     let output = ""
-    for (let i = 0; i < probabilities.length; i++) {
-        output += `${probabilities[i]},`
+    for (let i = 0; i < array.length; i++) {
+        output += `${array[i]},`
     }
     return output
 }
 
-// console.log(await getWinProbabilities([[0, 0, 1], [1, 0, 1], [0, 1, 0]], [0.2, 0.8]))
-console.log(await getWinProbabilities([[2, 0, 1, 2], [1, 2, 1, 2], [0, 1, 0, 0], [1, 2, 2, 1]], [0.2, 0.7, 0.1]))
-
-async function getWinProbabilities(sequences, probabilities) {
-    let winRates = []
-    for (let i = 0; i < sequences.length; i++) {
-        winRates.push(await simulate(sequences, probabilities, i))
+// returns the wgsl code that will check who will win and count it in the bins
+function winChecksCode(numSequences) {
+    let code = `var sequenceWon = false;`
+    for (let i = 0; i < numSequences; i++) {
+        code +=
+            `
+        if (i >= sequenceLengths[${i}] && sequencesMatch(sequences[${i}], sequenceLengths[${i}], flipsSequence)) {
+            atomicAdd(&binsSequence${i}[binIndex], 1);
+            sequenceWon = true;
+        }
+        `
     }
+    code += `if (sequenceWon) {return;} //if anyone won, end the game. doing it this way makes ties count as a win for both`
 
-    return winRates
+    return code
 }
 
-// return the win rate of one sequence, the one at countedSequence
-async function simulate(sequences, probabilities, countedSequence) {
+await startSimulation([[2, 1, 0, 2, 1], [1, 2, 0, 1]], [1/3, 1/3, 1/3])
+
+async function startSimulation(sequences, probabilities) {
+    let wins = []
+    for (let i = 0; i < sequences.length; i++) { wins.push(0) }
+
+    for (let i = 0; i < 100; i++) {
+        const thisRoundResults = await simulate(sequences, probabilities)
+        for (let j = 0; j < thisRoundResults.length; j++) {
+            wins[j] += thisRoundResults[j]
+        }
+
+        let displayWins = []
+        for (let j = 0; j < sequences.length; j++) {
+            displayWins.push(wins[j] / (30 * 30 * 30 * 16 * 16 * (i + 1)))
+        }
+        console.log(displayWins) //to get a progress update
+    }
+
+    for (let i = 0; i < wins.length; i++) {
+        wins[i] /= (30 * 30 * 30 * 16 * 16 * 100) //divided by the number of games played to get an average
+    }
+
+    console.log(wins)
+}
+
+// play millions of games and see how many times each player won
+async function simulate(sequences, probabilities) {
     const adapter = await navigator.gpu?.requestAdapter()
     const device = await adapter?.requestDevice()
     if (!device) {
@@ -50,30 +81,37 @@ async function simulate(sequences, probabilities, countedSequence) {
 
 
 
+    const numSequences = sequences.length
+
+    let maxSequenceLength = 0
+    let sequenceLengths = []
+    for (let i = 0; i < numSequences; i++) {
+        const L = sequences[i].length
+        if (L > maxSequenceLength) { maxSequenceLength = L }
+        sequenceLengths.push(L)
+    }
+
+
+    let binsWgsl = ""
+    for (let i = 0; i < numSequences; i++) {
+        binsWgsl += `@group(0) @binding(${i}) var <storage, read_write> binsSequence${i}: array<atomic<u32>>;\n`
+    }
+
+
     const simulateModule = device.createShaderModule({
         label: "penney's game simulating module",
         code: simulateCode
             .replace("_WORKGROUPS1D", simulateWorkgroups1D)
             .replace("_TIMEOFFSET", Date.now() % 100000) //a time offset for the random number so that it's different on each run
-            .replace("_SEQUENCELENGTH", sequences[0].length)
+            .replace("_MAXSEQUENCELENGTH", maxSequenceLength)
             .replace("_VALUEOPTIONS", probabilities.length)
-            .replace("_SEQUENCES", formatSequences(sequences))
-            .replace("_NUMSEQUENCES", sequences.length)
-            .replace("_PROBABILITIES", formatProbabilities(probabilities))
-            .replace("_COUNTEDSEQUENCE", countedSequence)
+            .replace("_SEQUENCES", formatSequences(sequences, maxSequenceLength))
+            .replace("_NUMSEQUENCES", numSequences)
+            .replace("_SEQUENCELENGTHS", formatWgslArray(sequenceLengths))
+            .replace("_PROBABILITIES", formatWgslArray(probabilities))
+            .replace("_BINS", binsWgsl)
+            .replace("_WINCHECKS", winChecksCode(numSequences))
     })
-
-    console.log(
-        simulateCode
-            .replace("_WORKGROUPS1D", simulateWorkgroups1D)
-            .replace("_TIMEOFFSET", Date.now() % 100000) //a time offset for the random number so that it's different on each run
-            .replace("_SEQUENCELENGTH", sequences[0].length)
-            .replace("_VALUEOPTIONS", probabilities.length)
-            .replace("_SEQUENCES", formatSequences(sequences))
-            .replace("_NUMSEQUENCES", sequences.length)
-            .replace("_PROBABILITIES", formatProbabilities(probabilities))
-            .replace("_COUNTEDSEQUENCE", 0)
-    )
 
     const simulatePipeline = device.createComputePipeline({
         label: "penney's game simulating pipeline",
@@ -81,18 +119,28 @@ async function simulate(sequences, probabilities, countedSequence) {
         compute: { module: simulateModule }
     })
 
-    const binsBuffer = device.createBuffer({
-        label: "buffer holding different entries for the results of groups of games",
-        size: simulateWorkgroups1D ** 3 * 4,
-        usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC
-    })
+    let binsBuffers = [] //create one bins buffer for each sequence: this will be where 
+    let bindGroupEntries = []
+    for (let i = 0; i < numSequences; i++) {
+        binsBuffers.push(
+            device.createBuffer({
+                label: `buffer holding entries for wins of sequence ${i}`,
+                size: simulateWorkgroups1D ** 3 * 4,
+                usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC
+            })
+        )
+
+        bindGroupEntries.push(
+            { binding: i, resource: { buffer: binsBuffers[i] } }
+        )
+    }
+
+
 
     const simulateBindGroup = device.createBindGroup({
         label: "bind group for simulating games",
         layout: simulatePipeline.getBindGroupLayout(0),
-        entries: [
-            { binding: 0, resource: { buffer: binsBuffer } }
-        ]
+        entries: bindGroupEntries
     })
 
 
@@ -122,58 +170,63 @@ async function simulate(sequences, probabilities, countedSequence) {
 
     pass.setPipeline(sumPipeline)
 
-    const numSteps = Math.ceil(Math.log2(simulateWorkgroups1D ** 3)) //the number of steps it will take to get that done
-    for (let i = 0; i < numSteps - 1; i++) {
-        const sumUniformArray = new Uint32Array(2)
-        const thisStride = 2 ** i
-        const sumWorkgroupsSize = Math.ceil(simulateWorkgroups1D / Math.pow(thisStride * 2, 1 / 3)) //the workgroups are called as a cube, this finds the dimensions of the cube needed to have enough to sum the entire buffer
-        sumUniformArray.set([thisStride, sumWorkgroupsSize])
 
-        const sumUniformBuffer = device.createBuffer({
-            size: 8,
-            usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
-        })
-        device.queue.writeBuffer(sumUniformBuffer, 0, sumUniformArray)
+    for (let i = 0; i < numSequences; i++) { //for each sequence, sum up its wins
 
-        const sumBindGroup = device.createBindGroup({
-            label: `bindGroup for the sum shader, stride number ${thisStride}`,
-            layout: sumPipeline.getBindGroupLayout(0),
-            entries: [
-                { binding: 0, resource: { buffer: binsBuffer } },
-                { binding: 1, resource: { buffer: sumUniformBuffer } }
-            ]
-        })
+        const numSteps = Math.ceil(Math.log2(simulateWorkgroups1D ** 3)) //the number of steps it will take to get that done
+        for (let j = 0; j < numSteps; j++) {
+            const sumUniformArray = new Uint32Array(2)
+            const thisStride = 2 ** j
+            const sumWorkgroupsSize = Math.ceil(simulateWorkgroups1D / Math.pow(thisStride * 2, 1 / 3)) //the workgroups are called as a cube, this finds the dimensions of the cube needed to have enough to sum the entire buffer
+            sumUniformArray.set([thisStride, sumWorkgroupsSize])
 
-        pass.setBindGroup(0, sumBindGroup)
-        pass.dispatchWorkgroups(sumWorkgroupsSize, sumWorkgroupsSize, sumWorkgroupsSize)
+            const sumUniformBuffer = device.createBuffer({
+                size: 8,
+                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+            })
+            device.queue.writeBuffer(sumUniformBuffer, 0, sumUniformArray)
+
+            const sumBindGroup = device.createBindGroup({
+                label: `bindGroup for the sum shader, stride number ${thisStride}`,
+                layout: sumPipeline.getBindGroupLayout(0),
+                entries: [
+                    { binding: 0, resource: { buffer: binsBuffers[i] } },
+                    { binding: 1, resource: { buffer: sumUniformBuffer } }
+                ]
+            })
+
+            pass.setBindGroup(0, sumBindGroup)
+            pass.dispatchWorkgroups(sumWorkgroupsSize, sumWorkgroupsSize, sumWorkgroupsSize)
+        }
+
     }
+
 
     pass.end()
 
-    const resultBuffer1 = device.createBuffer({
-        size: 4,
-        usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST
-    })
-    const resultBuffer2 = device.createBuffer({
-        size: 4,
-        usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST
-    })
 
+    let resultsBuffers = []
+    for (let i = 0; i < numSequences; i++) {
+        resultsBuffers.push(
+            device.createBuffer({
+                size: 4,
+                usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST
+            })
+        )
 
-    encoder.copyBufferToBuffer(binsBuffer, 0, resultBuffer1, 0, 4)
-    encoder.copyBufferToBuffer(binsBuffer, 2 ** (numSteps + 1), resultBuffer2, 0, 4) //*because of integer overflow, we cant do the last step on the gpu. the last addition happens on the cpu where it can be handled properly by javascript
+        encoder.copyBufferToBuffer(binsBuffers[i], 0, resultsBuffers[i], 0, 4)
+    }
 
     device.queue.submit([encoder.finish()])
 
-    await resultBuffer1.mapAsync(GPUMapMode.READ) //when its ready to be read
-    const result1 = new Uint32Array(resultBuffer1.getMappedRange().slice())[0]
-    resultBuffer1.unmap()
+    let wins = []
+    for (let i = 0; i < numSequences; i++) {
+        await resultsBuffers[i].mapAsync(GPUMapMode.READ) //when its ready to be read
+        wins.push(new Uint32Array(resultsBuffers[i].getMappedRange().slice())[0])
+        resultsBuffers[i].unmap()
+    }
 
-    await resultBuffer2.mapAsync(GPUMapMode.READ) //when its ready to be read
-    const result2 = new Uint32Array(resultBuffer2.getMappedRange().slice())[0]
-    resultBuffer2.unmap()
-
-    return (result1 + result2) / (simulateWorkgroups1D ** 3 * 256)
+    return wins
 }
 
 function indexToSequence(index, sequenceLength, valueOptions) {
@@ -187,7 +240,7 @@ function indexToSequence(index, sequenceLength, valueOptions) {
 // generateResultsTable(3, 2)
 
 async function generateResultsTable(sequenceLength, valueOptions) {
-    if (document.getElementById("resultsTable")){document.getElementById("resultsTable").remove()}
+    if (document.getElementById("resultsTable")) { document.getElementById("resultsTable").remove() }
     generateHTMLTable(sequenceLength, valueOptions)
 
     // compared to the html table to be displayed, this one starts at the top right, and fills in right to left then top to bottom
@@ -215,7 +268,7 @@ function generateHTMLTable(sequenceLength, valueOptions) {
     const numSequences = Math.pow(valueOptions, sequenceLength)
 
     const table = document.createElement("table")
-    table.id="resultsTable"
+    table.id = "resultsTable"
     document.body.append(table)
 
     const headerRow = document.createElement("tr")
@@ -263,12 +316,12 @@ function updateHTMLTable(jsTable, numSequences) {
             const topTriangle = document.getElementById(`${row}_${col}`)
             const topTriangleProb = jsTable[row][i]
             topTriangle.innerText = toNearestFraction(topTriangleProb)
-            topTriangle.style = `background: rgba(${topTriangleProb*255}, ${topTriangleProb*255}, ${topTriangleProb*255}, 255)`
+            topTriangle.style = `background: rgba(${topTriangleProb * 255}, ${topTriangleProb * 255}, ${topTriangleProb * 255}, 255)`
 
             const bottomTriangle = document.getElementById(`${col}_${row}`)
-            const bottomTriangleProb = 1-topTriangleProb
+            const bottomTriangleProb = 1 - topTriangleProb
             bottomTriangle.innerText = toNearestFraction(bottomTriangleProb)
-            bottomTriangle.style = `background: rgba(${bottomTriangleProb*255}, ${bottomTriangleProb*255}, ${bottomTriangleProb*255}, 255)`
+            bottomTriangle.style = `background: rgba(${bottomTriangleProb * 255}, ${bottomTriangleProb * 255}, ${bottomTriangleProb * 255}, 255)`
         }
     }
 }
