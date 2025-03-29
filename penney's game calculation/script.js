@@ -61,6 +61,8 @@ class Matrix {
     }
 
     cofactor() {
+        if (this.rows == 1 && this.columns == 1) { return this } //if it's just a number, return that number
+
         let cofactor = new Matrix(this.rows, this.columns)
 
         for (let i = 0; i < this.rows; i++) {
@@ -123,15 +125,17 @@ class Matrix {
 }
 
 function getReturn(sequenceAppeared, thisSequence, probabilities) {
-    const k = sequenceAppeared.length
+    const LA = sequenceAppeared.length
+    const LB = thisSequence.length
 
     let v = 0
 
-    for (let s = 1; s <= k; s++) {
+    for (let s = 1; s <= Math.min(LA, LB); s++) {
         let p = 1
-        for (let i = 0; i <= k - s; i++) {
-            p *= sequenceAppeared[s + i - 1] == thisSequence[i] ? (1 / probabilities[sequenceAppeared[s + i - 1]]) : 0
+        for (let i = 1; i <= s; i++) {
+            p *= (thisSequence[i - 1] == sequenceAppeared[LA - s + i - 1] ? 1 : 0) / probabilities[thisSequence[i - 1]]
         }
+
         v += p
     }
 
@@ -148,13 +152,70 @@ function getNetProfit(sequenceAppeared, thisSequence, sequences, probabilities) 
     return 1 / (n - 1) * (n * getReturn(sequenceAppeared, thisSequence, probabilities) - otherSequencesSum)
 }
 
-function getWinProbabilities(sequences, probabilities) {
-    const n = sequences.length
+// checks if this sequence contains another sequence. if it does, it cannot win
+function containsOtherSequence(sequences, index) {
+    const S = sequences[index]
 
-    let M = new Matrix(n, sequences.length)
+    // for each other sequence
+    for (let i = 0; i < sequences.length; i++) {
+        if (i == index) { continue }
+        const O = sequences[i]
+
+        // step through this one and see if it matches up
+        for (let j = S.length - O.length; j >= 0; j--) { //note: if O is longer than S this never runs, so that's dealt with
+            let match = true
+            for (let k = 0; k < O.length; k++) {
+                if (S[j + k] !== O[k]) { match = false; break } //this one isnt a match
+            }
+            if (match) { return true }
+        }
+    }
+
+    return false
+}
+
+// checks if the end of this sequence matches with the end of another sequence. if it does, both are disqualitied
+function isEndOfOtherSequence(sequences, index) {
+    const S = sequences[index]
+
+    for (let i = 0; i < sequences.length; i++) {
+        const O = sequences[i]
+        if (i == index || S.length > O.length) { continue }
+
+        let match = true
+        for (let j = 0; j < S.length; j++) {
+            if (O[O.length - S.length + j] !== S[j]) { match = false; break }
+        }
+        if (match) { return true }
+    }
+
+    return false
+}
+
+function getWinProbabilities(sequences, probabilities) {
+
+    // removing sequences that contain another
+    let sequencesTrimmed = []
+    let removedSequences = []
+    for (let i = 0; i < sequences.length; i++) {
+        if (containsOtherSequence(sequences, i) || isEndOfOtherSequence(sequences, i)) {
+            removedSequences.push(i)
+        }
+        else {
+            sequencesTrimmed.push(sequences[i])
+        }
+    }
+
+    // if no sequences remain after being trimmed, return an empty array
+    if (sequencesTrimmed.length == 0) { return new Array(sequences.length) }
+
+    const n = sequencesTrimmed.length
+
+    // fill the main part of the matrix
+    let M = new Matrix(n, sequencesTrimmed.length)
     for (let row = 0; row < n - 1; row++) {
         for (let col = 0; col < n; col++) {
-            M.entries[row][col] = getNetProfit(sequences[col], sequences[row], sequences, probabilities)
+            M.entries[row][col] = getNetProfit(sequencesTrimmed[col], sequencesTrimmed[row], sequencesTrimmed, probabilities)
         }
     }
     // fill in the last row with 1
@@ -174,7 +235,17 @@ function getWinProbabilities(sequences, probabilities) {
         solutions.push(solutionsVector.entries[i][0])
     }
 
-    return solutions
+    // replace back the ones removed for containing another sequence, but with probability 0
+    let winRates = []
+    let indexInRemoved = 0
+    let indexInSolutions = 0
+    for (let i = 0; i < sequences.length; i++) {
+        if (removedSequences[indexInRemoved] == i) { winRates.push(0); indexInRemoved++ }
+        else { winRates.push(solutions[indexInSolutions]); indexInSolutions++ }
+    }
+
+    return winRates
+
 }
 
 function indexToSequence(index, sequenceLength, outcomePossibilities) {
@@ -185,48 +256,46 @@ function indexToSequence(index, sequenceLength, outcomePossibilities) {
     return result
 }
 
-// function indexToSequenceBackwards(index, sequenceLength, valueOptions) {
-//     let result = []
-//     for (let i = sequenceLength - 1; i >= 0; i--) {
-//         result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
-//     }
-//     return result
-// }
-
-// finds if two players are playing the same sequence
-function sequencesMatch() {
-    for (let i = 0; i < sequences.length; i++) {
-        for (let j = 0; j < sequences.length - 1; j++) {
-            if (i == j) { j++ }
-            else {
-                let sequencesMatch = true
-                for (let k = 0; k < sequences[0].length; k++) {
-                    if (sequences[i][k] !== sequences[j][k]) { sequencesMatch = false }
-                }
-                if (sequencesMatch) { return true }
-            }
-        }
-    }
-
-    return false
-}
-
-// add a warning if two sequences are the same
-function sequenceMatchWarning() {
-    if (sequencesMatch()) {
-        document.getElementById("sequencesMatchWarning").innerText = "Warning: two players are playing the same sequence!"
-    }
-    else {
-        document.getElementById("sequencesMatchWarning").innerText = ""
-    }
-}
-
-
-
 document.getElementById("numOutcomesInput").addEventListener("input", function (e) {
     setupProbabilitiesInputs(e.target.value)
     setupPlayersInputs()
 })
+
+
+let sequenceLengths = []
+setupSequenceLengths(2)
+function setupSequenceLengths(numSequences) {
+    const H = document.getElementById("sequenceLengthsHolder")
+    H.innerHTML = ""
+
+    sequenceLengths = []
+
+    for (let i = 0; i < numSequences; i++) {
+        const div = document.createElement("div")
+        div.classList.add("outcomeProbabilityDiv")
+        H.append(div)
+
+        const label = document.createElement("span")
+        label.innerText = `Player ${i + 1}'s Length:`
+        div.append(label)
+
+        const input = document.createElement("input")
+        input.type = "number"
+        input.value = 3
+        input.min = 1
+        input.max = 100
+        input.step = 1
+        div.append(input)
+
+        input.addEventListener("input", function (e) {
+            sequenceLengths[i] = parseFloat(e.target.value)
+            setupPlayersInputs()
+        })
+
+        sequenceLengths[i] = 3
+    }
+
+}
 
 let outcomesProbabilities = []
 setupProbabilitiesInputs(2)
@@ -267,8 +336,6 @@ function setupProbabilitiesInputs(numProbabilities) {
             else {
                 document.getElementById("outcomesProbabilitiesWarning").innerText = ""
             }
-
-            sequenceMatchWarning()
         })
 
         const percent = document.createElement("span")
@@ -280,24 +347,21 @@ function setupProbabilitiesInputs(numProbabilities) {
 }
 
 
-
 document.getElementById("numPlayersInput").addEventListener("input", function (e) {
     setupPlayersInputs()
-})
-document.getElementById("sequenceLengthInput").addEventListener("input", function (e) {
-    setupPlayersInputs()
+    setupSequenceLengths(document.getElementById("numPlayersInput").value)
 })
 
 let sequences = []
-setupPlayersInputs(2)
+setupPlayersInputs()
 function setupPlayersInputs() {
     const numPlayers = document.getElementById("numPlayersInput").value
-    const sequenceLength = document.getElementById("sequenceLengthInput").value
     const outcomePossibilities = outcomesProbabilities.length
 
     // sets up or removes the button to create a results table depending on if there are two players
     document.getElementById("tableCreatorDiv").innerHTML = ""
-    if (numPlayers == 2 && Math.pow(sequenceLength, outcomePossibilities) < 150) { //* 50 is the max table size
+
+    if (numPlayers == 2 && Math.pow(Math.max(sequenceLengths[0], sequenceLengths[1]), outcomePossibilities) < 250) {
         addCreateTableButton()
     }
 
@@ -316,11 +380,11 @@ function setupPlayersInputs() {
         playerLabel.innerText = `Player ${i + 1}: `
         playerDiv.append(playerLabel)
 
-        const thisPlayerSequence = indexToSequence(i, sequenceLength, outcomePossibilities) //used in case the old sequence doesnt exist or isnt valid anymore
+        const thisPlayerSequence = indexToSequence(i, sequenceLengths[i], outcomePossibilities) //used in case the old sequence doesnt exist or isnt valid anymore
 
         sequences.push([])
 
-        for (let j = 0; j < sequenceLength; j++) {
+        for (let j = 0; j < sequenceLengths[i]; j++) {
             const sequenceEntryDiv = document.createElement("div")
             sequenceEntryDiv.classList.add("sequenceEntryDiv")
             playerDiv.append(sequenceEntryDiv)
@@ -341,11 +405,9 @@ function setupPlayersInputs() {
 
             input.addEventListener("input", function (e) {
                 sequences[i][j] = parseInt(e.target.value)
-
-                sequenceMatchWarning()
             })
 
-            if (j !== sequenceLength - 1) {
+            if (j !== sequenceLengths[j] - 1) {
                 const separator = document.createElement("span")
                 separator.innerText = ", "
                 sequenceEntryDiv.append(separator)
@@ -356,7 +418,6 @@ function setupPlayersInputs() {
 
         H.append(document.createElement("br"))
     }
-    sequenceMatchWarning()
 }
 
 
@@ -377,6 +438,8 @@ function displayWinChances() {
 }
 
 function toNearestFraction(num, maxDenominator = 50) {
+    if (isNaN(num)) { return { fraction: "NaN", error: 0 } }
+
     let bestNumerator = 1
     let bestDenominator = 1
     let bestError = Math.abs(num - bestNumerator / bestDenominator)
@@ -394,7 +457,6 @@ function toNearestFraction(num, maxDenominator = 50) {
 
     return { fraction: `${bestNumerator}/${bestDenominator}`, error: bestError }
 }
-
 
 
 function addCreateTableButton() {
@@ -417,28 +479,37 @@ function createTable() {
     const table = document.createElement("table")
     H.append(table)
 
-    const sequenceLength = sequences[0].length
+    // const sequenceLength = sequences[0].length
     const valueOptions = outcomesProbabilities.length
-    const numSequences = Math.pow(valueOptions, sequenceLength)
+    // const numSequences = Math.pow(valueOptions, sequenceLength)
 
-    for (let i = 0; i < numSequences; i++) {
-        const rowSequence = indexToSequence(i, sequenceLength, valueOptions)
+    const sequenceLength0 = sequenceLengths[0]
+    const sequenceLength1 = sequenceLengths[1]
+    const numSequences0 = Math.pow(valueOptions, sequenceLength0)
+    const numSequences1 = Math.pow(valueOptions, sequenceLength1)
+    const maxNumSequences = Math.max(numSequences0, numSequences1)
+
+    for (let i = 0; i < numSequences0; i++) {
+        const rowSequence = indexToSequence(i, sequenceLength0, valueOptions)
 
         const thisRow = document.createElement("tr")
         table.append(thisRow)
 
-        for (let j = 0; j < numSequences; j++) {
-            const colSequence = indexToSequence(j, sequenceLength, valueOptions)
+        for (let j = 0; j < numSequences1; j++) {
+            const colSequence = indexToSequence(j, sequenceLength1, valueOptions)
 
             const thisCell = document.createElement("td")
-            if (i !== j) {
-                const winRate = getWinProbabilities([rowSequence, colSequence], outcomesProbabilities)[0]
+            const winRate = getWinProbabilities([rowSequence, colSequence], outcomesProbabilities)[0]
+
+            if (typeof winRate == "number") {
                 thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: ${(winRate * 100).toFixed(2)}% chance of winning`
-                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500 / numSequences}px; height: ${500 / numSequences}px;`
+                thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
             }
             else {
-                thisCell.title = ""
+                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: Game invalid - Sequences end the same`
+                thisCell.style = `background: rgb(106, 0, 0); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
             }
+
             thisRow.append(thisCell)
         }
     }
@@ -525,6 +596,27 @@ function actualBest(sequenceLength, outcomePossibilities) {
 }
 // do this for all sequences and visualize whether offset 0, 1, 2, ... is the best
 
+function getPlayer2BestStrategy(opponentSequence, outcomePossibilities) {
+    let probabilities = []
+    for (let i = 0; i < outcomePossibilities; i++) {
+        probabilities.push(1 / outcomePossibilities)
+    }
+
+    let bestWinRate = 0
+    let bestSequence
+    for (let i = 0; i < Math.pow(outcomePossibilities, opponentSequence.length); i++) {
+        const thisSequence = indexToSequence(i, opponentSequence.length, outcomePossibilities)
+        const winRate = getWinProbabilities([thisSequence, opponentSequence], probabilities)[0]
+
+        if (winRate > bestWinRate) {
+            bestWinRate = winRate
+            bestSequence = thisSequence
+        }
+    }
+
+    return [bestWinRate, bestSequence]
+}
+
 // gets the win rate of player 1's sequence assuming player 2 chooses the optimal sequence in response, in other words: the worst possible win rate for player 1
 function player1SequenceWinRate(sequence, outcomePossibilities) {
     let probabilities = []
@@ -568,4 +660,16 @@ function getPlayer1BestStrategy(sequenceLength, outcomePossibilities) {
     }
 
     return [highestWinRate, bestSequences]
+}
+
+function getPlayer2BestStrategies(sequenceLength, outcomePossibilities) {
+    let output = []
+
+    for (let i = 0; i < Math.pow(outcomePossibilities, sequenceLength); i++) {
+        let opponentSequence = indexToSequence(i, sequenceLength, outcomePossibilities)
+
+        output.push([opponentSequence, getPlayer2BestStrategy(opponentSequence, outcomePossibilities)[1]])
+    }
+
+    return output
 }
