@@ -207,7 +207,7 @@ function getWinProbabilities(sequences, probabilities) {
     }
 
     // if no sequences remain after being trimmed, return an empty array
-    if (sequencesTrimmed.length == 0) { return new Array(sequences.length) }
+    if (sequencesTrimmed.length < 2) { return new Array(sequences.length) }
 
     const n = sequencesTrimmed.length
 
@@ -364,6 +364,9 @@ function setupPlayersInputs() {
     if (numPlayers == 2 && Math.pow(Math.max(sequenceLengths[0], sequenceLengths[1]), outcomePossibilities) < 250) {
         addCreateTableButton()
     }
+    if (numPlayers == 3 && Math.pow(Math.max(sequenceLengths[0], sequenceLengths[1]), outcomePossibilities) < 250) {
+        addCreate3dTableButton()
+    }
 
     const H = document.getElementById("playerSequencesHolder")
     H.innerHTML = ""
@@ -506,7 +509,7 @@ function createTable() {
                 thisCell.style = `background: rgba(${winRate * 255}, ${winRate * 255}, ${winRate * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
             }
             else {
-                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: Game invalid - Sequences end the same`
+                thisCell.title = `As [${rowSequence.join("")}] against [${colSequence.join("")}]: Game Invalid - Sequences end the same`
                 thisCell.style = `background: rgb(106, 0, 0); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
             }
 
@@ -517,6 +520,152 @@ function createTable() {
     const info = document.createElement("p")
     info.innerText = "Hover over a square to see the game it represents."
     H.append(info)
+}
+
+function addCreate3dTableButton() {
+    const H = document.getElementById("tableCreatorDiv")
+
+    const button = document.createElement("button")
+    button.innerText = "Create table for all possible games"
+    button.addEventListener("click", function () {
+        create3dTable("All Players")
+    })
+
+    H.append(button)
+}
+
+function create3dTable(playerShown) {
+    const H = document.getElementById("tableCreatorDiv")
+    H.innerHTML = "" //clear the element
+    addCreate3dTableButton() //add the button back
+
+    // const sequenceLength = sequences[0].length
+    const valueOptions = outcomesProbabilities.length
+    // const numSequences = Math.pow(valueOptions, sequenceLength)
+
+    const sequenceLength0 = sequenceLengths[0]
+    const sequenceLength1 = sequenceLengths[1]
+    const sequenceLength2 = sequenceLengths[2]
+    const numSequences0 = Math.pow(valueOptions, sequenceLength0)
+    const numSequences1 = Math.pow(valueOptions, sequenceLength1)
+    const numSequences2 = Math.pow(valueOptions, sequenceLength2)
+    const maxNumSequences = Math.max(numSequences0, numSequences1, numSequences2)
+
+    let tables = []
+    for (let i = 0; i < numSequences2; i++) {
+        let t = document.createElement("table")
+        t.id = `table${i}`
+        tables.push(t)
+    }
+
+    // creates one table for each sequence that player 3 could be
+    for (let k = 0; k < numSequences2; k++) {
+        const sliceSequence = indexToSequence(k, sequenceLength2, valueOptions)
+
+        for (let i = 0; i < numSequences0; i++) {
+            const rowSequence = indexToSequence(i, sequenceLength0, valueOptions)
+
+            const thisRow = document.createElement("tr")
+            tables[k].append(thisRow)
+
+            for (let j = 0; j < numSequences1; j++) {
+                const colSequence = indexToSequence(j, sequenceLength1, valueOptions)
+
+                const thisCell = document.createElement("td")
+                // ! instead of only storing the win rate of the first player (the one in the row), maybe store them all and colour as rgb
+                const winRate = getWinProbabilities([rowSequence, colSequence, sliceSequence], outcomesProbabilities)
+
+                let gameValid = true
+                for (let m = 0; m < winRate.length; m++) {
+                    if (typeof winRate[m] !== "number") { gameValid = false; break }
+                }
+
+                if (gameValid) {
+                    thisCell.title = `Player 1 as ${rowSequence.join("")}: ${(winRate[0] * 100).toFixed(2)}% chance of winning\nPlayer 2 as ${colSequence.join("")}: ${(winRate[1] * 100).toFixed(2)}% chance of winning\nPlayer 3 as ${sliceSequence.join("")}: ${(winRate[2] * 100).toFixed(2)}% chance of winning`
+                    if (playerShown == "All Players") {
+                        thisCell.style = `background: rgba(${winRate[0] * 255}, ${winRate[1] * 255}, ${winRate[2] * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
+                    }
+                    else if (playerShown == "Player 1") {
+                        thisCell.style = `background: rgba(${winRate[0] * 255}, ${winRate[0] * 255}, ${winRate[0] * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
+                    }
+                    else if (playerShown == "Player 2") {
+                        thisCell.style = `background: rgba(${winRate[1] * 255}, ${winRate[1] * 255}, ${winRate[1] * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
+                    }
+                    else if (playerShown == "Player 3") {
+                        thisCell.style = `background: rgba(${winRate[2] * 255}, ${winRate[2] * 255}, ${winRate[2] * 255}, 255); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px;`
+                    }
+                }
+                else {
+                    thisCell.title = `Player 1 as ${rowSequence.join("")}\nPlayer 2 as ${colSequence.join("")}\nPlayer 3 as ${sliceSequence.join("")}\nGame Invalid - Sequences end the same`
+                    // thisCell.style = `background-image: url("../crossedCell.png"); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px; background-size: ${500 / maxNumSequences}px ${500 / maxNumSequences}px; background-repeat: no-repeat;`
+                    thisCell.style = `background: black; width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px; background-size: ${500 / maxNumSequences}px ${500 / maxNumSequences}px; background-repeat: no-repeat;`
+                }
+
+                thisRow.append(thisCell)
+            }
+        }
+
+    }
+
+
+    const info = document.createElement("p")
+    info.innerText = "Hover over a square to see the game it represents."
+    H.append(info)
+
+    const tableArea = document.createElement("div")
+    H.append(tableArea)
+    tableArea.append(tables[0])
+
+    const sliceSlider = document.createElement("input")
+    sliceSlider.type = "range"
+    sliceSlider.step = 1
+    sliceSlider.max = numSequences2-1
+    sliceSlider.min = 0
+    sliceSlider.value= 0
+    H.append(sliceSlider)
+
+    const sliceSliderLabel = document.createElement("span")
+    sliceSliderLabel.innerText = `Player 3: ${indexToSequence(0, sequenceLength2, valueOptions).join("")}`
+    H.append(sliceSliderLabel)
+
+    sliceSlider.addEventListener("input", function () {
+        let V = parseInt(sliceSlider.value)
+        sliceSliderLabel.innerText = `Player 3: ${indexToSequence(V, sequenceLength2, valueOptions).join("")}`
+        tableArea.innerHTML = ""
+        tableArea.append(tables[V])
+    })
+
+    H.append(document.createElement("br"))
+
+    const playerShownLabel = document.createElement("span")
+    playerShownLabel.innerHTML = "Player Shown: "
+    H.append(playerShownLabel)
+
+    const playerShownElt = document.createElement("select")
+    playerShown.id = "3dTablePlayerShown"
+    H.append(playerShownElt)
+
+    const allPlayersShown = document.createElement("option")
+    allPlayersShown.innerText = "All Players"
+    playerShownElt.append(allPlayersShown)
+
+    const Player1Shown = document.createElement("option")
+    Player1Shown.innerText = "Player 1"
+    playerShownElt.append(Player1Shown)
+
+    const Player2Shown = document.createElement("option")
+    Player2Shown.innerText = "Player 2"
+    playerShownElt.append(Player2Shown)
+
+    const Player3Shown = document.createElement("option")
+    Player3Shown.innerText = "Player 3"
+    playerShownElt.append(Player3Shown)
+
+    playerShownElt.value = playerShown
+
+    playerShownElt.addEventListener("change", function() {
+        create3dTable(playerShownElt.value)
+    })
 }
 
 // not exactly right
