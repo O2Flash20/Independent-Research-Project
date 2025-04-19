@@ -268,7 +268,15 @@ function setupSequenceLengths(numSequences) {
     const H = document.getElementById("sequenceLengthsHolder")
     H.innerHTML = ""
 
-    sequenceLengths = []
+    // sequenceLengths = []
+
+    while (numSequences > sequenceLengths.length) {
+        sequenceLengths.push(3)
+    }
+
+    while (numSequences < sequenceLengths.length) {
+        sequenceLengths.splice(-1, 1)
+    }
 
     for (let i = 0; i < numSequences; i++) {
         const div = document.createElement("div")
@@ -281,7 +289,7 @@ function setupSequenceLengths(numSequences) {
 
         const input = document.createElement("input")
         input.type = "number"
-        input.value = 3
+        input.value = sequenceLengths[i] || 3
         input.min = 1
         input.max = 100
         input.step = 1
@@ -292,7 +300,7 @@ function setupSequenceLengths(numSequences) {
             setupPlayersInputs()
         })
 
-        sequenceLengths[i] = 3
+        // sequenceLengths[i] = 3
     }
 
 }
@@ -348,8 +356,8 @@ function setupProbabilitiesInputs(numProbabilities) {
 
 
 document.getElementById("numPlayersInput").addEventListener("input", function (e) {
-    setupPlayersInputs()
     setupSequenceLengths(document.getElementById("numPlayersInput").value)
+    setupPlayersInputs()
 })
 
 let sequences = []
@@ -410,7 +418,7 @@ function setupPlayersInputs() {
                 sequences[i][j] = parseInt(e.target.value)
             })
 
-            if (j !== sequenceLengths[j] - 1) {
+            if (j !== sequenceLengths[i] - 1) {
                 const separator = document.createElement("span")
                 separator.innerText = ", "
                 sequenceEntryDiv.append(separator)
@@ -821,4 +829,25 @@ function getPlayer2BestStrategies(sequenceLength, outcomePossibilities) {
     }
 
     return output
+}
+
+function getPlayer3BestStrategy(sequenceLength, outcomePossibilities) {
+    let results = ""
+
+    for (let i = 0; i < Math.pow(outcomePossibilities, sequenceLength); i++) {
+        for (let j = 0; j < Math.pow(outcomePossibilities, sequenceLength); j++) {
+            let maxProb = 0
+            let maxIndex = -1
+            for (let k = 0; k < Math.pow(outcomePossibilities, sequenceLength); k++) {
+                const thisProb = getWinProbabilities([indexToSequence(i, sequenceLength, outcomePossibilities), indexToSequence(j, sequenceLength, outcomePossibilities), indexToSequence(k, sequenceLength, outcomePossibilities)], [1/3, 1/3, 1/3])[2]
+                if (thisProb > maxProb) {
+                    maxProb = thisProb
+                    maxIndex = k
+                }
+            }
+            results += `(${i}, ${j}, ${maxIndex}), `
+        }
+    }
+
+    return results
 }
