@@ -55,7 +55,7 @@ function playerSequencesUI(numPlayers, sequenceLengths, numOutcomePossibilities)
         playerDiv.append(label)
         for (let j = 0; j < sequenceLengths[i]; j++) {
             const sequenceEntryDiv = document.createElement("div")
-            sequenceEntryDiv.style="display:inline-block; padding: 5px;"
+            sequenceEntryDiv.style = "display:inline-block; padding: 5px;"
             playerDiv.append(sequenceEntryDiv)
 
             const sequenceEntryInput = document.createElement("input")
@@ -81,7 +81,7 @@ function outcomePossibilitiesUI(numOutcomePossibilities) {
 
     for (let i = 0; i < numOutcomePossibilities; i++) {
         const div = document.createElement("div")
-        div.style="display:inline-block; padding: 5px"
+        div.style = "display:inline-block; padding: 5px"
         d.append(div)
 
         const label = document.createElement("span")
@@ -132,11 +132,11 @@ function resultsUI(numPlayers) {
         d.append(div)
 
         const label = document.createElement("span")
-        label.innerText = `Player ${i+1}'s win rate: `
+        label.innerText = `Player ${i + 1}'s win rate: `
         div.append(label)
 
         const rate = document.createElement("span")
-        rate.id = `player${i+1}Rate`
+        rate.id = `player${i + 1}Rate`
         rate.innerText = "__%"
         div.append(rate)
     }
@@ -176,16 +176,15 @@ function deepCopy(object) {
 // run the simulation when the button is pressed
 let simulationRunning = false
 document.getElementById("runButton").addEventListener("click", async function () {
-    if (simulationRunning) {return}
+    if (simulationRunning) { return }
 
     simulationRunning = true
     await startSimulation(
         deepCopy(sequences),
         deepCopy(outcomePossibilities),
-        function (wins, gamesPlayed) { 
-            console.log(wins, gamesPlayed)
+        function (wins, gamesPlayed) {
             for (let i = 0; i < wins.length; i++) {
-                document.getElementById(`player${i+1}Rate`).innerText = `${wins[i]*100}%`
+                document.getElementById(`player${i + 1}Rate`).innerText = `${wins[i] * 100}%`
             }
             document.getElementById("gamesPlayed").innerText = gamesPlayed
         }
