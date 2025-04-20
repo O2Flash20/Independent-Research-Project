@@ -6,8 +6,20 @@
     <title>Penney's Game Simulator</title>
     <link rel="stylesheet" href="../style.css">
     <script src="script.js" type="module"></script>
+    <script src="ui.js" type="module"></script>
 </head>
 <body>
-    
+    <span>Number of players: </span><input id="numPlayersInput" type="number" min="2" value="2" step="1">
+    <div id="playerSequenceLengths"></div>
+    <div id="playerSequences"></div>
+    <span>Number of Possible Flip Outcomes: </span><input id="numFlipOutcomesInput" type="number" min="2" value="2" step="1"><br>
+    <div id="flipOutcomeProbabilities" class="playerDiv"></div>
+    <p style="color:red;" id="probabilitiesWarning"></p>
+
+    <button id="runButton">Run Simulation</button>
+
+    <div id="results">
+        
+    </div>
 </body>
 </html>

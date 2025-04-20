@@ -1,10 +1,8 @@
 import simulateCode from "./shaders/simulate.wgsl.js"
 import sumCode from "./shaders/sum.wgsl.js"
 
-
-
 // it will use workgroups set up in 3d, so this is one dimension of the cube of workgroups
-const simulateWorkgroups1D = 30 //max 322
+const simulateWorkgroups1D = 23 //max 322
 
 function formatSequences(sequences, maxSequenceLength) {
     let output = ""
@@ -45,30 +43,31 @@ function winChecksCode(numSequences) {
     return code
 }
 
-await startSimulation([[2, 1, 0, 2, 1], [1, 2, 0, 1]], [1/3, 1/3, 1/3])
-
-async function startSimulation(sequences, probabilities) {
+export async function startSimulation(sequences, probabilities, callback) {
     let wins = []
     for (let i = 0; i < sequences.length; i++) { wins.push(0) }
 
-    for (let i = 0; i < 100; i++) {
+    const numSteps = 150
+    for (let i = 0; i < numSteps; i++) {
         const thisRoundResults = await simulate(sequences, probabilities)
         for (let j = 0; j < thisRoundResults.length; j++) {
             wins[j] += thisRoundResults[j]
         }
 
         let displayWins = []
+        const gamesPlayed = simulateWorkgroups1D ** 3 * 16 * 16 * (i + 1)
         for (let j = 0; j < sequences.length; j++) {
-            displayWins.push(wins[j] / (30 * 30 * 30 * 16 * 16 * (i + 1)))
+            displayWins.push(wins[j] / gamesPlayed)
         }
-        console.log(displayWins) //to get a progress update
+        callback(displayWins, gamesPlayed)
     }
 
+    const gamesPlayed = (simulateWorkgroups1D ** 3 * 16 * 16 * numSteps)
     for (let i = 0; i < wins.length; i++) {
-        wins[i] /= (30 * 30 * 30 * 16 * 16 * 100) //divided by the number of games played to get an average
+        wins[i] /= gamesPlayed //divided by the number of games played to get an average
     }
 
-    console.log(wins)
+    callback(wins, gamesPlayed)
 }
 
 // play millions of games and see how many times each player won
@@ -228,127 +227,3 @@ async function simulate(sequences, probabilities) {
 
     return wins
 }
-
-function indexToSequence(index, sequenceLength, valueOptions) {
-    let result = []
-    for (let i = sequenceLength - 1; i >= 0; i--) {
-        result.push(Math.floor(index / Math.pow(valueOptions, i)) % valueOptions)
-    }
-    return result
-}
-
-// generateResultsTable(3, 2)
-
-async function generateResultsTable(sequenceLength, valueOptions) {
-    if (document.getElementById("resultsTable")) { document.getElementById("resultsTable").remove() }
-    generateHTMLTable(sequenceLength, valueOptions)
-
-    // compared to the html table to be displayed, this one starts at the top right, and fills in right to left then top to bottom
-    // it will only contain the top right triangle of the table, because the rest is flipped
-    let output = []
-
-    const numSequences = Math.pow(valueOptions, sequenceLength)
-    for (let row = 0; row < numSequences; row++) {
-        output.push([])
-        for (let col = 0; col < numSequences - 1 - row; col++) { //the weird end condition is to make the triangle
-            output[row].push(
-                await simulate(
-                    indexToSequence(row, sequenceLength, valueOptions),
-                    indexToSequence(numSequences - 1 - col, sequenceLength, valueOptions), valueOptions
-                )
-            )
-            updateHTMLTable(output, numSequences)
-        }
-    }
-
-    return output
-}
-
-function generateHTMLTable(sequenceLength, valueOptions) {
-    const numSequences = Math.pow(valueOptions, sequenceLength)
-
-    const table = document.createElement("table")
-    table.id = "resultsTable"
-    document.body.append(table)
-
-    const headerRow = document.createElement("tr")
-    table.append(headerRow)
-
-    headerRow.append(document.createElement("td"))
-    for (let i = 0; i < numSequences; i++) {
-        const thisSequence = indexToSequence(i, sequenceLength, valueOptions)
-        const thisCell = document.createElement("td")
-        thisCell.innerText = thisSequence.join(", ")
-        headerRow.append(thisCell)
-    }
-
-    for (let i = 0; i < numSequences; i++) {
-        const rowSequence = indexToSequence(i, sequenceLength, valueOptions)
-
-        const thisRow = document.createElement("tr")
-        table.append(thisRow)
-
-        const rowHeader = document.createElement("td")
-        rowHeader.innerText = rowSequence.join(", ")
-        thisRow.append(rowHeader)
-
-        for (let j = 0; j < numSequences; j++) {
-            const columnSequence = indexToSequence(j, sequenceLength, valueOptions)
-
-            const thisCell = document.createElement("td")
-            if (i !== j) {
-                thisCell.id = `${i}_${j}`
-                thisCell.innerText = "Calculating"
-            }
-            else {
-                thisCell.innerText = "-"
-            }
-            thisRow.append(thisCell)
-        }
-    }
-}
-
-function updateHTMLTable(jsTable, numSequences) {
-    for (let row = 0; row < jsTable.length; row++) {
-        for (let i = 0; i < jsTable[row].length; i++) {
-            const col = numSequences - 1 - i
-
-            const topTriangle = document.getElementById(`${row}_${col}`)
-            const topTriangleProb = jsTable[row][i]
-            topTriangle.innerText = toNearestFraction(topTriangleProb)
-            topTriangle.style = `background: rgba(${topTriangleProb * 255}, ${topTriangleProb * 255}, ${topTriangleProb * 255}, 255)`
-
-            const bottomTriangle = document.getElementById(`${col}_${row}`)
-            const bottomTriangleProb = 1 - topTriangleProb
-            bottomTriangle.innerText = toNearestFraction(bottomTriangleProb)
-            bottomTriangle.style = `background: rgba(${bottomTriangleProb * 255}, ${bottomTriangleProb * 255}, ${bottomTriangleProb * 255}, 255)`
-        }
-    }
-}
-
-function toNearestFraction(num, maxDenominator = 50) {
-    let bestNumerator = 1
-    let bestDenominator = 1
-    let bestError = Math.abs(num - bestNumerator / bestDenominator)
-
-    for (let denominator = 1; denominator <= maxDenominator; denominator++) {
-        const numerator = Math.round(num * denominator)
-        const error = Math.abs(num - numerator / denominator)
-
-        if (error < bestError) {
-            bestNumerator = numerator
-            bestDenominator = denominator
-            bestError = error
-        }
-    }
-
-    return `${bestNumerator}/${bestDenominator}`
-}
-
-/*
-Todo:
-make the table more clear with labels
-use the fact that the table is practically diagonally symmetrical with 1-p so do half the calculations
-add ui to change the settings
-add multiple players and multiple sequences per player
-*/
