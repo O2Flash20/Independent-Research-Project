@@ -99,3 +99,8 @@ table {
     margin: 10px;
     border-radius: 10px;
 }
+.numberBox {
+    background: rgb(12, 13, 14);
+    border-radius: 10px;
+    padding: 5px;
+}

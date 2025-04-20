@@ -129,6 +129,7 @@ function resultsUI(numPlayers) {
 
     for (let i = 0; i < numPlayers; i++) {
         const div = document.createElement("div")
+        div.style = "padding: 10px"
         d.append(div)
 
         const label = document.createElement("span")
@@ -137,18 +138,24 @@ function resultsUI(numPlayers) {
 
         const rate = document.createElement("span")
         rate.id = `player${i + 1}Rate`
+        rate.classList.add("numberBox")
         rate.innerText = "__%"
         div.append(rate)
     }
 
+    const playedDiv = document.createElement("div")
+    playedDiv.style = "padding: 10px"
+    d.append(playedDiv)
+
     const playedLabel = document.createElement("span")
     playedLabel.innerText = "Games Played: "
-    d.append(playedLabel)
+    playedDiv.append(playedLabel)
 
     const played = document.createElement("span")
     played.id = "gamesPlayed"
     played.innerText = "0"
-    d.append(played)
+    played.classList.add("numberBox")
+    playedDiv.append(played)
 }
 
 document.getElementById("numPlayersInput").addEventListener("change", function (e) {
