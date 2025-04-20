@@ -580,7 +580,6 @@ function create3dTable(playerShown) {
                 const colSequence = indexToSequence(j, sequenceLength1, valueOptions)
 
                 const thisCell = document.createElement("td")
-                // ! instead of only storing the win rate of the first player (the one in the row), maybe store them all and colour as rgb
                 const winRate = getWinProbabilities([rowSequence, colSequence, sliceSequence], outcomesProbabilities)
 
                 let gameValid = true
@@ -604,7 +603,7 @@ function create3dTable(playerShown) {
                     }
                 }
                 else {
-                    thisCell.title = `Player 1 as ${rowSequence.join("")}\nPlayer 2 as ${colSequence.join("")}\nPlayer 3 as ${sliceSequence.join("")}\nGame Invalid - Sequences end the same`
+                    thisCell.title = `Player 1 as ${rowSequence.join("")}\nPlayer 2 as ${colSequence.join("")}\nPlayer 3 as ${sliceSequence.join("")}\nGame Invalid - Sequences end the same or one player will always win`
                     // thisCell.style = `background-image: url("../crossedCell.png"); width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px; background-size: ${500 / maxNumSequences}px ${500 / maxNumSequences}px; background-repeat: no-repeat;`
                     thisCell.style = `background: black; width: ${500 / maxNumSequences}px; height: ${500 / maxNumSequences}px; background-size: ${500 / maxNumSequences}px ${500 / maxNumSequences}px; background-repeat: no-repeat;`
                 }
