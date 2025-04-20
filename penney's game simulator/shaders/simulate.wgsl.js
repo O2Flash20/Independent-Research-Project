@@ -13,6 +13,7 @@ const probabilities: array<f32, valueOptions> = array(_PROBABILITIES);
 _BINS
 
 // https://indico.cern.ch/event/93877/contributions/2118070/attachments/1104200/1575343/acat3_revised_final.pdf
+// kinda the same: https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-37-efficient-random-number-generation-and-application
 fn seedPerThread(i: u32) -> u32 {
     return i * 1099087573;
 }
@@ -22,16 +23,12 @@ fn tauStep(z: u32, s1: u32, s2: u32, s3: u32, M: u32) -> u32 {
     return (((z & M) << s3) ^ b);
 }
 
-//! is this not actually random? im getting some bias i think (repeated simulations concentrate around a value different from the expected)
 fn random(i: u32) -> f32 {
     let seed = seedPerThread(i);
 
     let r0 = tauStep(seed, 13, 19, 12, 429496729) ^ tauStep(seed, 2, 25, 4, 4294967288) ^ tauStep(seed, 3, 11, 17, 429496280) ^ (1664525*seed+1013904223);
-    let r1 = tauStep(r0, 13, 19, 12, 429496729) ^ tauStep(r0, 2, 25, 4, 4294967288) ^ tauStep(r0, 3, 11, 17, 429496280) ^ (1664525*r0+1013904223);
-    let r2 = tauStep(r1, 13, 19, 12, 429496729) ^ tauStep(r1, 2, 25, 4, 4294967288) ^ tauStep(r1, 3, 11, 17, 429496280) ^ (1664525*r1+1013904223);
-    let r3 = tauStep(r2, 13, 19, 12, 429496729) ^ tauStep(r2, 2, 25, 4, 4294967288) ^ tauStep(r2, 3, 11, 17, 429496280) ^ (1664525*r2+1013904223);
 
-    return f32(r3) * 2.3283064365387e-10;
+    return 2.3283064365387e-10 * f32(r0*seed + 1013904223);
 }
 
 fn pickValueWeighted(random: f32, probabilities: array<f32, valueOptions>) -> u32 {
@@ -72,7 +69,7 @@ fn sequencesMatch(s1: array<u32, maxSequenceLength>, s1Length: u32, s2: array<u3
     @builtin(workgroup_id) id: vec3u, @builtin(local_invocation_index) index: u32 //the position of this workgroup (same for all within a workgroup)
 ) {
     let binIndex = id.x*workgroups1D*workgroups1D + id.y*workgroups1D + id.z; //a unique place to put the results of each work group (all in a work group put it here)
-    let randomIndex = index + 1000*(binIndex+1) + timeOffset; // multiplied by 1000 so that there can be up to 1000 flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
+    let randomIndex = index + 1000000*(binIndex+1) + timeOffset; // multiplied by a big number so that there can be up to that many flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
 
     var flipsSequence = array<u32, maxSequenceLength>(); // [before-last, last, this]
     var i: u32 = 0; // the number of flips that have occurred in this game
