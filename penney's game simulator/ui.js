@@ -39,6 +39,9 @@ function playerSequenceLengthUI(numPlayers) {
 
     }
 
+    if (numPlayers < sequences.length) { sequences.splice(-1, 1) }
+    if (numPlayers < sequenceLengths.length) { sequenceLengths.splice(-1, 1) }
+
     playerSequencesUI(numPlayers, sequenceLengths, outcomePossibilities.length)
 }
 
@@ -160,6 +163,10 @@ function resultsUI(numPlayers) {
 
 document.getElementById("numPlayersInput").addEventListener("change", function (e) {
     const v = parseInt(e.target.value)
+    if (simulationRunning) {
+        e.target.value = sequenceLengths.length
+        return
+    }
     playerSequenceLengthUI(v)
     resultsUI(v)
 })
@@ -175,6 +182,12 @@ document.getElementById("numFlipOutcomesInput").addEventListener("change", funct
     outcomePossibilitiesUI(v)
 })
 
+updateGamesToPlay()
+function updateGamesToPlay() {
+    document.getElementById("gamesToPlay").innerText = prettyNumber(parseInt(document.getElementById("simulateWorkgroups1D").value) ** 3 * 16 ** 2 * 50 )
+}
+document.getElementById("simulateWorkgroups1D").addEventListener("input", updateGamesToPlay)
+
 // creates a copy that isnt linked to the original
 function deepCopy(object) {
     return JSON.parse(JSON.stringify(object))
@@ -189,12 +202,30 @@ document.getElementById("runButton").addEventListener("click", async function ()
     await startSimulation(
         deepCopy(sequences),
         deepCopy(outcomePossibilities),
+        parseInt(document.getElementById("simulateWorkgroups1D").value),
         function (wins, gamesPlayed) {
             for (let i = 0; i < wins.length; i++) {
                 document.getElementById(`player${i + 1}Rate`).innerText = `${wins[i] * 100}%`
             }
-            document.getElementById("gamesPlayed").innerText = gamesPlayed
+            document.getElementById("gamesPlayed").innerText = prettyNumber(gamesPlayed)
         }
     )
     simulationRunning = false
 })
+
+function prettyNumber(number) {
+    const s = String(number)
+    let o1 = ""
+    let j = 1
+    for (let i = s.length - 1; i >= 0; i--, j++) {
+        o1+=s[i]
+        if (j%3==0) {o1+= " "}
+    }
+
+    let o2 = ""
+    for (let i = o1.length - 1; i >= 0; i--) {
+        o2 += o1[i]
+    }
+
+    return o2
+}

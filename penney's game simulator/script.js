@@ -1,9 +1,6 @@
 import simulateCode from "./shaders/simulate.wgsl.js"
 import sumCode from "./shaders/sum.wgsl.js"
 
-// it will use workgroups set up in 3d, so this is one dimension of the cube of workgroups
-const simulateWorkgroups1D = 23 //max 322
-
 function formatSequences(sequences, maxSequenceLength) {
     let output = ""
 
@@ -43,13 +40,14 @@ function winChecksCode(numSequences) {
     return code
 }
 
-export async function startSimulation(sequences, probabilities, callback) {
+// it will use workgroups set up in 3d, so simulateWorkgroups1D is one dimension of the cube of workgroups
+export async function startSimulation(sequences, probabilities, simulateWorkgroups1D, callback) {
     let wins = []
     for (let i = 0; i < sequences.length; i++) { wins.push(0) }
 
-    const numSteps = 150
+    const numSteps = 50
     for (let i = 0; i < numSteps; i++) {
-        const thisRoundResults = await simulate(sequences, probabilities)
+        const thisRoundResults = await simulate(sequences, probabilities, simulateWorkgroups1D)
         for (let j = 0; j < thisRoundResults.length; j++) {
             wins[j] += thisRoundResults[j]
         }
@@ -71,7 +69,7 @@ export async function startSimulation(sequences, probabilities, callback) {
 }
 
 // play millions of games and see how many times each player won
-async function simulate(sequences, probabilities) {
+async function simulate(sequences, probabilities, simulateWorkgroups1D) {
     const adapter = await navigator.gpu?.requestAdapter()
     const device = await adapter?.requestDevice()
     if (!device) {

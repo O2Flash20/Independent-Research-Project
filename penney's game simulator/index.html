@@ -9,7 +9,7 @@
     <script src="ui.js" type="module"></script>
 </head>
 <body>
-    <span>Number of players: </span><input id="numPlayersInput" type="number" min="2" value="2" step="1">
+    <span>Number of Players: </span><input id="numPlayersInput" type="number" min="2" value="2" step="1">
     <div id="playerSequenceLengths"></div>
     <div id="playerSequences"></div>
     <span>Number of Possible Flip Outcomes: </span><input id="numFlipOutcomesInput" type="number" min="2" value="2" step="1"><br>
@@ -20,6 +20,9 @@
     <br>
     <div id="results" class="playerDiv">
 
+    </div>
+    <div>
+        <span>Number of Games to Simulate: </span><input id="simulateWorkgroups1D" type="range" min="1" max="322" value="23" step="1"><span id="gamesToPlay"></span>
     </div>
 </body>
 </html>
