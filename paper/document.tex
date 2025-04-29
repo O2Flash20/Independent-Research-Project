@@ -1,0 +1,627 @@
+\documentclass[english,12pt,a4paper,final]{article}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage[a4paper, total={6.27in, 9.69in}]{geometry}
+\definecolor{OliveGreen}{rgb}{0,0.6,0}
+\title{My research paper :)}
+\author{William Dracopoulos}
+\begin{document}
+	
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\part{Abstract}
+
+\part{Introduction}
+explain the H T notation
+
+\part{Deriving a formula for win probabilities with two players}
+
+\section{The basic version of the game}
+
+We know experimentally that Penney's Game is unfair, and we want to see quantitatively how unfair it is. We need an angle to approach it. Here's one:
+
+Miller bla bla bla
+
+Imagine two players sitting at a table with one coin between them. Each player picks a sequence and they begin to flip the coin until the last flips match with one of the player's sequences. Up until now, the game has been identical to Penney's Game, and that is by design. Now it begins to differ.
+
+Right before each coin flip, both players bet on their chosen sequence appearing in the next flips. Note that this means each player will likely have multiple bets going on at the same time, since a new sequence of bets starts for each flip, and each bet might last multiple flips. The players are betting against each other: if one wins \$2, it's the other player that gives it to them. Although the game ends when one player's sequence appears in the flips, it does not necessarily mean that the player wins. There is no winner nor loser, just an exchange of money.
+\\\\
+We will explain using an example: Let's say Alice chooses HHT and Bob chooses THT. We'll start by following the sequence of bets that starts from the first flip. Before the coin is flipped for the first time, Alice bets that the flips will follow her sequence, so she bets that the first will be H, the second H, and the third T. Bob simultaneously bets that the first flip will be T, the second H, and the third T. Both players start by betting \$1 on this. If they win, they will have \$2 and they will use that to bet on the second flip, and so on, doubling each time. If they lose, that \$1 is gone. By random chance, the coin lands on heads. Alice now has \$2 and Bob has lost the bet: his prediction has failed and he lost the \$1 to Alice. He also has to pay \$1 to Alice for her win. So she actually has \$3 and he has -\$1. But Alice continues, she bets the \$2 from her win on the next flip being heads. They flip the coin again and it lands on heads. Alice  now has \$5 after winning another \$2 from Bob, and Bob has -\$3. She bets the \$4 from her correct bets so far on tails to finish her sequence of HHT. The third flip lands on heads instead. Alice loses that \$4 to Bob, so they start back where they began: each has \$1.
+
+So this whole thing was useless, and there can be any number of useless sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips.
+
+This game actually ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. Notice that the row labeled 1 shows the sequence of bets that we described above: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
+
+To simplify, we can think of the bets slightly differently. We can ignore the constant exchange of money between players, and have them only give each other money when the game ends.
+
+Alice:
+\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	& H & H & H & T \\
+	\hline
+	1 & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{H} & \textcolor{red}{\sout{T}} &  \\
+	\hline
+	2 &  & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{T} \\
+	\hline
+	3 &  &  & \textcolor{OliveGreen}{H} & \textcolor{red}{\sout{H}} \\
+	\hline
+	4 &  &  &  & \textcolor{red}{\sout{H}} \\
+	\hline
+\end{tabular}
+
+We colour the successful bets in green and the unsuccessful ones in red. Alice has a single sequence of bets that was successful: row 2. From it, she is at \$8 because her three bets in a row were successful, also meaning that Alice made the game end. From the other sequences, she has nothing. So we can say that Alice has \$8 and therefore Bob owes her \$8. But during this time, what was Bob doing?
+
+Bob:
+\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	& H & H & H & T \\
+	\hline
+	1 & \textcolor{red}{\sout{T}} & H & T &  \\
+	\hline
+	2 &  & \textcolor{red}{\sout{T}} & H & T \\
+	\hline
+	3 &  &  & \textcolor{red}{\sout{T}} & H \\
+	\hline
+	4 &  &  &  & \textcolor{OliveGreen}{T} \\
+	\hline
+\end{tabular}
+
+In all rows except 4, Bob loses the sequence of bets on the first one. So all others after it are not coloured, indicating that they don't have an opportunity to happen at all. He won the first bet in row 4, but his bets were cut off from Alice winning the game, meaning that Bob gets to keep the \$2 he won from it.
+
+In total, Bob owes Alice \$8, but Alice owes Bob \$2. After the exchange, Alice has \$6 and Bob has -\$6.
+
+If either player had received money from another sequence of bets which started at another flip, it would get added to the total.
+
+It is very important to notice that the final share of money is not unique to this game in particular. In any game where Alice's sequence of HHT appears before Bob's sequence of THT, Alice will end up getting \$6 from Bob. This is because all of the flips before the last three do not matter: the prior bets of both Alice and Bob will fail eventually. The only two ways for a player to make money from a sequence of bets are:
+
+\begin{enumerate}
+	\item If the bets go to completion. In other words, if the three bets in a row succeed. This will end the game.
+	\item If a sequence of bets gets cut off by the game ending.
+\end{enumerate}
+
+We can ignore all sequences of bets before the last three because we know they won't give anyone any money. They can't return money in the first way because then the game would be over already. And we cover all bets that might return money in the second way by including the last two sequences of bets.
+
+We can now introduce a better version of the table, which we will use throughout the paper.
+
+$R_A(A)$:
+\begin{tabular}{|ccc|c|}
+	\hline
+	H & H & T & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{T} & $8$ \\
+	
+	& \textcolor{OliveGreen}{H} & \textcolor{red}{\sout{H}} & $0$ \\
+	
+	&  & \textcolor{red}{\sout{H}} & $0$ \\
+	\hline
+\end{tabular}
+$=8$
+
+It now only features the important rows: the last 3. And it shows that Alice's (denoted by the $A$ within the parentheses) "return" ($R$) when her own sequence (denoted by the $A$ in the subscript) appears as the coin is flipped.
+
+The same table can be made for Bob's return when Alice's sequence appears:
+
+$R_A(B)$:
+\begin{tabular}{|ccc|c|}
+	\hline
+	H & H & T & Gain \\
+	\hline
+	
+	\textcolor{red}{\sout{T}} & H & T & $0$ \\
+	
+	& \textcolor{red}{\sout{T}} & H & $0$ \\
+	
+	&  & \textcolor{OliveGreen}{T} & $2$ \\
+	\hline
+\end{tabular}
+$=2$
+\\\\\\
+We have studied sufficiently what happens when Alice's sequence appears. Now let's focus on when Bob's sequence appears by making the tables:
+
+$R_B(A)$:
+\begin{tabular}{|ccc|c|}
+	\hline
+	T & H & T & Gain \\
+	\hline
+	
+	\textcolor{red}{\sout{H}} & H & T & $0$ \\
+	
+	& \textcolor{OliveGreen}{H} & \textcolor{red}{\sout{H}} & $0$ \\
+	
+	&  & \textcolor{red}{\sout{H}} & $0$ \\
+	\hline
+\end{tabular}
+$=0$
+
+So Alice makes \$0 from Bob when his sequence appears in the coin flips.
+\\\\
+
+$R_B(B)$:
+\begin{tabular}{|ccc|c|}
+	\hline
+	T & H & T & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{T} & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{T} & $8$ \\
+	
+	& \textcolor{red}{\sout{T}} & H & $0$ \\
+	
+	&  & \textcolor{OliveGreen}{T} & $2$ \\
+	\hline
+\end{tabular}
+$=10$
+
+And Bob makes \$10 from Alice when his sequence appears in the coin flips.
+\\\\
+In total, when Bob's sequence appears, Alice gives him \$10.
+
+Note that something interesting is happening here. When Alice's sequence appears, Alice makes \$6 from Bob, but when Bob's sequence appears, he makes \$10 from Alice. This might make it seem like Bob has an advantage in this game, but there's a problem with that.
+\\\\
+\underline{Here is the point of all this:} All Alice and Bob are doing is betting on a fair coin, and either doubling or losing the money they put in. Each individual bet is \underline{fair}. But because of the linearity of expectation, it doesn't matter if you make a fair bet once or 100 times, on average, you should expect to neither lose nor gain money. Your expected profit should be 0.
+
+But it seems like Bob is doing better than Alice, and that doesn't make sense \textit{assuming} that Bob's sequence and Alice's sequence have an equal change of appearing. So let's simply assume that they don't. We'll take $\mathbb{P}(A)$ to mean the probability that Alice's sequence appears and ends the game, and $\mathbb{P}(B)$ to mean the probability that Bob's sequence appears and ends the game.
+
+Let's look at it from Alice's perspective:
+
+\begin{equation*}
+	(\$6) \cdot \mathbb{P}(A)  + (-\$10) \cdot \mathbb{P}(B) = \$0
+\end{equation*}
+
+In words, Alice's net profit when her sequence appears (\$6) weighed by the chance that her sequence appears ($\mathbb{P}(A)$), added to Alice's net profit when Bob's sequence appears (-\$10) weighed by the chance that his sequence appears ($\mathbb{P}(B)$) is her expected profit, which for reasons explained above must be \$0.
+
+Now, of course, either Alice's or Bob's sequence must appear, so
+
+\begin{equation}\label{PA+PB=1}
+	\mathbb{P}(A) + \mathbb{P}(B) = 1
+\end{equation}
+
+We now have two equations and two unknowns, so $\mathbb{P}(A)$ and $\mathbb{P}(B)$ can be found. After some algebra, $\mathbb{P}(A) = 62.5\%$ and $\mathbb{P}(B) = 37.5\%$.
+
+Importantly, this means that if Alice and Bob were playing Penney's Game with the sequences HHT and THT, Alice would have a 62.5\% chance of winning and Bob would have a 37.5\% chance of winning.
+
+Generalizing beyond this example, we can define the net profit of Player X against Player Y when sequence Z appears (either Player X or Player Y's sequence) as:
+
+\begin{equation*}
+	N_Y(X) = R_Y(X) - R_Y(Z)
+\end{equation*}
+
+Next, we can solve for $\mathbb{P}(A)$ and $\mathbb{P}(B)$ generally. From the perspective of Player A:
+
+\begin{equation*}
+	N_A(A)\cdot\mathbb{P}(A) + N_B(A)\cdot\mathbb{P}(B) = 0
+\end{equation*}
+
+Solving this with the help of \eqref{PA+PB=1}, we get
+
+\begin{equation*}
+	\mathbb{P}(A) = \frac{-N_B(A)}{N_A(A)-N_B(A)} = \frac{R_B(B)-R_B(A)}{R_A(A)-R_A(B)+R_B(B)-R_B(A)}
+\end{equation*}
+
+And the formula for $\mathbb{P}(B)$ is exactly the same but with all A and B's swapped.
+
+This matches exactly with Miller's paper and is equivalent to Conway's Algorithm. SOME OTHER STUFF HERE?
+
+The last and most complicated thing to do is express the return values $R$ mathematically. But all there is to do it find a mathematical algorithm to describe what we've already done with the tables. The following is a specific case of Miller's formula for $R$.
+
+For sequence X playing against sequence Y, we have
+
+\begin{equation*}
+	R_X(Y) = \sum_{n=1}^{3} \prod_{i=1}^{n} 2_{[Y_i = X_{k-n+i}]}
+\end{equation*}
+
+Where $2_{[Y_i = X_{k-n+i}]}$ is defined as:
+\begin{equation*}
+	2_{[Y_i = X_{k-n+i}]} = \begin{cases}
+		2 & \text{if } Y_i = X_{k-n+i} \\
+		0 & \text{if } Y_i \neq X_{k-n+i} \\
+	\end{cases}
+\end{equation*}
+
+And the subscript of a sequence is its index. For example, in $X$: HTT, $X_1$ = H; $X_2$ = T; $X_3$ = T.
+
+\section{Sequences of different length}
+
+\begin{equation}\label{generalFormula}
+	\begin{bmatrix}
+		N_{S_1}(S_1) && N_{S_2}(S_1) && \dots && N_{S_n}(S_1) \\
+		N_{S_1}(S_2) && N_{S_2}(S_2) && \dots && N_{S_n}(S_2) \\
+		\vdots && \vdots && \ddots && \vdots \\
+		N_{S_1}(S_{n-1}) && N_{S_2}(S_{n-1}) && \dots && N_{S_n}(S_{n-1}) \\
+		1 && 1 && \dots && 1
+	\end{bmatrix}
+	\begin{bmatrix}
+		\mathbb{P}(S_1) \\ \mathbb{P}(S_2) \\ \vdots \\ \mathbb{P}(S_{n-1}) \\  \mathbb{P}(S_n)
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 \\ 0 \\ \vdots \\ 0 \\ 1
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{Ndef}
+	N_{S_j}(S_i) = \frac{1}{n-1} \mathlarger{[}nR_{S_j}(S_i) - \sum_{m=1}^{n}R_{S_j}(S_m)\mathlarger{]}
+\end{equation}
+
+\begin{equation}\label{Rdef}
+	R_{S_i}(S_j) = \sum_{l=1}^{\text{min}\{L_A, L_B\}} \prod_{m=1}^{l} \frac{1_{[S_{j,m} = S_{i, L_A - l + m}]}}{\mathbb{P}(S_{j, m})}
+\end{equation}
+
+\part{Two-player games with equal sequence lengths and even flip outcome likelihoods}
+
+In a two player game, the probabilities that each player wins can be expressed:
+\begin{equation}\label{2playerAProb}
+	\mathbb{P}(A)=\frac{R_B(B)-R_B(A)}{R_A(A)-R_A(B)+R_B(B)-R_B(A)}
+\end{equation}
+\begin{equation}\label{2playerBProb}
+	\mathbb{P}(B)=\frac{R_A(A)-R_A(B)}{R_B(B)-R_B(A)+R_A(A)-R_A(B)}
+\end{equation}
+And since either Player A or Player B must win in a game,
+\begin{equation*}
+	\mathbb{P}(A)+\mathbb{P}(B)=1
+\end{equation*}
+
+\section{Proving that when sequence S appears, Player S will always win more money than their opponent}
+
+In other words, we are making the claim that $R_A(A)>R_A(B)$ in all cases and $R_B(B)>R_B(A)$ in all cases.
+
+We will start by showing that A: 100...0 and B: 000...0 produces the lowest possible $R_A(A)$ and the highest possible $R_A(B)$.
+\\\\\\
+${R_A(A)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	1 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^k$\\
+	
+	& \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$ \\
+	
+	&  & \textcolor{red}{\sout{1}} & ... & 0 & $0$ \\
+	
+	&  &  & \textcolor{red}{\sout{...}} & 0 & $0$ \\
+	
+	&  &  &  & \textcolor{red}{\sout{1}} & $0$ \\
+	\hline
+\end{tabular}
+$=s^k$
+\\\\
+This is the minimum value, since necessarily $A=A$.
+\\\\\\
+${R_A(B)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	1 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{red}{\sout{0}} & 0 & 0 & ... & 0 & 0\\
+	
+	& \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{k-1}$\\
+	
+	&  & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{k-2}$ \\
+	
+	&  &  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & ... \\
+	
+	&  &  &  & \textcolor{OliveGreen}{0} & $s$ \\
+	\hline
+\end{tabular}
+$=\mathlarger\sum_{i=1}^{k-1}s^{k-i}$
+\\\\
+This is the maximum value, since $A \neq B$ or else the game would be invalid.
+\\\\
+Therefore, if $s^k > \mathlarger\sum_{i=1}^{k-1}s^{k-i}$, ${R_A(A) > R_A(B)}$ will always be true, since $R_A(A)$ would be greater than $R_A(B)$ even when it's the most disadvantaged.
+
+$\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ can be rewritten as
+$\mathlarger{s^k \sum_{i=1}^{k-1}\big(\frac{1}{s}\big)^i}$, and since it's a sum of positive numbers, it must be less than $\mathlarger{s^k\sum_{i=1}^{\infty}\big(\frac{1}{s}\big)^i}$, a geometric series which is equal to $\mathlarger{s^k\frac{s}{s-1} - s^k}$.
+
+Now, if $s^k \ge s^k\frac{s}{s-1} - s^k$, then $s^k$ will definitely be larger than $\mathlarger{\sum_{i=1}^{k-1}s^{k-1}}$ and our claim will be proven.
+\\
+\begin{equation*}
+	s^k \ge s^k\frac{s}{s-1} - s^k
+\end{equation*}
+\begin{equation*}
+	1 \ge \frac{s}{s-1} - 1
+\end{equation*}
+\begin{equation*}
+	s \ge 2
+\end{equation*}
+Which is always the case, since there must be at least two possible outcomes from the flip.
+
+This proves that ${R_A(A) > R_A(B)}$, and if the exact same process is done after swapping the sequences of A and B, we also learn that $R_B(B)>R_B(A)$.
+
+So the player who has chosen a sequence \underline{will} always get the greatest return when that sequence appears. For example, if Player A's sequence appears in the flips, and the player makes \$10, Player B could not possibly make any more than \$9.
+
+\section{Determining how changes of $R$ values affect $\mathbb{P}(A)$}
+
+It will be useful to know whether increasing each $R$ value will increase or decrease $\mathbb{P}(A)$. Note that because of \eqref{PA+PB=1}, a value that increases $\mathbb{P}(A)$ will necessarily decrease $\mathbb{P}(B)$. We focus on $\mathbb{P}(A)$ and the results for $\mathbb{P}(B)$ will simply be the opposite.
+
+Although all $R$ values depend on each other, artificially increasing each value separately gives a good enough idea of how that value affects $\mathbb{P}(A)$.
+
+We start with $R_B(B)$ and increase its value to $R_B(B) + N$ where $N$ is any natural number greater than 0.
+
+Rewriting \eqref{2playerAProb} with this new value, we get:
+
+\begin{equation*}
+	\mathbb{P}_N(A)=\frac{\boldsymbol{(R_B(B)+N)}-R_B(A)}{R_A(A)-R_A(B)+\boldsymbol{(R_B(B)+N)}-R_B(A)}
+\end{equation*}
+
+Now, lets check if $\mathbb{P}_N(A) > \mathbb{P}(A)$:
+
+\begin{equation*}
+	\mathbb{P}_N(A) > \mathbb{P}(A)
+\end{equation*}
+\begin{equation*}
+	\frac{\mathbb{P}_N(A)}{\mathbb{P}(A)} > 1
+\end{equation*}
+Dividing, simplifying, and factoring, we get that this is true if and only if:
+\begin{equation*}
+	\frac{N\big[R_A(A)-R_A(B)\big]}{\big[R_B(B)-R_B(A)\big]\big[R_A(A)-R_A(B)+N+R_B(B)-R_B(A)\big]} > 0
+\end{equation*}
+We know from the previous section that $R_A(A) > R_A(B)$ and $R_B(B) > R_B(A)$, so the above inequality will always hold true, with all terms being positive numbers.
+
+This means that increasing $R_B(B)$ will always increase $\mathbb{P}(A)$, and decreasing $R_B(B)$ will always decrease $\mathbb{P}(A)$.
+\\\\
+Next, we will do the same for $R_B(A)$, increasing it to $R_B(A)+N$. This time, we need to note that since $R_B(B)$ must be greater than $R_B(A)$, we have the condition on $N$ that $0 < N < R_B(B)-R_B(A)$.
+
+Rewriting \eqref{PA+PB=1} with $R_B(A)$ incremented by $N$, we get:
+\begin{equation*}
+	\mathbb{P}_N(A) = \frac{R_B(B)-\boldsymbol{(R_B(A)+N)}}{R_A(A)-R_A(B)+R_B(B)-\boldsymbol{(R_B(A)+N)}}
+\end{equation*}
+Now doing the same process as before, we end up with an increase of $R_B(A)$ increasing $\mathbb{P}(A)$ if and only if:
+\begin{equation*}
+	\frac{N\big[R_A(B)-R_A(A)\big]}{\big[R_B(B)-R_B(A)\big]\big[R_A(A)-R_A(B)-N+R_B(B)-R_B(A)\big]} > 0
+\end{equation*}
+We know from the previous section that $R_A(B)-R_A(A)$ must be negative and $R_B(B)-R_B(A)$ must be positive. Additionally, the condition that $N < R_B(B)-R_B(A)$ means that $R_B(B)-R_B(A)-N > 0$.
+
+So in the above inequality, the numerator on the left side will always be negative and the denominator will always be positive, so the inequality will be false and increasing $R_B(A)$ will always decrease $\mathbb{P}(A)$.
+
+We can do the exact same process for B and use the idea that increasing $\mathbb{P}(B)$ will necessarily decrease $\mathbb{P}(A)$ to determine that increasing $R_A(A)$ will always decrease $\mathbb{P}(A)$ and increasing $R_A(B)$ will always increase $\mathbb{P}(A)$, and vice versa.
+\\\\
+In summary:
+\begin{equation}\label{R_A(A)change}
+	R_A(A)\uparrow \implies \mathbb{P}(A)\downarrow
+\end{equation}
+\begin{equation}\label{R_A(B)change}
+	R_A(B)\uparrow \implies \mathbb{P}(A)\uparrow
+\end{equation}
+\begin{equation}\label{R_B(B)change}
+	R_B(B)\uparrow \implies \mathbb{P}(A)\uparrow
+\end{equation}
+\begin{equation}\label{R_B(A)change}
+	R_B(A)\uparrow \implies \mathbb{P}(A)\downarrow
+\end{equation}
+And vice versa.
+\\\\
+
+Note that swapping the symbols A and B will give you the results of an equivalent analysis of $\mathbb{P}(B)$.
+
+\section{Proving that the greatest win probability difference occurs when $baa...a$ is played against $aaa...a$ for $b\ne a$}
+
+As a specific example of the case described in the title, let A: 100...0 and B: 000...0 in a game with sequences of length $k$ and with $s$ possible outcomes from the flip.
+\\\\
+From the previous section, $s^k$ is the minimum possible value of $R_A(A)$, and this maximizes $\mathbb{P}(A)$ by \eqref{R_A(A)change}, and $\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ is the maximum possible value of $R_A(B)$, maximizing $\mathbb{P}(A)$ by \eqref{R_A(B)change}.
+\\\\
+Determining the other return values:
+\\
+${R_B(B)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	0 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^k$\\
+	
+	& \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{k-1}$\\
+	
+	&  & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{k-2}$ \\
+	
+	&  &  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & ... \\
+	
+	&  &  &  & \textcolor{OliveGreen}{0} & $s$ \\
+	\hline
+\end{tabular}
+$=\mathlarger\sum_{i=0}^{k-1}s^{k-i}$
+\\\\
+Which is the maximum possible value, maximizing $\mathbb{P}(A)$ by \eqref{R_B(B)change}.
+\\\\\\
+${R_B(A)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	0 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{red}{\sout{1}} & 0 & 0 & ... & 0 & $0$\\
+	
+	& \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$\\
+	
+	&  & \textcolor{red}{\sout{1}} & ... & 0 & $0$\\
+	
+	&  &  & \textcolor{red}{\sout{...}} & 0 & $0$ \\
+	
+	&  &  &  & \textcolor{red}{\sout{1}} & $0$ \\
+	\hline
+\end{tabular}
+$=0$
+\\\\
+Which is the minimum possible value, maximizing $\mathbb{P}(A)$ by \eqref{R_B(A)change}.
+\\\\
+In summary, these two sequences played against each other provide the maximum value of $\mathbb{P}(A)$. This finding will be used in the next section.
+
+\section{Determining the bounds of $\mathbb{P}(A)$ and $\mathbb{P}(B)$}
+
+Substituting the previous section's values which maximize $\mathbb{P}(A)$ into \eqref{2playerAProb}, we get:
+\[
+\mathbb{P}(A) \le \frac{\mathlarger{\sum_{i=0}^{k-1}s^{k-i}} - 0}{s^k-\mathlarger{\sum_{i=1}^{k-1}s^{k-i}}+\mathlarger{\sum_{i=0}^{k-1}s^{k-i}}-0}
+\]
+\begin{equation}\label{PAMax}
+	\mathbb{P}(A) \le \frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
+\end{equation}
+Switching the sequences of A and B, we can also conclude that
+\begin{equation*}
+	\mathbb{P}(B) \le \frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
+\end{equation*}
+From \eqref{PA+PB=1}, $\mathbb{P}(A) = 1-\mathbb{P}(B)$. So the previous equation implies that:
+\begin{equation*}
+	\mathbb{P}(A) \ge 1-\frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
+\end{equation*}
+And similarly,
+\begin{equation*}
+	\mathbb{P}(B) \ge 1-\frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
+\end{equation*}
+Now the bounds for the probability that any sequence $S$ wins can be expressed as:
+\begin{equation}\label{PBounds}
+	1-\frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i} \le \mathbb{P}(S) \le \frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
+\end{equation}
+
+\section{Using the probability bounds to study extreme games.}
+
+\subsection{Proving that the game tends to be fair with infinite possible flip outcomes but finite sequence length}
+
+\begin{equation*}
+	\lim_{s \rightarrow \infty}\sum_{i=0}^{k-1}\frac{1}{s^i} = \lim_{s \rightarrow \infty} \big[1 + \frac{1}{s} + \frac{1}{s^2} + \dots + \frac{1}{s^{k-1}}\big] = 1
+\end{equation*}
+Using this insight in \eqref{PBounds},
+\begin{equation*}
+	1-\frac{1}{2}\cdot1 \le \lim_{s\rightarrow\infty}\mathbb{P}(S) \le \frac{1}{2}\cdot1
+\end{equation*}
+Therefore $\mathlarger{\lim_{s\rightarrow\infty}}\mathbb{P}(S) = \frac{1}{2}$ by the Squeeze Theorem, and the game tends toward being fair with more possible flip outcomes.
+
+\subsection{Determining the bounds for games with infinitely long sequences but finite possible flip outcomes}
+\begin{equation*}
+	\lim_{k\rightarrow\infty}\frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i} = \frac{1}{2}\sum_{i=0}^{\infty}\frac{1}{s^i} = \frac{s}{2s-2}
+\end{equation*}
+Thus taking \eqref{PBounds} as $k\rightarrow\infty$, we get:
+\begin{equation}\label{PBoundsKToInfty}
+	1-\frac{s}{2s-2} \le \lim_{k\rightarrow\infty} \mathbb{P}(S) \le \frac{s}{2s-2} 
+\end{equation}
+\begin{equation*}
+	\big|\lim_{k\rightarrow\infty}\mathbb{P}(S) - \frac{1}{2}\big| \le \frac{1}{2s-2}
+\end{equation*}
+So the limit might not exist, but (and this is supported by simulations) the probability of a sequence winning will tend toward being contained within the range $\frac{1}{2s-2}$ greater than or less than 50\% as sequence length approaches infinity.
+
+\subsection{Proving that the game tends to be fair with infinite possible flip outcomes and infinitely long sequences.}
+Using \eqref{PBoundsKToInfty} and having $s\rightarrow\infty$,
+\begin{equation*}
+	\lim_{s\rightarrow\infty}\big[1-\frac{s}{2s-2}\big] \le \lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) \le \lim_{s\rightarrow\infty}\frac{s}{2s-2} 
+\end{equation*}
+\begin{equation*}
+	\frac{1}{2} \le \lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) \le \frac{1}{2}
+\end{equation*}
+And so by the Squeeze Theorem, $\mathlarger{\lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) = \frac{1}{2}}$
+
+\part{Two-player games with different sequence lengths and even flip outcome likelihoods}
+
+\section{Determining when the shorter sequence always has an advantage in games with two players and even flip outcome probabilities.}
+First, we will prove that for all games with A being shorter than B, A: 000...0 and B: 1...100...0 leads to the minimum possible probability for A to win.
+\\
+${R_A(A)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	0 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A}$\\
+	
+	& \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A-1}$\\
+	
+	&  & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A-2}$ \\
+	
+	&  &  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & ... \\
+	
+	&  &  &  & \textcolor{OliveGreen}{0} & $s$ \\
+	\hline
+\end{tabular}
+$=\mathlarger\sum_{i=0}^{L_A-1}s^{L_A-i}$
+\\
+Which is the maximum possible value, minimizing $\mathbb{P}(A)$ by \eqref{R_A(A)change} 
+\\\\
+${R_A(B)}$:
+\begin{tabular}{|ccccc|c|}
+	\hline
+	0 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{red}{\sout{1}} & 0 & 0 & ... & 0 & $0$\\
+	
+	& \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$\\
+	
+	&  & \textcolor{red}{\sout{1}} & ... & 0 & $0$\\
+	
+	&  &  & \textcolor{red}{\sout{...}} & 0 & $0$ \\
+	
+	&  &  &  & \textcolor{red}{\sout{1}} & $0$ \\
+	\hline
+\end{tabular}
+$=0$
+\\
+Which is the minimum possible value, minimizing $\mathbb{P}(A)$ by \eqref{R_A(B)change}.
+\\\\
+${R_B(B)}$:
+\begin{tabular}{|cccccccc|c|}
+	\hline
+	1 & 1 & ... & 1 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	\textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A}$\\
+	
+	& \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$ \\
+	
+	&  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 0 & $0$ \\
+	
+	&  &  & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
+	
+	&  &  &  & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
+	
+	&  &  &  &  & \textcolor{red}{\sout{1}} & ... & 1 & $0$ \\
+	
+	&  &  &  &  &  & \textcolor{red}{\sout{...}} & 1 & $0$ \\
+	
+	&  &  &  &  &  &  & \textcolor{red}{\sout{1}} & $0$ \\
+	\hline
+\end{tabular}
+$=s^{L_A}$
+\\
+Which is the minimum possible, value since $B=B$. This minimizes $\mathbb{P}(A)$ by \eqref{R_B(B)change}.
+\\\\\\
+${R_B(A)}$:
+\begin{tabular}{|cccccccc|c|}
+	\hline
+	1 & 1 & ... & 1 & 0 & 0 & ... & 0 & Gain \\
+	\hline
+	
+	& & & \textcolor{red}{\sout{1}} & 0 & 0 & ... & 0 & $s^{L_A}$\\
+	
+	& \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$ \\
+	
+	&  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 0 & $0$ \\
+	
+	&  &  & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
+	
+	&  &  &  & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
+	
+	&  &  &  &  & \textcolor{red}{\sout{1}} & ... & 1 & $0$ \\
+	
+	&  &  &  &  &  & \textcolor{red}{...} & 1 & $0$ \\
+	
+	&  &  &  &  &  &  & \textcolor{red}{1} & $0$ \\
+	\hline
+\end{tabular}
+$=\mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-1}}$
+
+NOT DONE
+
+\part {Conclusion}
+
+
+
+\end{document}
