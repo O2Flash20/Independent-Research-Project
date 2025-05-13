@@ -7,10 +7,21 @@
 \usepackage{relsize}
 \usepackage[normalem]{ulem}
 \usepackage{xcolor}
+\usepackage{parskip}
 \usepackage[a4paper, total={6.27in, 9.69in}]{geometry}
 \definecolor{OliveGreen}{rgb}{0,0.6,0}
-\title{My research paper :)}
-\author{William Dracopoulos}
+
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\addbibresource{bibliography.bib}
+\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+
+\title{Exploring Variations of Penney's Game}
+\author{
+William Dracopoulos \& Derrick Chung
+\\
+John Abbott College
+}
+
 \begin{document}
 	
 \maketitle
@@ -21,18 +32,62 @@
 
 \part{Abstract}
 
+Penney’s Game is an example of where our intuitive understanding of probability completely fails; it’s a seemingly fair game with a surprisingly complicated strategy. The goal of this research is to explore Penney’s Game using new methods and in areas that it has not been explored before. By studying a similar game that is fair, we create a formula for the probability of each player winning Penney’s Game depending on the number of players, the sequences chosen by each player, the length of each sequence, the number of possible outcomes of the “flip” (coin flip or dice roll or random number generation), and the probability distribution of the outcomes of this flip. This formula was verified by computer simulations and then packaged into an online calculator. The calculator then revealed patterns which were analyzed using the formula. Among these, it was proven that games tend towards being fair with an infinite number of possible outcomes from the “flip” but not infinite sequence length, and that the shorter sequence always has an advantage, except in some specific and known cases. The work done in this paper is not exhaustive, there is still plenty to explore and discover, and we leave behind tools to help future researchers to do this.
+
 \part{Introduction}
-explain the H T notation
+
+In its basic variation, Penney's Game is simple game invented by Walter Penney involving two players and one coin. Each player predicts which sequence of flips will appear first as the coin is being flipped. For example, Alice predicts that HHT (heads, then heads, then tails) will appear first, while Bob predicts that THT (tails, then heads, then tails) will appear first. The players flip the coin until the last three coin flips match with the sequence predicted by one of the players. That player wins. Note that this does not mean the coin is flipped three times, a match is checked for, and then it's flipped three times again. Instead, after every coin flip, the last three flips are checked to see if they match with a player's prediction.
+
+The game might seem fair, but it really is not. In that example, Alice actually has a 62.5\% chance of beating Bob. In fact, for any sequence that one player predicts, there is another that will, beat it on average \parencite{penney}. A formula for finding the exact win probabilities for any sequence in this basic variation of the game was first discovered by the mathematician John Conway, but he never supplied a proof of his "leading number algorithm".
+
+Since Conway, many other researchers have developed other algorithms and ways of thinking about the problem. One way is using Markov chains and martingale arguments, like in \textcite{markov}'s research. However, this paper uses a much simpler way of understanding the game and deriving a formula for win probabilities. The general idea, which will be explained in depth during the next part, is to think about another game instead, which this time is always fair. This new game, which I'll call the betting game, contains the same probabilities as Penney's Game but allows for a clear and powerful starting point due to its fairness. The idea of the betting game comes simultaneously from two places: a research paper which tackles Penney's game from the perspective of no-arbitrage \parencite{miller}, and \textcite{chung}'s talk which mentions describes it in the context of the Optional Stopping Theorem. The latter will be the same approach used in this paper. We extend the betting game analogy further than ever before to allow us to determine probabilities in many variations of Penney's Game. 
+
+A formula, \eqref{generalFormula}, will be derived which can calculate the win probabilities in games with:
+
+\begin{enumerate}
+	\item Any number of players
+	\item Players predicting more or less than the next three flips, and  players predicting a different number of flips to each other
+	\item Any kind of coin, die, or random number generator being "flipped"
+	\item Unfair coins, loaded dice, and random number generators with any probability distribution
+\end{enumerate}
+
+We will also verify this formula with simulations and analyze it to discover new things about Penney's Game in some of the variations covered by the formula.
+
+\part{Showing that Penney's Game is unintuitive, and providing some hope that it can be understood}
+
+The game was introduced as seeming fair but actually being biased. However, sometimes it seems like one player should be advantaged, while in reality the game is completely fair.
+
+Imagine sitting at a table and flipping a coin until there are three consecutive heads. You should find that, on average, HHH appears after the 14th coin flip. Now you do the same and count how many flips it takes to get HHT. This time, you count that HHT appears after only the 8th coin flip on average. We went through this process and collected data for each sequence in the basic variation, which is shown in Figure \ref{fig:probGraph}.
+
+\newpage
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{"./prob graph"}
+	\caption{Probability of a sequence appearing for the first time as a function of the number of coin flips. The data was obtained from a simulation of 1 000 000 repetitions. The expected wait time (number of flips until the sequence appears) for the purple, black, and green lines are calculated to be approximately 8 flips, 10 flips, and 14 flips respectively.}
+	{fig:probGraph}
+\end{figure}
+
+An exact function for the green line was found by my friend Fenghua Li to be 
+\begin{equation*}
+	\mathbb{P}_n=\frac{1}{16} A(n-4)
+\end{equation*}
+\begin{equation*}
+	A(m) = \frac{1}{2^m}\sum_{s=0}^{m- \lfloor \frac{m}{3} \rfloor}\sum_{L=\lceil \frac{s}{2} \rceil}^{s} {m+1-s \choose L} {L \choose s-L}
+\end{equation*}
+This gives the probability of the sequence appearing, $\mathbb{P}$, for any number of previous coin flips $n$.
+
+This might lead you to believe that HHT would beat HHH in Penney's Game, since it would appear earlier, but in fact HHT vs. HHH would be a fair game. Figure \ref{fig:probGraph} does not show the whole picture. It does not take into account how the sequences interact with each other. The difference is that the expected wait time comes from one player flipping one coin, but in Penney's Game it's two players checking for their sequence on the same coin. Imagine the last two coin flips were heads. There is now a 50:50 chance that the third flip will land on heads and tails. Therefore it is equally likely that HHT and HHH appears, so the game is fair.
+
+The situation is very different if you switch it around to be THH vs. HHH however. This will actually give the greatest probability difference in the basic variation of the game: the player predicting HHH will only have a 12.5\% (or $\frac{1}{8}$) chance of winning. This is because as soon as a single coin flip lands on tails, HHH has no chance of appearing before THH: THH will always get to two heads in a row before HHH gets to three in a row. This leaves only one way for HHH to win: if the first three coin flips land on heads, which is a $\frac{1}{2^3} = \frac{1}{8}$ chance.
+
+We have shown that Penney's Game is unintuitive but not completely impossible to understand. Now we can move on to analyzing it through the betting game to develop a general formula for win probabilities.
 
 \part{Deriving a formula for win probabilities with two players}
 
-\section{The basic version of the game}
+\section{The basic variation of Penney's Game}
 
-We know experimentally that Penney's Game is unfair, and we want to see quantitatively how unfair it is. We need an angle to approach it. Here's one:
-
-Miller bla bla bla
-
-Imagine two players sitting at a table with one coin between them. Each player picks a sequence and they begin to flip the coin until the last flips match with one of the player's sequences. Up until now, the game has been identical to Penney's Game, and that is by design. Now it begins to differ.
+Imagine two players sitting at a table with one coin between them. Each player picks a sequence and they begin to flip the coin until the last flips match with one of the player's sequences. Up until now, the game has been identical to Penney's Game, and that is by design. Now it begins to differ. This is how the betting game works:
 
 Right before each coin flip, both players bet on their chosen sequence appearing in the next flips. Note that this means each player will likely have multiple bets going on at the same time, since a new sequence of bets starts for each flip, and each bet might last multiple flips. The players are betting against each other: if one wins \$2, it's the other player that gives it to them. Although the game ends when one player's sequence appears in the flips, it does not necessarily mean that the player wins. There is no winner nor loser, just an exchange of money.
 \\\\
@@ -40,10 +95,10 @@ We will explain using an example: Let's say Alice chooses HHT and Bob chooses TH
 
 So this whole thing was useless, and there can be any number of useless sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips.
 
-This game actually ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. Notice that the row labeled 1 shows the sequence of bets that we described above: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
+This game actually ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. Notice that the row labelled 1 shows the sequence of bets that we described above: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
 
 To simplify, we can think of the bets slightly differently. We can ignore the constant exchange of money between players, and have them only give each other money when the game ends.
-
+\\\\\\
 Alice:
 \begin{tabular}{|c|c|c|c|c|}
 	\hline
@@ -58,9 +113,9 @@ Alice:
 	4 &  &  &  & \textcolor{red}{\sout{H}} \\
 	\hline
 \end{tabular}
-
+\\\\\\
 We colour the successful bets in green and the unsuccessful ones in red. Alice has a single sequence of bets that was successful: row 2. From it, she is at \$8 because her three bets in a row were successful, also meaning that Alice made the game end. From the other sequences, she has nothing. So we can say that Alice has \$8 and therefore Bob owes her \$8. But during this time, what was Bob doing?
-
+\\\\\\
 Bob:
 \begin{tabular}{|c|c|c|c|c|}
 	\hline
@@ -75,7 +130,7 @@ Bob:
 	4 &  &  &  & \textcolor{OliveGreen}{T} \\
 	\hline
 \end{tabular}
-
+\\\\\\
 In all rows except 4, Bob loses the sequence of bets on the first one. So all others after it are not coloured, indicating that they don't have an opportunity to happen at all. He won the first bet in row 4, but his bets were cut off from Alice winning the game, meaning that Bob gets to keep the \$2 he won from it.
 
 In total, Bob owes Alice \$8, but Alice owes Bob \$2. After the exchange, Alice has \$6 and Bob has -\$6.
@@ -92,14 +147,14 @@ It is very important to notice that the final share of money is not unique to th
 We can ignore all sequences of bets before the last three because we know they won't give anyone any money. They can't return money in the first way because then the game would be over already. And we cover all bets that might return money in the second way by including the last two sequences of bets.
 
 We can now introduce a better version of the table, which we will use throughout the paper.
-
+\\\\\\
 $R_A(A)$:
 \begin{tabular}{|ccc|c|}
 	\hline
 	H & H & T & Gain \\
 	\hline
 	
-	\textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{T} & $8$ \\
+	\textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{H} & \textcolor{OliveGreen}{T} & $2^3=8$ \\
 	
 	& \textcolor{OliveGreen}{H} & \textcolor{red}{\sout{H}} & $0$ \\
 	
@@ -107,11 +162,11 @@ $R_A(A)$:
 	\hline
 \end{tabular}
 $=8$
-
-It now only features the important rows: the last 3. And it shows that Alice's (denoted by the $A$ within the parentheses) "return" ($R$) when her own sequence (denoted by the $A$ in the subscript) appears as the coin is flipped.
+\\\\\\
+It now only features the important rows: the last 3. And it shows that Alice's (denoted by the $A$ within the parentheses) "return" ($R$) when her own sequence (denoted by the $A$ in the subscript) appears as the coin is flipped will be \$8.
 
 The same table can be made for Bob's return when Alice's sequence appears:
-
+\\\\\\
 $R_A(B)$:
 \begin{tabular}{|ccc|c|}
 	\hline
@@ -126,9 +181,9 @@ $R_A(B)$:
 	\hline
 \end{tabular}
 $=2$
-\\\\\\
+\\\\\\\\\\
 We have studied sufficiently what happens when Alice's sequence appears. Now let's focus on when Bob's sequence appears by making the tables:
-
+\\\\\\
 $R_B(A)$:
 \begin{tabular}{|ccc|c|}
 	\hline
@@ -143,9 +198,9 @@ $R_B(A)$:
 	\hline
 \end{tabular}
 $=0$
-
+\\\\\\
 So Alice makes \$0 from Bob when his sequence appears in the coin flips.
-\\\\
+\\\\\\\\
 
 $R_B(B)$:
 \begin{tabular}{|ccc|c|}
@@ -161,7 +216,7 @@ $R_B(B)$:
 	\hline
 \end{tabular}
 $=10$
-
+\\\\\\
 And Bob makes \$10 from Alice when his sequence appears in the coin flips.
 \\\\
 In total, when Bob's sequence appears, Alice gives him \$10.
@@ -170,7 +225,7 @@ Note that something interesting is happening here. When Alice's sequence appears
 \\\\
 \underline{Here is the point of all this:} All Alice and Bob are doing is betting on a fair coin, and either doubling or losing the money they put in. Each individual bet is \underline{fair}. But because of the linearity of expectation, it doesn't matter if you make a fair bet once or 100 times, on average, you should expect to neither lose nor gain money. Your expected profit should be 0.
 
-But it seems like Bob is doing better than Alice, and that doesn't make sense \textit{assuming} that Bob's sequence and Alice's sequence have an equal change of appearing. So let's simply assume that they don't. We'll take $\mathbb{P}(A)$ to mean the probability that Alice's sequence appears and ends the game, and $\mathbb{P}(B)$ to mean the probability that Bob's sequence appears and ends the game.
+But it seems like Bob is doing better than Alice, and that doesn't make sense \textit{assuming} that Bob's sequence and Alice's sequence have an equal chance of appearing. So let's simply assume that they don't. We'll take $\mathbb{P}(A)$ to mean the probability that Alice's sequence appears and ends the game, and $\mathbb{P}(B)$ to mean the probability that Bob's sequence appears and ends the game.
 
 Let's look at it from Alice's perspective:
 
@@ -178,7 +233,7 @@ Let's look at it from Alice's perspective:
 	(\$6) \cdot \mathbb{P}(A)  + (-\$10) \cdot \mathbb{P}(B) = \$0
 \end{equation*}
 
-In words, Alice's net profit when her sequence appears (\$6) weighed by the chance that her sequence appears ($\mathbb{P}(A)$), added to Alice's net profit when Bob's sequence appears (-\$10) weighed by the chance that his sequence appears ($\mathbb{P}(B)$) is her expected profit, which for reasons explained above must be \$0.
+In words, Alice's net profit when her sequence appears (\$6) weighed by the chance that her sequence appears ($\mathbb{P}(A)$), added to Alice's net profit when Bob's sequence appears (-\$10) weighed by the chance that his sequence appears ($\mathbb{P}(B)$) is her expected profit, which for reasons explained above must be exactly \$0.
 
 Now, of course, either Alice's or Bob's sequence must appear, so
 
@@ -190,11 +245,11 @@ We now have two equations and two unknowns, so $\mathbb{P}(A)$ and $\mathbb{P}(B
 
 Importantly, this means that if Alice and Bob were playing Penney's Game with the sequences HHT and THT, Alice would have a 62.5\% chance of winning and Bob would have a 37.5\% chance of winning.
 
-Generalizing beyond this example, we can define the net profit of Player X against Player Y when sequence Z appears (either Player X or Player Y's sequence) as:
+Generalizing beyond this example, we can define the net profit of Player X against Player Y when sequence Z appears (Z being either Player X or Player Y's sequence) as:
 
-\begin{equation*}
-	N_Y(X) = R_Y(X) - R_Y(Z)
-\end{equation*}
+\begin{equation}\label{NtwoPlayers}
+	N_Z(X) = R_Z(X) - R_Z(Y)
+\end{equation}
 
 Next, we can solve for $\mathbb{P}(A)$ and $\mathbb{P}(B)$ generally. From the perspective of Player A:
 
@@ -204,33 +259,139 @@ Next, we can solve for $\mathbb{P}(A)$ and $\mathbb{P}(B)$ generally. From the p
 
 Solving this with the help of \eqref{PA+PB=1}, we get
 
-\begin{equation*}
+\begin{equation}\label{PtwoPlayersFirst}
 	\mathbb{P}(A) = \frac{-N_B(A)}{N_A(A)-N_B(A)} = \frac{R_B(B)-R_B(A)}{R_A(A)-R_A(B)+R_B(B)-R_B(A)}
-\end{equation*}
+\end{equation}
 
-And the formula for $\mathbb{P}(B)$ is exactly the same but with all A and B's swapped.
+And the formula for $\mathbb{P}(B)$ is exactly the same but with all A and B's swapped. This is exactly the same result as found by Miller and it is equivalent to Conway's leading number algorithm \parencite{miller}.
 
-This matches exactly with Miller's paper and is equivalent to Conway's Algorithm. SOME OTHER STUFF HERE?
+The last and most complicated thing to do is express the return values $R$ mathematically. The return in \$ for sequence $Y$ if the game ends by sequence $X$ appearing can be given by this equation, which simply describes the process done in the tables above:
 
-The last and most complicated thing to do is express the return values $R$ mathematically. But all there is to do it find a mathematical algorithm to describe what we've already done with the tables. The following is a specific case of Miller's formula for $R$.
+\begin{equation}\label{Rbasic}
+	R_X(Y) = \sum_{i=1}^{3} \prod_{j=1}^{i} 2_{[Y_j = X_{3-i+j}]}
+\end{equation}
 
-For sequence X playing against sequence Y, we have
-
+Where $2_{[Y_j = X_{3-i+j}]}$ is defined as:
 \begin{equation*}
-	R_X(Y) = \sum_{n=1}^{3} \prod_{i=1}^{n} 2_{[Y_i = X_{k-n+i}]}
-\end{equation*}
-
-Where $2_{[Y_i = X_{k-n+i}]}$ is defined as:
-\begin{equation*}
-	2_{[Y_i = X_{k-n+i}]} = \begin{cases}
-		2 & \text{if } Y_i = X_{k-n+i} \\
-		0 & \text{if } Y_i \neq X_{k-n+i} \\
+	2_{[Y_j = X_{3-i+j}]} = \begin{cases}
+		2 & \text{if } Y_j = X_{3-i+j} \\
+		0 & \text{if } Y_j \neq X_{3-i+j} \\
 	\end{cases}
 \end{equation*}
 
 And the subscript of a sequence is its index. For example, in $X$: HTT, $X_1$ = H; $X_2$ = T; $X_3$ = T.
 
-\section{Sequences of different length}
+This equation is a specific case of Miller's formula for $R$.
+
+\section{Allowing for any random outcome generator with any known probability distribution}
+
+We have described Penney's Game as being played with a fair coin, but this is not necessary. We can extend the formula to account for any random outcome generator with any known probability distribution. For example, a random outcome generator can be a loaded 20-sided die or a coin flipped in a certain way so that it's more likely to land on heads\footnote{We provide a way to physically model loaded die and unfair coins in Part \ref{physicalModelling}.}. From now on, we will generalize all of these random outcome generators by imagining them as a random number generator that spits out integers $[0, 1, ..., n-1]$ for $n$ possible outcomes of the "flip". For example, instead of writing "heads" / "H" and "tails" / T" for a coin, we will write "0" and "1" because $n=2$. And a 6-sided die will be thought of as a generator outputting numbers $0, 1, 2, 3, 4, 5$.
+
+To keep the betting game a valid analogy to Penney's Game, we need to keep the condition that the game must be fair, no matter which outcome generator is being used. This has a simple fix.
+
+With a fair two-sided coin. We said that each bet is a double-or-nothing. This is because for a bet in which you put $\$X$, there is a 50\% chance of winning $\$X$ and a 50\% chance of losing $\$X$. Mathematically, the expected profit is 0, so
+
+\begin{equation*}
+	W \cdot \mathbb{P}(W) + L \cdot \mathbb{P}(L)=0
+\end{equation*}
+
+Meaning that the net profit from winning, $W$, weighted by the probability of winning, $\mathbb{P}(W)$, added to the net profit from losing, $L$, weighted by the probability of losing, $\mathbb{P}(L)$, should be zero.
+
+Since this bet must either be won or lost, $\mathbb{P}(W) + \mathbb{P}(L) = 1$, so $\mathbb{P}(L) = 1-\mathbb{P}(W)$.
+
+For example, in the case of a fair coin, 
+
+\begin{equation*}
+	X \cdot \frac{1}{2} + (-X) \cdot \frac{1}{2}=0
+\end{equation*}
+
+Now we can generalize for any $\mathbb{P}(W)$. We will say that the outcome of any bet will either be losing what you put into it, $L=-X$, or winning some multiple of what you put into it, $W=\lambda X$. We want to see which multiple $\lambda$ to use as a function of $\mathbb{P}(W)$.
+
+\begin{equation*}
+	(\lambda X) \cdot \mathbb{P}(W) + (-X) \cdot (1-\mathbb{P}(W)) = 0
+\end{equation*}
+
+\begin{equation*}
+	\lambda = \frac{1}{\mathbb{P}(W)} - 1
+\end{equation*}
+
+In our table and our formula for $R$, we don't care about how much is won, but instead how much we're left with after a win. So after winning a bet of $X$, we will be left with a sum of $X'$ such that
+
+\begin{equation*}
+	\mathbf{X'} = X + \lambda X = X + \frac{X}{\mathbb{P}(W)} - X = \mathbf{X\frac{1}{\mathbb{P}(W)}}
+\end{equation*}
+
+So instead of a double or nothing, it must be a \textit{multiply your bet by $\frac{1}{\mathbb{P}(W)}$} or nothing. We can now include this new rule in our formula for $R$. Replacing the 2 in \eqref{Rbasic} by $\frac{1}{\mathbb{P}(W)}$, we get:
+
+\begin{equation}\label{RanyRandom}
+	R_X(Y) = \sum_{i=1}^{3} \prod_{j=1}^{i} \frac{1_{[Y_j = X_{3-i+j}]}}{\mathbb{P}(Y_j)}
+\end{equation}
+
+$\mathbb{P}(Y_j)$ is written instead of $\mathbb{P}(W)$ because, in this formula, the bet is being placed on the $j$th element of sequence $Y$ appearing, which we define to be $\mathbb{P}(Y_j)$. So $\mathbb{P}(Y_j)$ is the probability of winning. For example, with a fair coin, if sequence Y is HHT and $j=2$, then $\mathbb{P}(Y_j) = \mathbb{P}(H) = \frac{1}{2} = \mathbb{P}(W)$ and we return to what we had in \eqref{Rbasic} because $\frac{1}{(\frac{1}{2})} = 2$.
+
+\section{Extending to games with sequences of different lengths}
+
+As it was previously discussed, a sequence of bets can only return money (and therefore can only matter) if either of these things happen:
+\begin{enumerate}
+	\item The bets go to completion. In other words, if all bets in the sequence succeed. This will end the game.
+	\item A sequence of bets gets cut off by the game ending.
+\end{enumerate}
+
+This allowed us to only look at the last 3 sequences of bets in the basic variation, because there will be 3 bets going on when the game ends, because the sequences predict the next three flips. For a game involving sequences of length $k$, all we have to change is that we should now look at the last $k$ sequences of bets before a player ends the betting. This is again a simple fix in the formula for $R$, introducing a $k$ in the place of the 3:
+
+\begin{equation}\label{RanyLength}
+	R_X(Y) = \sum_{i=1}^{k} \prod_{j=1}^{i} \frac{1_{[Y_j = X_{k-i+j}]}}{\mathbb{P}(Y_j)}
+\end{equation}
+
+At this point, our formula for $R$ is identical to the one derived by \textcite{miller}, despite some notation changes.
+
+However, we can make one more small change to allow for games in which the players are predicting a different number of coin flips into the future compared to each other. For a sequence $S$, we will define its length (the number of flips predicted in the future) to be $L_S$.
+
+Using the same logic as before, we find that the number of sequences of bets that must be checked when calculating $R_X(Y)$ must be $k = \text{min}\{L_X, L_Y\}$. Additionally, the subscript of X in $1_{[Y_j = X_{k-i+j}]}$ continues to involve the length of X, which has been changed from $k$ to $L_X$. This completes our work on $R$:
+
+\begin{equation}\label{Rdef}
+	R_{X}(Y) = \sum_{i=1}^{\text{min}\{L_{X}, L_{Y}\}} \prod_{j=1}^{i} \frac{1_{[Y_{j} = X_{L_{X} - i + j}]}}{\mathbb{P}(Y_{j})}
+\end{equation}
+
+\part{Deriving a formula for win probabilities in games with any number of players}
+
+The last way that we will generalize our formula is to make it work with any number of players.
+
+We will define $n$ to represent the number of players, and we will store the predicted sequences of all players in a list: $\{S_1, S_2, ..., S_n\}$.
+
+The first thing we can do is edit \eqref{NtwoPlayers}. This equation says that in the betting game with two players, they pay each other their winnings. We can make this work with more than two players. A way to do this which keeps the game fair for everyone (this is still necessary), is to say that at the end of the game, each player's winnings are paid by all other players equally. For example, in a game with 5 players, if one player wins \$1, all the others will give that player \$0.25 when the game ends. Mathematically, that rule can be expressed like this:
+
+\begin{equation}\label{Ndef}
+	N_{X}(Y) = \frac{1}{n-1} \mathlarger{[}nR_{X}(Y) - \sum_{i=1}^{n}R_{X}(S_i)\mathlarger{]}
+\end{equation}
+
+The problem that is now left is that there are $n$ players, so there are not just two win probabilities (previously simply $\mathbb{P}(A)$ and $\mathbb{P}(B) = 1-\mathbb{P}(A)$), but $n$ unknown win probabilities.
+
+However, we can generate enough equations to solve for all of them. For each player, the betting game must be fair. Therefore,
+
+\begin{equation*}
+	N_{S_1}(S_\textbf{1}) \cdot \mathbb{P}(S_1) + N_{S_2}(S_\textbf{1}) \cdot \mathbb{P}(S_2) + ... + N_{S_n}(S_\textbf{1}) \cdot \mathbb{P}(S_n) = 0
+\end{equation*}
+
+\begin{equation*}
+	N_{S_1}(S_\textbf{2}) \cdot \mathbb{P}(S_1) + N_{S_2}(S_\textbf{2}) \cdot \mathbb{P}(S_2) + ... + N_{S_n}(S_\textbf{2}) \cdot \mathbb{P}(S_n) = 0
+\end{equation*}
+
+\begin{equation*}
+	...(\text{one for the net profit of each player})...
+\end{equation*}
+
+\begin{equation*}
+	N_{S_1}(S_\textbf{n}) \cdot \mathbb{P}(S_1) + N_{S_2}(S_\textbf{n}) \cdot \mathbb{P}(S_2) + ... + N_{S_n}(S_\textbf{n}) \cdot \mathbb{P}(S_n) = 0
+\end{equation*}
+
+And finally, someone must win, so 
+
+\begin{equation*}
+	\mathbb{P}(S_1) + \mathbb{P}(S_2) + ... + \mathbb{P}(S_n) = 1
+\end{equation*}
+
+Translating this system of linear equations into a matrix equation, we get the general formula to solve for the win probabilities of any number of players:
 
 \begin{equation}\label{generalFormula}
 	\begin{bmatrix}
@@ -249,17 +410,11 @@ And the subscript of a sequence is its index. For example, in $X$: HTT, $X_1$ = 
 	\end{bmatrix}
 \end{equation}
 
-\begin{equation}\label{Ndef}
-	N_{S_j}(S_i) = \frac{1}{n-1} \mathlarger{[}nR_{S_j}(S_i) - \sum_{m=1}^{n}R_{S_j}(S_m)\mathlarger{]}
-\end{equation}
-
-\begin{equation}\label{Rdef}
-	R_{S_i}(S_j) = \sum_{l=1}^{\text{min}\{L_A, L_B\}} \prod_{m=1}^{l} \frac{1_{[S_{j,m} = S_{i, L_A - l + m}]}}{\mathbb{P}(S_{j, m})}
-\end{equation}
+Note that we were able to remove the equation for the last player and replace it by $\mathbb{P}(S_1) + \mathbb{P}(S_2) + ... + \mathbb{P}(S_n) = 1$, since only $n$ equations are necessary.
 
 \part{Two-player games with equal sequence lengths and even flip outcome likelihoods}
 
-In a two player game, the probabilities that each player wins can be expressed:
+Solving \eqref{Ndef} and \eqref{generalFormula} with $n=2$, we get a formula for the probabilities in a two-player game. This formula is, of course, identical to \eqref{PtwoPlayersFirst}, which was derived earlier on.
 \begin{equation}\label{2playerAProb}
 	\mathbb{P}(A)=\frac{R_B(B)-R_B(A)}{R_A(A)-R_A(B)+R_B(B)-R_B(A)}
 \end{equation}
@@ -270,8 +425,9 @@ And since either Player A or Player B must win in a game,
 \begin{equation*}
 	\mathbb{P}(A)+\mathbb{P}(B)=1
 \end{equation*}
+We will use $s$ to denote the number of possible outcomes of the flip. $s=2$ for coins, $s=6$ for 6-sided dice, etc.
 
-\section{Proving that when sequence S appears, Player S will always win more money than their opponent}
+\section{Proving that when sequence S appears, Player S will always win more money than their opponent in the betting game}
 
 In other words, we are making the claim that $R_A(A)>R_A(B)$ in all cases and $R_B(B)>R_B(A)$ in all cases.
 
@@ -319,7 +475,7 @@ $=\mathlarger\sum_{i=1}^{k-1}s^{k-i}$
 \\\\
 This is the maximum value, since $A \neq B$ or else the game would be invalid.
 \\\\
-Therefore, if $s^k > \mathlarger\sum_{i=1}^{k-1}s^{k-i}$, ${R_A(A) > R_A(B)}$ will always be true, since $R_A(A)$ would be greater than $R_A(B)$ even when it's the most disadvantaged.
+Therefore, if $s^k > \mathlarger\sum_{i=1}^{k-1}s^{k-i}$, ${R_A(A) > R_A(B)}$ will always be true. This is because $R_A(A)$ would be greater than $R_A(B)$ even when it's the most disadvantaged.
 
 $\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ can be rewritten as
 $\mathlarger{s^k \sum_{i=1}^{k-1}\big(\frac{1}{s}\big)^i}$, and since it's a sum of positive numbers, it must be less than $\mathlarger{s^k\sum_{i=1}^{\infty}\big(\frac{1}{s}\big)^i}$, a geometric series which is equal to $\mathlarger{s^k\frac{s}{s-1} - s^k}$.
@@ -337,7 +493,7 @@ Now, if $s^k \ge s^k\frac{s}{s-1} - s^k$, then $s^k$ will definitely be larger t
 \end{equation*}
 Which is always the case, since there must be at least two possible outcomes from the flip.
 
-This proves that ${R_A(A) > R_A(B)}$, and if the exact same process is done after swapping the sequences of A and B, we also learn that $R_B(B)>R_B(A)$.
+This proves that ${R_A(A) > R_A(B)}$. If the exact same process is done after swapping the sequences of A and B, we also learn that $R_B(B)>R_B(A)$.
 
 So the player who has chosen a sequence \underline{will} always get the greatest return when that sequence appears. For example, if Player A's sequence appears in the flips, and the player makes \$10, Player B could not possibly make any more than \$9.
 
@@ -373,7 +529,7 @@ This means that increasing $R_B(B)$ will always increase $\mathbb{P}(A)$, and de
 \\\\
 Next, we will do the same for $R_B(A)$, increasing it to $R_B(A)+N$. This time, we need to note that since $R_B(B)$ must be greater than $R_B(A)$, we have the condition on $N$ that $0 < N < R_B(B)-R_B(A)$.
 
-Rewriting \eqref{PA+PB=1} with $R_B(A)$ incremented by $N$, we get:
+Rewriting \eqref{2playerAProb}, this time with $R_B(A)$ incremented by $N$, we get:
 \begin{equation*}
 	\mathbb{P}_N(A) = \frac{R_B(B)-\boldsymbol{(R_B(A)+N)}}{R_A(A)-R_A(B)+R_B(B)-\boldsymbol{(R_B(A)+N)}}
 \end{equation*}
@@ -383,7 +539,7 @@ Now doing the same process as before, we end up with an increase of $R_B(A)$ inc
 \end{equation*}
 We know from the previous section that $R_A(B)-R_A(A)$ must be negative and $R_B(B)-R_B(A)$ must be positive. Additionally, the condition that $N < R_B(B)-R_B(A)$ means that $R_B(B)-R_B(A)-N > 0$.
 
-So in the above inequality, the numerator on the left side will always be negative and the denominator will always be positive, so the inequality will be false and increasing $R_B(A)$ will always decrease $\mathbb{P}(A)$.
+So in the large inequality, the numerator on the left side will always be negative and the denominator will always be positive, so the inequality will be false and increasing $R_B(A)$ will always decrease $\mathbb{P}(A)$ and vice versa.
 
 We can do the exact same process for B and use the idea that increasing $\mathbb{P}(B)$ will necessarily decrease $\mathbb{P}(A)$ to determine that increasing $R_A(A)$ will always decrease $\mathbb{P}(A)$ and increasing $R_A(B)$ will always increase $\mathbb{P}(A)$, and vice versa.
 \\\\
@@ -620,7 +776,16 @@ $=\mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-1}}$
 
 NOT DONE
 
+\part {Verifying the formula with simulations}
+
+\part {Creating a tool to aid in research of Penney's Game}
+
+\part {Physically modelling unfair coin flips and dice rolls \label{physicalModelling}}
+
 \part {Conclusion}
+
+\part {References}
+\printbibliography
 
 
 

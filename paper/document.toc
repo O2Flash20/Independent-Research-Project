@@ -1,18 +1,25 @@
 \babel@toc {english}{}\relax 
-\contentsline {part}{I\hspace {1em}Abstract}{3}{}%
-\contentsline {part}{II\hspace {1em}Introduction}{3}{}%
-\contentsline {part}{III\hspace {1em}Deriving a formula for win probabilities with two players}{3}{}%
-\contentsline {section}{\numberline {1}The basic version of the game}{3}{}%
-\contentsline {section}{\numberline {2}Sequences of different length}{7}{}%
-\contentsline {part}{IV\hspace {1em}Two-player games with equal sequence lengths and even flip outcome likelihoods}{7}{}%
-\contentsline {section}{\numberline {3}Proving that when sequence S appears, Player S will always win more money than their opponent}{7}{}%
-\contentsline {section}{\numberline {4}Determining how changes of $R$ values affect $\mathbb {P}(A)$}{8}{}%
-\contentsline {section}{\numberline {5}Proving that the greatest win probability difference occurs when $baa...a$ is played against $aaa...a$ for $b\ne a$}{10}{}%
-\contentsline {section}{\numberline {6}Determining the bounds of $\mathbb {P}(A)$ and $\mathbb {P}(B)$}{11}{}%
-\contentsline {section}{\numberline {7}Using the probability bounds to study extreme games.}{11}{}%
-\contentsline {subsection}{\numberline {7.1}Proving that the game tends to be fair with infinite possible flip outcomes but finite sequence length}{11}{}%
-\contentsline {subsection}{\numberline {7.2}Determining the bounds for games with infinitely long sequences but finite possible flip outcomes}{12}{}%
-\contentsline {subsection}{\numberline {7.3}Proving that the game tends to be fair with infinite possible flip outcomes and infinitely long sequences.}{12}{}%
-\contentsline {part}{V\hspace {1em}Two-player games with different sequence lengths and even flip outcome likelihoods}{12}{}%
-\contentsline {section}{\numberline {8}Determining when the shorter sequence always has an advantage in games with two players and even flip outcome probabilities.}{12}{}%
-\contentsline {part}{VI\hspace {1em}Conclusion}{13}{}%
+\contentsline {part}{I\hspace {1em}Abstract}{4}{}%
+\contentsline {part}{II\hspace {1em}Introduction}{4}{}%
+\contentsline {part}{III\hspace {1em}Showing that Penney's Game is unintuitive, and providing some hope that it can be understood}{5}{}%
+\contentsline {part}{IV\hspace {1em}Deriving a formula for win probabilities with two players}{7}{}%
+\contentsline {section}{\numberline {1}The basic variation of Penney's Game}{7}{}%
+\contentsline {section}{\numberline {2}Allowing for any random outcome generator with any known probability distribution}{11}{}%
+\contentsline {section}{\numberline {3}Extending to games with sequences of different lengths}{12}{}%
+\contentsline {part}{V\hspace {1em}Deriving a formula for win probabilities in games with any number of players}{13}{}%
+\contentsline {part}{VI\hspace {1em}Two-player games with equal sequence lengths and even flip outcome likelihoods}{14}{}%
+\contentsline {section}{\numberline {4}Proving that when sequence S appears, Player S will always win more money than their opponent in the betting game}{15}{}%
+\contentsline {section}{\numberline {5}Determining how changes of $R$ values affect $\mathbb {P}(A)$}{16}{}%
+\contentsline {section}{\numberline {6}Proving that the greatest win probability difference occurs when $baa...a$ is played against $aaa...a$ for $b\ne a$}{18}{}%
+\contentsline {section}{\numberline {7}Determining the bounds of $\mathbb {P}(A)$ and $\mathbb {P}(B)$}{19}{}%
+\contentsline {section}{\numberline {8}Using the probability bounds to study extreme games.}{19}{}%
+\contentsline {subsection}{\numberline {8.1}Proving that the game tends to be fair with infinite possible flip outcomes but finite sequence length}{19}{}%
+\contentsline {subsection}{\numberline {8.2}Determining the bounds for games with infinitely long sequences but finite possible flip outcomes}{20}{}%
+\contentsline {subsection}{\numberline {8.3}Proving that the game tends to be fair with infinite possible flip outcomes and infinitely long sequences.}{20}{}%
+\contentsline {part}{VII\hspace {1em}Two-player games with different sequence lengths and even flip outcome likelihoods}{20}{}%
+\contentsline {section}{\numberline {9}Determining when the shorter sequence always has an advantage in games with two players and even flip outcome probabilities.}{20}{}%
+\contentsline {part}{VIII\hspace {1em}Verifying the formula with simulations}{21}{}%
+\contentsline {part}{IX\hspace {1em}Creating a tool to aid in research of Penney's Game}{22}{}%
+\contentsline {part}{X\hspace {1em}Physically modelling unfair coin flips and dice rolls }{22}{}%
+\contentsline {part}{XI\hspace {1em}Conclusion}{22}{}%
+\contentsline {part}{XII\hspace {1em}References}{22}{}%

@@ -1,0 +1,146 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{chung}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=35aaff31fe4a4b589cf45fb6b1c279d3}{%
+           family={Chung},
+           familyi={C\bibinitperiod},
+           given={Derrick},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \strng{fullhash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \strng{bibnamehash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \strng{authorbibnamehash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \strng{authornamehash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \strng{authorfullhash}{35aaff31fe4a4b589cf45fb6b1c279d3}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{subtitle}{An exploration of coin flips both real and imaginary}
+      \field{title}{Fair Game}
+      \field{year}{2024}
+      \field{dateera}{ce}
+    \endentry
+    \entry{markov}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=65a971270dc49907ad91088248bc5f8c}{%
+           family={Gerber},
+           familyi={G\bibinitperiod},
+           given={Hans\bibnamedelima U.},
+           giveni={H\bibinitperiod\bibinitdelim U\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=778a0bca8602b58d7eee37d66cac73d1}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Shuo-Yen\bibnamedelima Robert},
+           giveni={S\bibinithyphendelim Y\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \strng{fullhash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \strng{bibnamehash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \strng{authorbibnamehash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \strng{authornamehash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \strng{authorfullhash}{8838e7190e2d9bc5efaa19c203cd7310}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Stochastic Processes and their Applications}
+      \field{title}{The Occurence of Sequence Patterns in Repeated Experiments and Hitting Times in a Markov Chain}
+      \field{volume}{11}
+      \field{year}{1981}
+      \field{dateera}{ce}
+      \field{pages}{101\bibrangedash 108}
+      \range{pages}{8}
+    \endentry
+    \entry{miller}{unpublished}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bb50c798013b7686650e3a50e4b9cca4}{%
+           family={Miller},
+           familyi={M\bibinitperiod},
+           given={Joshua\bibnamedelima B.},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bb50c798013b7686650e3a50e4b9cca4}
+      \strng{fullhash}{bb50c798013b7686650e3a50e4b9cca4}
+      \strng{bibnamehash}{bb50c798013b7686650e3a50e4b9cca4}
+      \strng{authorbibnamehash}{bb50c798013b7686650e3a50e4b9cca4}
+      \strng{authornamehash}{bb50c798013b7686650e3a50e4b9cca4}
+      \strng{authorfullhash}{bb50c798013b7686650e3a50e4b9cca4}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Penney's Game Odds from No-Arbitrage}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://doi.org/10.48550/arXiv.1904.09888
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.48550/arXiv.1904.09888
+      \endverb
+    \endentry
+    \entry{penney}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9c4ad3943253dd9134f53ec96973da5b}{%
+           family={Penney},
+           familyi={P\bibinitperiod},
+           given={Walter},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9c4ad3943253dd9134f53ec96973da5b}
+      \strng{fullhash}{9c4ad3943253dd9134f53ec96973da5b}
+      \strng{bibnamehash}{9c4ad3943253dd9134f53ec96973da5b}
+      \strng{authorbibnamehash}{9c4ad3943253dd9134f53ec96973da5b}
+      \strng{authornamehash}{9c4ad3943253dd9134f53ec96973da5b}
+      \strng{authorfullhash}{9c4ad3943253dd9134f53ec96973da5b}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Recreational Mathematics}
+      \field{title}{Problem 95. Penney-Ante}
+      \field{volume}{2}
+      \field{year}{1969}
+      \field{dateera}{ce}
+      \field{pages}{241}
+      \range{pages}{1}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
