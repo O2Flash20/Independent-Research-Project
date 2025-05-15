@@ -626,9 +626,9 @@ function create3dTable(playerShown) {
     const sliceSlider = document.createElement("input")
     sliceSlider.type = "range"
     sliceSlider.step = 1
-    sliceSlider.max = numSequences2-1
+    sliceSlider.max = numSequences2 - 1
     sliceSlider.min = 0
-    sliceSlider.value= 0
+    sliceSlider.value = 0
     H.append(sliceSlider)
 
     const sliceSliderLabel = document.createElement("span")
@@ -670,7 +670,7 @@ function create3dTable(playerShown) {
 
     playerShownElt.value = playerShown
 
-    playerShownElt.addEventListener("change", function() {
+    playerShownElt.addEventListener("change", function () {
         create3dTable(playerShownElt.value)
     })
 }
@@ -838,7 +838,7 @@ function getPlayer3BestStrategy(sequenceLength, outcomePossibilities) {
             let maxProb = 0
             let maxIndex = -1
             for (let k = 0; k < Math.pow(outcomePossibilities, sequenceLength); k++) {
-                const thisProb = getWinProbabilities([indexToSequence(i, sequenceLength, outcomePossibilities), indexToSequence(j, sequenceLength, outcomePossibilities), indexToSequence(k, sequenceLength, outcomePossibilities)], [1/3, 1/3, 1/3])[2]
+                const thisProb = getWinProbabilities([indexToSequence(i, sequenceLength, outcomePossibilities), indexToSequence(j, sequenceLength, outcomePossibilities), indexToSequence(k, sequenceLength, outcomePossibilities)], [1 / 3, 1 / 3, 1 / 3])[2]
                 if (thisProb > maxProb) {
                     maxProb = thisProb
                     maxIndex = k
@@ -849,4 +849,55 @@ function getPlayer3BestStrategy(sequenceLength, outcomePossibilities) {
     }
 
     return results
+}
+
+function getProbabilityOverTime(sequence) {
+    let output = []
+
+    let flips = []
+    const N = 1000000
+    for (let j = 0; j < N; j++) {
+        for (let i = 0; i < 1000000; i++) {
+            flips.push(Math.round(Math.random()))
+
+            const L = flips.length
+            if (flips[L - 1] == sequence[2] && flips[L - 2] == sequence[1] && flips[L - 3] == sequence[0]) {
+                output[i] = (output[i] || 0) + (1 / N)
+                break
+            }
+        }
+        flips = []
+    }
+
+    let string = ""
+    for (let i = 0; i < output.length; i++) {
+        if (output[i] !== undefined) {
+            string += `(${i}, ${output[i]}), `
+        }
+    }
+
+    return string
+}
+
+function expectedWaitTime(sequence) {
+    let output = 0
+
+    let flips = []
+    const N = 1000000
+    for (let j = 0; j < N; j++) {
+        for (let i = 1; i < 1000000; i++) {
+            flips.push(Math.round(Math.random()))
+
+            const L = flips.length
+            if (flips[L - 1] == sequence[2] && flips[L - 2] == sequence[1] && flips[L - 3] == sequence[0]) {
+                output += i
+                break
+            }
+        }
+        flips = []
+    }
+
+    output /= N
+
+    return output
 }
