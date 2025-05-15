@@ -8,12 +8,25 @@
 \usepackage[normalem]{ulem}
 \usepackage{xcolor}
 \usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{float}
 \usepackage[a4paper, total={6.27in, 9.69in}]{geometry}
+
 \definecolor{OliveGreen}{rgb}{0,0.6,0}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
 
 \usepackage[backend=biber, style=authoryear]{biblatex}
 \addbibresource{bibliography.bib}
 \DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	citecolor=firebrick,
+	pdftitle={Exploring Variations of Penney's Game},
+	pdfauthor={William Dracopoulos}
+}
 
 \title{Exploring Variations of Penney's Game}
 \author{
@@ -32,7 +45,7 @@ John Abbott College
 
 \part{Abstract}
 
-Penney’s Game is an example of where our intuitive understanding of probability completely fails; it’s a seemingly fair game with a surprisingly complicated strategy. The goal of this research is to explore Penney’s Game using new methods and in areas that it has not been explored before. By studying a similar game that is fair, we create a formula for the probability of each player winning Penney’s Game depending on the number of players, the sequences chosen by each player, the length of each sequence, the number of possible outcomes of the “flip” (coin flip or dice roll or random number generation), and the probability distribution of the outcomes of this flip. This formula was verified by computer simulations and then packaged into an online calculator. The calculator then revealed patterns which were analyzed using the formula. Among these, it was proven that games tend towards being fair with an infinite number of possible outcomes from the “flip” but not infinite sequence length, and that the shorter sequence always has an advantage, except in some specific and known cases. The work done in this paper is not exhaustive, there is still plenty to explore and discover, and we leave behind tools to help future researchers to do this.
+Penney’s Game is an example of where our intuitive understanding of probability completely fails; it’s a seemingly fair game with a surprisingly complicated strategy. The goal of this research is to explore Penney’s Game using new methods and in areas that it has not been explored before. By studying a similar game that is fair, we create a formula for the probability of each player winning Penney’s Game depending on the number of players, the sequences chosen by each player, the length of each sequence, the number of possible outcomes of the “flip” (coin flip or dice roll or random outcome generation), and the probability distribution of the outcomes of this flip. This formula was verified by computer simulations and then packaged into an online calculator. The calculator then revealed patterns which were analyzed using the formula. Among these, it was proven that games tend towards being fair with an infinite number of possible outcomes from the “flip” but not infinite sequence length, and that the shorter sequence always has an advantage, except in some specific and known cases. The work done in this paper is not exhaustive, there is still plenty to explore and discover, and we leave behind tools to help future researchers to do this.
 
 \part{Introduction}
 
@@ -40,18 +53,18 @@ In its basic variation, Penney's Game is simple game invented by Walter Penney i
 
 The game might seem fair, but it really is not. In that example, Alice actually has a 62.5\% chance of beating Bob. In fact, for any sequence that one player predicts, there is another that will, beat it on average \parencite{penney}. A formula for finding the exact win probabilities for any sequence in this basic variation of the game was first discovered by the mathematician John Conway, but he never supplied a proof of his "leading number algorithm".
 
-Since Conway, many other researchers have developed other algorithms and ways of thinking about the problem. One way is using Markov chains and martingale arguments, like in \textcite{markov}'s research. However, this paper uses a much simpler way of understanding the game and deriving a formula for win probabilities. The general idea, which will be explained in depth during the next part, is to think about another game instead, which this time is always fair. This new game, which I'll call the betting game, contains the same probabilities as Penney's Game but allows for a clear and powerful starting point due to its fairness. The idea of the betting game comes simultaneously from two places: a research paper which tackles Penney's game from the perspective of no-arbitrage \parencite{miller}, and \textcite{chung}'s talk which mentions describes it in the context of the Optional Stopping Theorem. The latter will be the same approach used in this paper. We extend the betting game analogy further than ever before to allow us to determine probabilities in many variations of Penney's Game. 
+Since Conway, many other researchers have developed other algorithms and ways of thinking about the problem. One way is using Markov chains and martingale arguments, such as the paper by \textcite{markov}'s. However, we hope to use a much simpler way of understanding the game and deriving a formula for win probabilities. The general idea, which will be explained in depth during the next part, is to think about another game instead, which this time is always fair. This new game, which we will call the betting game, contains the same probabilities as Penney's Game but allows for a clear and powerful starting point due to its fairness. The idea of the betting game comes simultaneously from two places: a research paper which tackles Penney's game from the perspective of no-arbitrage \parencite{miller}, and \textcite{chung}'s talk which mentions describes it in the context of the Optional Stopping Theorem. The latter will be the same approach used in this paper. Our goal is to extend the betting game analogy further than ever before to allow us to determine probabilities in many variations of Penney's Game.
 
 A formula, \eqref{generalFormula}, will be derived which can calculate the win probabilities in games with:
 
 \begin{enumerate}
 	\item Any number of players
 	\item Players predicting more or less than the next three flips, and  players predicting a different number of flips to each other
-	\item Any kind of coin, die, or random number generator being "flipped"
-	\item Unfair coins, loaded dice, and random number generators with any probability distribution
+	\item Any kind of coin, die, or random outcome generator being "flipped"
+	\item Unfair coins, loaded dice, and random outcome generators with any probability distribution
 \end{enumerate}
 
-We will also verify this formula with simulations and analyze it to discover new things about Penney's Game in some of the variations covered by the formula.
+We also hope to verify our formula with simulations, and then analyze it to discover new things about Penney's Game in some of the variations covered by the formula.
 
 \part{Showing that Penney's Game is unintuitive, and providing some hope that it can be understood}
 
@@ -65,7 +78,7 @@ Imagine sitting at a table and flipping a coin until there are three consecutive
 	\centering
 	\includegraphics[width=0.7\linewidth]{"./prob graph"}
 	\caption{Probability of a sequence appearing for the first time as a function of the number of coin flips. The data was obtained from a simulation of 1 000 000 repetitions. The expected wait time (number of flips until the sequence appears) for the purple, black, and green lines are calculated to be approximately 8 flips, 10 flips, and 14 flips respectively.}
-	{fig:probGraph}
+	\label{fig:probGraph}
 \end{figure}
 
 An exact function for the green line was found by my friend Fenghua Li to be 
@@ -353,6 +366,8 @@ Using the same logic as before, we find that the number of sequences of bets tha
 	R_{X}(Y) = \sum_{i=1}^{\text{min}\{L_{X}, L_{Y}\}} \prod_{j=1}^{i} \frac{1_{[Y_{j} = X_{L_{X} - i + j}]}}{\mathbb{P}(Y_{j})}
 \end{equation}
 
+It is important to note that having two or more sequences of different lengths leaves a lot of room for games which break the formula in some way. For example, 1100 vs. 100 would always be a tie in Penney's Game, since one sequence makes up the end of another. Additionally, 1100 vs. 110 would result in the shorter one always winning Penney's Game, since it is contained within the longer one but not at the end. Games like this can be dealt with using a rule for picking sequences such as "one sequence must not be contained within another."
+
 \part{Deriving a formula for win probabilities in games with any number of players}
 
 The last way that we will generalize our formula is to make it work with any number of players.
@@ -412,7 +427,7 @@ Translating this system of linear equations into a matrix equation, we get the g
 
 Note that we were able to remove the equation for the last player and replace it by $\mathbb{P}(S_1) + \mathbb{P}(S_2) + ... + \mathbb{P}(S_n) = 1$, since only $n$ equations are necessary.
 
-\part{Two-player games with equal sequence lengths and even flip outcome likelihoods}
+\part{Two-player games with equal sequence lengths and even flip outcome likelihoods}\label{twoPlayerProofs}
 
 Solving \eqref{Ndef} and \eqref{generalFormula} with $n=2$, we get a formula for the probabilities in a two-player game. This formula is, of course, identical to \eqref{PtwoPlayersFirst}, which was derived earlier on.
 \begin{equation}\label{2playerAProb}
@@ -478,7 +493,7 @@ This is the maximum value, since $A \neq B$ or else the game would be invalid.
 Therefore, if $s^k > \mathlarger\sum_{i=1}^{k-1}s^{k-i}$, ${R_A(A) > R_A(B)}$ will always be true. This is because $R_A(A)$ would be greater than $R_A(B)$ even when it's the most disadvantaged.
 
 $\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ can be rewritten as
-$\mathlarger{s^k \sum_{i=1}^{k-1}\big(\frac{1}{s}\big)^i}$, and since it's a sum of positive numbers, it must be less than $\mathlarger{s^k\sum_{i=1}^{\infty}\big(\frac{1}{s}\big)^i}$, a geometric series which is equal to $\mathlarger{s^k\frac{s}{s-1} - s^k}$.
+$\mathlarger{s^k \sum_{i=1}^{k-1}\left(\frac{1}{s}\right)^i}$, and since it's a sum of positive numbers, it must be less than $\mathlarger{s^k\sum_{i=1}^{\infty}\left(\frac{1}{s}\right)^i}$, a geometric series which is equal to $\mathlarger{s^k\frac{s}{s-1} - s^k}$.
 
 Now, if $s^k \ge s^k\frac{s}{s-1} - s^k$, then $s^k$ will definitely be larger than $\mathlarger{\sum_{i=1}^{k-1}s^{k-1}}$ and our claim will be proven.
 \\
@@ -521,7 +536,7 @@ Now, lets check if $\mathbb{P}_N(A) > \mathbb{P}(A)$:
 \end{equation*}
 Dividing, simplifying, and factoring, we get that this is true if and only if:
 \begin{equation*}
-	\frac{N\big[R_A(A)-R_A(B)\big]}{\big[R_B(B)-R_B(A)\big]\big[R_A(A)-R_A(B)+N+R_B(B)-R_B(A)\big]} > 0
+	\frac{N\left[R_A(A)-R_A(B)\right]}{\left[R_B(B)-R_B(A)\right]\left[R_A(A)-R_A(B)+N+R_B(B)-R_B(A)\right]} > 0
 \end{equation*}
 We know from the previous section that $R_A(A) > R_A(B)$ and $R_B(B) > R_B(A)$, so the above inequality will always hold true, with all terms being positive numbers.
 
@@ -535,7 +550,7 @@ Rewriting \eqref{2playerAProb}, this time with $R_B(A)$ incremented by $N$, we g
 \end{equation*}
 Now doing the same process as before, we end up with an increase of $R_B(A)$ increasing $\mathbb{P}(A)$ if and only if:
 \begin{equation*}
-	\frac{N\big[R_A(B)-R_A(A)\big]}{\big[R_B(B)-R_B(A)\big]\big[R_A(A)-R_A(B)-N+R_B(B)-R_B(A)\big]} > 0
+	\frac{N\left[R_A(B)-R_A(A)\right]}{\left[R_B(B)-R_B(A)\right]\left[R_A(A)-R_A(B)-N+R_B(B)-R_B(A)\right]} > 0
 \end{equation*}
 We know from the previous section that $R_A(B)-R_A(A)$ must be negative and $R_B(B)-R_B(A)$ must be positive. Additionally, the condition that $N < R_B(B)-R_B(A)$ means that $R_B(B)-R_B(A)-N > 0$.
 
@@ -616,12 +631,12 @@ In summary, these two sequences played against each other provide the maximum va
 \section{Determining the bounds of $\mathbb{P}(A)$ and $\mathbb{P}(B)$}
 
 Substituting the previous section's values which maximize $\mathbb{P}(A)$ into \eqref{2playerAProb}, we get:
-\[
-\mathbb{P}(A) \le \frac{\mathlarger{\sum_{i=0}^{k-1}s^{k-i}} - 0}{s^k-\mathlarger{\sum_{i=1}^{k-1}s^{k-i}}+\mathlarger{\sum_{i=0}^{k-1}s^{k-i}}-0}
-\]
-\begin{equation}\label{PAMax}
+\begin{equation*}
+	\text{max}\{\mathbb{P}(A)\} = \frac{\mathlarger{\sum_{i=0}^{k-1}s^{k-i}} - 0}{s^k-\mathlarger{\sum_{i=1}^{k-1}s^{k-i}}+\mathlarger{\sum_{i=0}^{k-1}s^{k-i}}-0}
+\end{equation*}
+\begin{equation*}
 	\mathbb{P}(A) \le \frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
-\end{equation}
+\end{equation*}
 Switching the sequences of A and B, we can also conclude that
 \begin{equation*}
 	\mathbb{P}(B) \le \frac{1}{2}\sum_{i=0}^{k-1}\frac{1}{s^i}
@@ -644,7 +659,7 @@ Now the bounds for the probability that any sequence $S$ wins can be expressed a
 \subsection{Proving that the game tends to be fair with infinite possible flip outcomes but finite sequence length}
 
 \begin{equation*}
-	\lim_{s \rightarrow \infty}\sum_{i=0}^{k-1}\frac{1}{s^i} = \lim_{s \rightarrow \infty} \big[1 + \frac{1}{s} + \frac{1}{s^2} + \dots + \frac{1}{s^{k-1}}\big] = 1
+	\lim_{s \rightarrow \infty}\sum_{i=0}^{k-1}\frac{1}{s^i} = \lim_{s \rightarrow \infty} \left[1 + \frac{1}{s} + \frac{1}{s^2} + \dots + \frac{1}{s^{k-1}}\right] = 1
 \end{equation*}
 Using this insight in \eqref{PBounds},
 \begin{equation*}
@@ -661,24 +676,23 @@ Thus taking \eqref{PBounds} as $k\rightarrow\infty$, we get:
 	1-\frac{s}{2s-2} \le \lim_{k\rightarrow\infty} \mathbb{P}(S) \le \frac{s}{2s-2} 
 \end{equation}
 \begin{equation*}
-	\big|\lim_{k\rightarrow\infty}\mathbb{P}(S) - \frac{1}{2}\big| \le \frac{1}{2s-2}
+	\left|\lim_{k\rightarrow\infty}\mathbb{P}(S) - \frac{1}{2}\right| \le \frac{1}{2s-2}
 \end{equation*}
 So the limit might not exist, but (and this is supported by simulations) the probability of a sequence winning will tend toward being contained within the range $\frac{1}{2s-2}$ greater than or less than 50\% as sequence length approaches infinity.
 
 \subsection{Proving that the game tends to be fair with infinite possible flip outcomes and infinitely long sequences.}
 Using \eqref{PBoundsKToInfty} and having $s\rightarrow\infty$,
 \begin{equation*}
-	\lim_{s\rightarrow\infty}\big[1-\frac{s}{2s-2}\big] \le \lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) \le \lim_{s\rightarrow\infty}\frac{s}{2s-2} 
+	\lim_{s\rightarrow\infty}\left[1-\frac{s}{2s-2}\right] \le \lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) \le \lim_{s\rightarrow\infty}\frac{s}{2s-2} 
 \end{equation*}
 \begin{equation*}
 	\frac{1}{2} \le \lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) \le \frac{1}{2}
 \end{equation*}
 And so by the Squeeze Theorem, $\mathlarger{\lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) = \frac{1}{2}}$
 
-\part{Two-player games with different sequence lengths and even flip outcome likelihoods}
+\part{Proving that in two-player games, the player who is predicting a shorter sequence will always have an advantage (except in one specific case)}\label{shorterSequenceProof}
 
-\section{Determining when the shorter sequence always has an advantage in games with two players and even flip outcome probabilities.}
-First, we will prove that for all games with A being shorter than B, A: 000...0 and B: 1...100...0 leads to the minimum possible probability for A to win.
+First, we will prove that for all games with A being shorter than B, A: 000...0 and B: 11...100...0 leads to the minimum possible probability for A to win.
 \\
 ${R_A(A)}$:
 \begin{tabular}{|ccccc|c|}
@@ -707,9 +721,9 @@ ${R_A(B)}$:
 	0 & 0 & 0 & ... & 0 & Gain \\
 	\hline
 	
-	\textcolor{red}{\sout{1}} & 0 & 0 & ... & 0 & $0$\\
+	\textcolor{red}{\sout{1}} & 1 & 1 & ... & 0 & $0$\\
 	
-	& \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$\\
+	& \textcolor{red}{\sout{1}} & 1 & ... & 0 & $0$\\
 	
 	&  & \textcolor{red}{\sout{1}} & ... & 0 & $0$\\
 	
@@ -728,7 +742,7 @@ ${R_B(B)}$:
 	1 & 1 & ... & 1 & 0 & 0 & ... & 0 & Gain \\
 	\hline
 	
-	\textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A}$\\
+	\textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_B}$\\
 	
 	& \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$ \\
 	
@@ -745,7 +759,7 @@ ${R_B(B)}$:
 	&  &  &  &  &  &  & \textcolor{red}{\sout{1}} & $0$ \\
 	\hline
 \end{tabular}
-$=s^{L_A}$
+$=s^{L_B}$
 \\
 Which is the minimum possible, value since $B=B$. This minimizes $\mathbb{P}(A)$ by \eqref{R_B(B)change}.
 \\\\\\
@@ -755,37 +769,299 @@ ${R_B(A)}$:
 	1 & 1 & ... & 1 & 0 & 0 & ... & 0 & Gain \\
 	\hline
 	
-	& & & \textcolor{red}{\sout{1}} & 0 & 0 & ... & 0 & $s^{L_A}$\\
+	& & & \textcolor{red}{\sout{0}} & 0 & 0 & ... & 0 & $0$\\
 	
-	& \textcolor{OliveGreen}{1} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 0 & ... & 0 & $0$ \\
+	& & & & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A-1}$ \\
 	
-	&  & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 0 & $0$ \\
+	& & & & & \textcolor{OliveGreen}{0} & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $s^{L_A-2}$ \\
 	
-	&  &  & \textcolor{OliveGreen}{1} & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
+	& & & & & & \textcolor{OliveGreen}{...} & \textcolor{OliveGreen}{0} & $...$ \\
 	
-	&  &  &  & \textcolor{red}{\sout{1}} & 1 & ... & 1 & $0$ \\
-	
-	&  &  &  &  & \textcolor{red}{\sout{1}} & ... & 1 & $0$ \\
-	
-	&  &  &  &  &  & \textcolor{red}{...} & 1 & $0$ \\
-	
-	&  &  &  &  &  &  & \textcolor{red}{1} & $0$ \\
+	&  &  &  &  & &  & \textcolor{OliveGreen}{0} & $s$ \\
 	\hline
 \end{tabular}
-$=\mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-1}}$
+$=\mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-i}}$
+\\
+Which is the maximum possible value, since A cannot be contained within B or the game will be invalid (in this case, it would result in a constant tie between both sequences, A would make up the end of B). This minimizes $\mathbb{P}(A)$ by \eqref{R_B(A)change}.
 
-NOT DONE
+Substituting these values which minimize A into \eqref{2playerAProb}, we get
 
-\part {Verifying the formula with simulations}
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\} = \frac{s^{L_B} - \mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-i}}}{\mathlarger{\sum_{i=0}^{L_A-1}s^{L_A-i}} - 0 + s^{L_B} - \mathlarger{\sum_{i=1}^{L_A-1}s^{L_A-i}}}
+\end{equation*}
+\begin{equation}\label{PminDifferentLengths}
+	\text{min}\{\mathbb{P}(A)\} = 1 - \frac{s^{L_A}\mathlarger{\sum_{i=0}^{L_A-1}\frac{1}{s^i}}}{s^{L_A} + s^{L_B}}
+\end{equation}
 
-\part {Creating a tool to aid in research of Penney's Game}
+To remove the sum, we can say:
+\begin{equation*}
+	\sum_{i=0}^{L_A-1}\frac{1}{s^i} < \sum_{i=0}^{\infty}\frac{1}{s^i} \text{  with  }\sum_{i=0}^{\infty}\frac{1}{s^i} = \frac{1}{1-\frac{1}{s}}
+\end{equation*}
+
+Therefore
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\} > 1 - \frac{s^{L_A}\mathlarger{\frac{1}{1-\frac{1}{s}}}}{s^{L_A} + s^{L_B}}
+\end{equation*}
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\} > 1 - \frac{s^{L_A+1}}{(s-1)(s^{L_A}+s^{L_B})}
+\end{equation*}
+
+We want to know when A will win no matter which exact sequences are chosen. So we want to know when $\text{min}\{\mathbb{P}(A)\} > \frac{1}{2}$. This will definitely be true when
+
+\begin{equation*}
+	1 - \frac{s^{L_A+1}}{(s-1)(s^{L_A}+s^{L_B})} \ge \frac{1}{2}
+\end{equation*}
+
+Defining $k$ to be the difference in sequence length $L_B-L_A$, we get that $\text{min}\{\mathbb{P}(A)\} > \frac{1}{2}$ when
+
+\begin{equation*}
+	\frac{s^{k+1}-s^k-1}{s} \ge 1
+\end{equation*}
+
+For all cases where $s \ge 3$ and $k \ge 1$, we have 
+
+\begin{equation*}
+	\frac{s^{k+1}-s^k-1}{s} \ge \frac{3^2-3-1}{3}
+\end{equation*}
+
+\begin{equation*}
+	\frac{s^{k+1}-s^k-1}{s} \ge \frac{5}{3} \ge 1
+\end{equation*}
+
+So with more than two flip outcome possibilities and with any two sequences of different lengths, the shorter one will always have an advantage.
+
+We can find most of the values of $k$ which will give the shorter sequence an advantage when $s=2$ using the same inequality:
+
+\begin{equation*}
+	\frac{2^{k+1}-2^k-1}{2} \ge 1
+\end{equation*}
+\begin{equation*}
+	k \ge \log_2(3)
+\end{equation*}
+\begin{equation*}
+	k \ge 2
+\end{equation*}
+The shorter sequence will always have an advantage when the difference in sequence length is greater than 2, since $k$ must be a natural number.
+
+The only thing left to check is when $s=2$ and $k=1$. We need to find at which $L_A$ Player A always has an advantage. Since $\text{min}\{\mathbb{P}(A)\}$ decreases as $L_A$ increases,
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\}|_{L_A \ge 3} \le \text{min}\{\mathbb{P}(A)\}|_{L_A = 3}
+\end{equation*}
+
+To find $\text{min}\{\mathbb{P}(A)\}|_{L_A = 3}$, we need to return to \eqref{PminDifferentLengths}. 
+
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\}|_{L_A = 3} = 1-\frac{2^3 \mathlarger{\sum_{i=0}^{2} \frac{1}{2^i}}}{2^3+2^4} = \frac{5}{12}
+\end{equation*}
+
+Since $\frac{5}{12} < \frac{1}{2}$, $\text{min}\{\mathbb{P}(A)\}|_{L_A \ge 3}$ will always be greater than $\frac{1}{2}$ and Player A will not necessarily have an advantage for all games where $s=2$, $L_A \ge 3$, and $L_B = L_A + 1$.
+
+There are only two possible cases left: when $s=2$, $k=1$, $L_A=1$, and $L_B=2$ and when $s=2$, $k=1$, $L_A=2$, and $L_B=3$. 
+
+The former only has two valid games possible: when A is 0 and B is 11 (or the same but with 0 and 1 swapped). Therefore we can use \eqref{2playerAProb} to determine that $\mathbb{P}(A)=\frac{3}{4}$, so A has the advantage.
+
+The latter is an interesting case, since using \eqref{PminDifferentLengths} gives
+\begin{equation*}
+	\text{min}\{\mathbb{P}(A)\} = \frac{1}{2}
+\end{equation*}
+
+So A always has an advantage except in one game: when A chooses 00 and B chooses 110 (or A chooses 11 and B chooses 001), in which case the game is fair.
+
+\part {Software}
+
+This paper comes with two bits of software: a simulator which can find experimental win probability values with extremely high precision and a calculator which we used to help guide where research should be done. Both can be found at \href{https://will-drac.github.io/Penneys-Game/}{will-drac.github.io/Penneys-Game/}.
+
+\section{Verifying the formula with simulations}
+
+We are confident that all our results are correct, because they match with billions of data points found by our virtual Penney's Game simulator, which can be found on the website above. The simulator runs on the browser and runs computations on the device's GPU using WebGPU. The simulator works with all of the variations discussed in this paper.
+
+Each thread plays a game until one player has won and writes down the winner in a local bin in GPU memory. The results from all of these bins then get summed using multiple passes of a parallel reduction algorithm which is also run on the GPU, until there is just one bin containing the total number of wins from each player. This vector of $<\text{Player 1 wins}, \text{Player 2 wins}, ..., \text{Player $n$ wins}>$ then gets passed to the CPU and divided by the total number of games played to obtain the experimental win probability for each player.
+
+It uses a pseudorandom number generator which is adapted from the hybrid LCG and Tausworthe generator described in Nvidia's GPU Gems 3 \parencite{prng}.
+
+\section {Creating a tool to aid in research of Penney's Game}
+
+The proofs done in Parts \ref{twoPlayerProofs} and \ref{shorterSequenceProof} were scouted for with the help of a software tool we created to visualize patterns and trends in Penney's Game.
+
+(strategies stuff here)
 
 \part {Physically modelling unfair coin flips and dice rolls \label{physicalModelling}}
 
+Our equations can take into account random outcome generators with any probability distribution because of the $\mathbb{P}(Y_j)$ term in \eqref{Rdef}. We could like to physically ground this by modelling the probability distribution of loaded dice and unfairly flipped coins.
+
+\section{Deriving an approximate probability distribution for loaded dice}
+
+Our goal in this section is to find a formula for the probability that a loaded die (a die with it's centre of mass offset) lands on each of its faces. We will be making many key assumptions which are not true, but may be close enough.
+
+\begin{enumerate}
+	\item There is some point in the rolling of a die at which it is touching the table at one edge, without any rotational or translational motion. Imagine a die teetering on one edge, about to fall over so that it lands on a face but it hasn't started moving yet. This is pictured in Figure \ref{fig:loadeddie}.
+	\item It is equally likely that a die lands on all edges.
+	\item It is equally likely for a die to come at rest like this at any angle $\theta$ (as defined in Figure \ref{fig:loadeddie}).
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{loadedDie}
+	\caption[A loaded die teetering on one of its edges]{A side view of a loaded die teetering on one of its edges. We are assuming that the die is currently at rest. Therefore, it will fall to whichever side the centre of mass (C.O.M) is on. In this case, it will rotate clockwise until it lands on the lower face.}
+	\label{fig:loadeddie}
+\end{figure}
+
+Let's take the centre of mass to be at the tip of the vector $<x, z>$. After a rotation by $\theta$, it's new position $<x', z'>$ will be:
+
+\begin{equation*}
+	\begin{bmatrix} x' \\ z' \end{bmatrix} = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} x \\ z \end{bmatrix}
+\end{equation*}
+
+
+Because of our assumptions, the probability that the die lands back on the face where $\theta=0$ will be 
+
+\begin{equation*}
+	\mathbb{P} = \frac{\text{angles where the C.O.M will make it rotate clockwise}}{\text{total angles possible}}
+\end{equation*}
+
+\begin{equation*}
+	 \mathbb{P} = \frac{\text{angles where $x' > 0$}}{\pi/2}
+\end{equation*}
+
+We can find which angles will make $x' > 0$:
+
+\begin{equation*}
+	x' > 0
+\end{equation*}
+\begin{equation*}
+	x\cos\theta - z\sin\theta > 0
+\end{equation*}
+\begin{equation*}
+	\frac{x}{z} > \tan\theta
+\end{equation*}
+
+So it will fall back to $\theta=0$ for all $\theta < \arctan\mathlarger{\frac{x}{z}}$.
+
+\begin{equation}\label{dieEdgeProb}
+	\mathbb{P} = \frac{\arctan(x/z)}{\pi/2} = \frac{2}{\pi} \arctan\left(\frac{x}{z}\right)
+\end{equation}
+
+However, if we really want to find the probability of it landing on that face, we have to take into account that there are four edges which could possibly lead the die to fall onto that face. We can derive a formula which takes into account all four.
+
+Let's imagine a die of side length $s$ and $r=\frac{s}{2}$. We will place the die on the xy-plane such that it is centred at $(0, 0, r)$. This is pictured in Figure \ref{fig:loadeddie3d}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{loadedDie3d}
+	\caption{Setup for calculating the probability of a loaded dice landing on the down-facing side. The green arrows represent the rotation and translation which are used to line up the selected edge with the y-axis.}
+	\label{fig:loadeddie3d}
+\end{figure}
+
+For each edge of the face which is currently pointing in the $-z$ direction, we will:
+
+\begin{enumerate}
+	\item Rotate the die so that the edge is centred on $(-r, 0, 0)$ and parallel to the y-axis. This edge will be the one which will use \eqref{dieEdgeProb} on.
+	\item Translate the die forward in the x-direction so that the edge is centred at the origin. We now have the situation in Figure \ref{fig:probGraph} for our selected face but with $\theta=0$ because we haven't started checking the angles yet.
+	\item Determine the probability that it lands on the face which is facing in the $-z$ direction when $\theta=0$ using \eqref{dieEdgeProb}.
+	\item Mix the probabilities from each edge to get the final probability for the face.
+\end{enumerate}
+
+From steps one and two, we must rotate the centre of mass $<x, y, z>$ and then translate it to follow the die being rotated and translated:
+
+\begin{equation*}
+	\begin{bmatrix}x'\\y'\\z'\end{bmatrix} = \begin{bmatrix}\cos\psi & -\sin\psi & 0 \\ \sin\psi & \cos\psi & 0 \\ 0 & 0 & 1\end{bmatrix} \begin{bmatrix}x\\y\\z\end{bmatrix} + \begin{bmatrix}r\\0\\0\end{bmatrix}
+\end{equation*}
+
+If the die starts as it is in Figure \ref{fig:loadeddie3d}, we have one edge with no rotation ($\psi=0$) and three edges each $\frac{\pi}{2} \text{rad}$ away from each other. To do this, we let $\psi = n\pi/2 \text{ with } n=\{0, 1, 2, 3\}$. Additionally, we are assuming that there is equal likelihood that the die lands on each of the 12 edges, so the chance that it lands on any one of the faces is $\frac{1}{2}$ So the probability coming from one of the edges that the die lands on the bottom face is:
+
+\begin{equation*}
+	\mathbb{P}_n = \frac{1}{12} \cdot \frac{2}{\pi} \arctan\left(\frac{x\cos(n\frac{\pi}{2})-y\sin(n\frac{\pi}{2})+r}{z}\right)
+\end{equation*}
+since
+\begin{equation*}
+	\arctan\left(\frac{x'}{z'}\right) = \arctan\left(\frac{x\cos\psi-y\sin\psi+r}{z}\right)
+\end{equation*}
+after the centre of mass rotates by $\psi$.
+
+Finally, the total probability of the die landing on the face is the sum of the contributions by each edge of the face:
+
+\begin{equation*}
+	\mathbb{P} = \frac{1}{6\pi} \sum_{n=0}^{3} \arctan\left(\frac{x\cos(n\frac{\pi}{2})-y\sin(n\frac{\pi}{2})+r}{z}\right)
+\end{equation*}
+
+One last thing must be done, since we want a single formula which returns the probability for all sides of a die. To do this, we need a procedure to align the die as it is in Figure \ref{fig:loadeddie3d} for all faces.
+
+widjawoidjwoiaj big long thing
+
+\section{Simulating an unfair coin flip}
+
+\textcite{unfairCoin} describe a way to flip a coin which makes it more likely to land on a particular side. Put simply, if a coin is spun like a flying disc, the side which started facing upwards will stay that way. In Theorem 2, Diaconis \textit{et al.} provide a formula for the probability that the coin lands on the upward-facing side as a function of the angle between the normal direction of the coin and its axis of rotation $\psi$:
+
+\begin{equation}\label{coinProbByAngle}
+	p = \begin{cases}
+		\frac{1}{2} + \frac{1}{\pi}\arcsin(\cot^2(\psi)) & \text{ if } \frac{\pi}{4}<\psi<\frac{3\pi}{4}
+		\\
+		1 & \text{ if } 0<\psi<\frac{\pi}{4} \text{ or } \frac{\pi}{4} < \psi < \pi
+	\end{cases}
+\end{equation}
+
+This is what would give us our value for $\mathbb{P}(Y_j)$. To add on to their work, we created a flipping coin simulator which demonstrates the phenomenon they describe. The simulator can be found at \href{https://will-drac.github.io/Penneys-Game/flipping%20coin/}{will-drac.github.io/Penneys-Game/flipping\%20coin/}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{flippingCoin}
+	\caption{Freeze frame of the simulator, showing the coin's normal in yellow and the axis of rotation in cyan. As described by Diaconis \textit{et al.}, the normal rotates around the axis.}
+	\label{fig:flippingcoin}
+\end{figure}
+
+\subsection{Finding the force on the coin as a function of the coin's probability}
+
+Another addition to \textcite{unfairCoin}'s work is a derivation of the force vector required to give the coin a particular probability.
+
+Inverting \eqref{coinProbByAngle}, we get the angle between the coin's normal direction and its rotational axis $\psi$ as a function of the probability it produces $p$:
+
+\begin{equation}\label{coinAngleByProb}
+	\psi(p) = \arctan\left(\left[\sin(\pi p-\frac{\pi}{2})\right]^{-\frac{1}{2}}\right) \text{ for } p \in \left[\frac{1}{2}, 1\right]
+\end{equation}
+
+We imagine a coin receiving a force which is anywhere except at the coin's centre (because that would result in no rotation), and the force having a large enough magnitude that the coin will make enough flips in the air so that the outcome is really random. We define a coordinate system as seen in Figure \ref{fig:coincoords}. The normal of the coin is made to be $<0, 0, 1>$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{coinCoords}
+	\caption{Coordinate system set up to determine the force vector $F$ required to give the coin a particular probability $p$. The origin is placed at the center of the coin and the force lies on the x-axis.}
+	\label{fig:coincoords}
+\end{figure}
+
+When the force $\vec{F}=<F_x, F_y, F_z>$ is applied to the coin, there will be a torque which rotates the coin about its centre of mass and in the direction of the torque $\vec{\tau}$. So the axis of rotation is parallel to the torque.
+
+Calling the normal of the coin $\hat{n}$, $\psi$ can be defined in this way:
+
+\begin{equation*}
+	\hat{n} \cdot \vec{\tau} = |\hat{n}| |\vec{\tau}| \cos\psi \implies \psi = \arccos\left(\frac{\hat{n}\cdot\vec{\tau}}{|\vec{\tau}|}\right)
+\end{equation*}
+
+We can calculate $\vec{\tau}$ as a function of $\vec{F}$
+
+\begin{equation*}
+	\vec{\tau} = \vec{r}\times\vec{F} = \begin{bmatrix}r\\0\\0\end{bmatrix} \times \begin{bmatrix}F_x \\ F_y \\ F_z\end{bmatrix} = \begin{bmatrix}0\\-r F_z\\r F_y\end{bmatrix}
+\end{equation*}
+
+and find that
+
+\begin{equation*}
+	\psi = \arccos \left(\begin{bmatrix}0\\0\\1\end{bmatrix} \cdot \begin{bmatrix}0\\-r F_z\\r F_y\\\end{bmatrix} \cdot \frac{1}{r\sqrt{F_y^2+F_z^2}} \right) = \arccos \left(\frac{F_y}{\sqrt{F_y^2+F_z^2}}\right) = \arctan\frac{F_z}{F_y}
+\end{equation*}
+
+A general form of a definition for $\vec{F}$ which satisfies $\psi = \arctan\frac{F_z}{F_y}$ is
+
+\begin{equation*}
+	\vec{F}(p) = \begin{bmatrix}a\\b\cos\left(\psi(p)\right)\\b\sin\left(\psi(p)\right)\end{bmatrix}
+\end{equation*}
+
+With $a$ being any real number and $b$ being any non-zero real number. Substituting $\psi$ with \eqref{coinAngleByProb}, we get $\vec{F}$ as a function of $p$.
+
 \part {Conclusion}
 
+We successfully extended the analogy of the betting game and created a formula for probability of each player winning in many variations of Penney's Game: games with any number of players, players predicting any number of flips even if they are different to each other, any kind of random outcome generator, and any probability distribution on the random outcome generator. We then physically modelled what it means to have a skewed probability distribution on dice and coins. We were also able to create a simulator which is able to verify our results beyond doubt. Finally, we developed a software tool which helped us to determine other trends and patterns in the game: the game limits to being fair as the number of possible outcomes of the flip tends to infinity but not as length of sequence tends to infinity in two-player games, and the shorter sequence almost always has an advantage, except in a few known cases.
+
 \part {References}
-\printbibliography
+\printbibliography[heading=none]
 
 
 

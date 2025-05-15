@@ -45,6 +45,48 @@
       \field{year}{2024}
       \field{dateera}{ce}
     \endentry
+    \entry{unfairCoin}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=f5a7dd4f4a0c79d2eaaf29d6dda0f4b3}{%
+           family={Diaconis},
+           familyi={D\bibinitperiod},
+           given={Persi},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cbe1726729e0d456268ff795c70dd2af}{%
+           family={Holmes},
+           familyi={H\bibinitperiod},
+           given={Susan},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b842e0d8befc4932cc2c0178b00b9bb2}{%
+           family={Montgomery},
+           familyi={M\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \strng{fullhash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \strng{bibnamehash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \strng{authorbibnamehash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \strng{authornamehash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \strng{authorfullhash}{ef0d1d84476111adf47d6b6db8cc9189}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Society for Industrial and Applied Mathematics}
+      \field{number}{2}
+      \field{title}{Dynamical Bias in the Coin Toss}
+      \field{volume}{49}
+      \field{year}{2007}
+      \field{dateera}{ce}
+      \field{pages}{211\bibrangedash 235}
+      \range{pages}{25}
+    \endentry
     \entry{markov}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=65a971270dc49907ad91088248bc5f8c}{%
@@ -109,6 +151,38 @@
       \endverb
       \verb{url}
       \verb https://doi.org/10.48550/arXiv.1904.09888
+      \endverb
+    \endentry
+    \entry{prng}{book}{}
+      \name{editor}{1}{}{%
+        {{un=0,uniquepart=base,hash=f42c41b05729beaad0d1740077b348ec}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Hubert},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f42c41b05729beaad0d1740077b348ec}
+      \strng{fullhash}{f42c41b05729beaad0d1740077b348ec}
+      \strng{bibnamehash}{f42c41b05729beaad0d1740077b348ec}
+      \strng{editorbibnamehash}{f42c41b05729beaad0d1740077b348ec}
+      \strng{editornamehash}{f42c41b05729beaad0d1740077b348ec}
+      \strng{editorfullhash}{f42c41b05729beaad0d1740077b348ec}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{chapter}{37}
+      \field{title}{GPU Gems 3}
+      \field{year}{2007}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-37-efficient-random-number-generation-and-application
+      \endverb
+      \verb{url}
+      \verb https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-37-efficient-random-number-generation-and-application
       \endverb
     \endentry
     \entry{penney}{article}{}
