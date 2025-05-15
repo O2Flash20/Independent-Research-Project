@@ -12,23 +12,27 @@ const probabilities: array<f32, valueOptions> = array(_PROBABILITIES);
 
 _BINS
 
-// https://indico.cern.ch/event/93877/contributions/2118070/attachments/1104200/1575343/acat3_revised_final.pdf
-// kinda the same: https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-37-efficient-random-number-generation-and-application
-fn seedPerThread(i: u32) -> u32 {
-    return i * 1099087573;
+// adapted from https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-37-efficient-random-number-generation-and-application
+fn tauStep(z_ptr: ptr<private, u32>, s1: u32, s2: u32, s3: u32, M: u32) -> u32 {
+    let b = (((*z_ptr<<s1)^*z_ptr)>>s2);
+    *z_ptr = (((*z_ptr & M) << s3) ^ b);
+    return *z_ptr;
 }
 
-fn tauStep(z: u32, s1: u32, s2: u32, s3: u32, M: u32) -> u32 {
-    let b = (((z<<s1)^z)>>s2);
-    return (((z & M) << s3) ^ b);
+fn LCGStep(z_ptr: ptr<private, u32>, a: u32, c: u32) -> u32 {
+    *z_ptr = a * *z_ptr + c;
+    return *z_ptr;
 }
 
-fn random(i: u32) -> f32 {
-    let seed = seedPerThread(i);
-
-    let r0 = tauStep(seed, 13, 19, 12, 429496729) ^ tauStep(seed, 2, 25, 4, 4294967288) ^ tauStep(seed, 3, 11, 17, 429496280) ^ (1664525*seed+1013904223);
-
-    return 2.3283064365387e-10 * f32(r0*seed + 1013904223);
+var<private> z1: u32 = 0; var<private> z2: u32 = 0; var<private> z3: u32 = 0; var<private> z4: u32 = 0;
+fn hybridTaus() -> f32 {
+    // Combined period is lcm(p1,p2,p3,p4)~ 2^121
+    return 2.3283064365387e-10 * f32(              // Periods
+        tauStep(&z1, 13, 19, 12, 4294967294) ^  // p1=2^31-1
+        tauStep(&z2, 2, 25, 4, 4294967288) ^    // p2=2^30-1
+        tauStep(&z3, 3, 11, 17, 4294967280) ^   // p3=2^28-1
+        LCGStep(&z4, 1664525, 1013904223)        // p4=2^32
+    );
 }
 
 fn pickValueWeighted(random: f32, probabilities: array<f32, valueOptions>) -> u32 {
@@ -69,7 +73,8 @@ fn sequencesMatch(s1: array<u32, maxSequenceLength>, s1Length: u32, s2: array<u3
     @builtin(workgroup_id) id: vec3u, @builtin(local_invocation_index) index: u32 //the position of this workgroup (same for all within a workgroup)
 ) {
     let binIndex = id.x*workgroups1D*workgroups1D + id.y*workgroups1D + id.z; //a unique place to put the results of each work group (all in a work group put it here)
-    let randomIndex = index + 1000000*(binIndex+1) + timeOffset; // multiplied by a big number so that there can be up to that many flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
+    let randomIndex = index + 112332*(binIndex+1) + timeOffset; // multiplied by a big number so that there can be up to that many flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
+    z1 = 2134*randomIndex; z2 = 432*randomIndex; z3 = 358*randomIndex; z4 = 123123*randomIndex;
 
     var flipsSequence = array<u32, maxSequenceLength>(); // [before-last, last, this]
     var i: u32 = 0; // the number of flips that have occurred in this game
@@ -77,7 +82,7 @@ fn sequencesMatch(s1: array<u32, maxSequenceLength>, s1Length: u32, s2: array<u3
     while (true) { // keep going until someone wins
         i++;
 
-        let thisFlip = pickValueWeighted(random(randomIndex+i), probabilities);
+        let thisFlip = pickValueWeighted(hybridTaus(randomIndex+i), probabilities);
         flipsSequence = shiftSequence(flipsSequence, thisFlip);
 
         _WINCHECKS //a lot is going on in here, defined in js
