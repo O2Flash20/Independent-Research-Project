@@ -378,11 +378,9 @@ function vectorPointMatrix(direction) {
 function getRotVel(force, forcePosition, forceTime, coinMass, coinRadius) {
     // it should be forcePosition cross force technically but something's off somewhere else
     const torque = force.copy().cross(forcePosition)
-    const torqueXZMagNorm = (torque.x * torque.x + torque.z * torque.z) / torque.mag()
+    const angularMomentum = torque.mult(forceTime)
 
-    const momentOfInertia = (coinMass * coinRadius * coinRadius / 4) * (2 - torqueXZMagNorm)
-
-    return torque.mult(forceTime / momentOfInertia)
+    return angularMomentum.mult(1, 0.5, 1).div(coinMass * coinRadius * coinRadius / 4)
 }
 
 function getForceCanvasPos() {
