@@ -104,9 +104,19 @@ Imagine two players sitting at a table with one coin between them. Each player p
 
 Right before each coin flip, both players bet on their chosen sequence appearing in the next flips. Note that this means each player will likely have multiple bets going on at the same time, since a new sequence of bets starts for each flip, and each bet might last multiple flips. The players are betting against each other: if one wins \$2, it's the other player that gives it to them. Although the game ends when one player's sequence appears in the flips, it does not necessarily mean that the player wins. There is no winner nor loser, just an exchange of money.
 \\\\
-We will explain using an example: Let's say Alice chooses HHT and Bob chooses THT. We'll start by following the sequence of bets that starts from the first flip. Before the coin is flipped for the first time, Alice bets that the flips will follow her sequence, so she bets that the first will be H, the second H, and the third T. Bob simultaneously bets that the first flip will be T, the second H, and the third T. Both players start by betting \$1 on this. If they win, they will have \$2 and they will use that to bet on the second flip, and so on, doubling each time. If they lose, that \$1 is gone. By random chance, the coin lands on heads. Alice now has \$2 and Bob has lost the bet: his prediction has failed and he lost the \$1 to Alice. He also has to pay \$1 to Alice for her win. So she actually has \$3 and he has -\$1. But Alice continues, she bets the \$2 from her win on the next flip being heads. They flip the coin again and it lands on heads. Alice  now has \$5 after winning another \$2 from Bob, and Bob has -\$3. She bets the \$4 from her correct bets so far on tails to finish her sequence of HHT. The third flip lands on heads instead. Alice loses that \$4 to Bob, so they start back where they began: each has \$1.
+We will explain using an example: Let's say Alice chooses HHT and Bob chooses THT. We'll start by following the sequence of bets that starts from the first flip. 
 
-So this whole thing was useless, and there can be any number of useless sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips.
+Before the coin is flipped for the first time, Alice bets that the flips will follow her sequence, so she bets that the first will be H, the second H, and the third T. Bob simultaneously bets that the first flip will be T, the second H, and the third T. 
+
+Both players start by betting \$1 on this. If they win, they will have \$2 and they will use that to bet on the second flip, and so on, doubling each time. If they lose, that \$1 is gone. 
+
+By random chance, the coin lands on heads. Alice now has \$2 and Bob has lost the bet: his prediction has failed and he lost the \$1 to Alice. He also has to pay \$1 to Alice for her win. So she actually has \$3 and he has -\$1. 
+
+But Alice continues, she bets the \$2 from her win on the next flip being heads. They flip the coin again and it lands on heads. Alice  now has \$5 after winning another \$2 from Bob, and Bob has -\$3. 
+
+She bets the \$4 from her correct bets so far on tails to finish her sequence of HHT. The third flip lands on heads instead. Alice loses that \$4 to Bob, so they start back where they began: each has \$1.
+
+There can be any number of ineffective sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips.
 
 This game actually ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. Notice that the row labelled 1 shows the sequence of bets that we described above: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
 
@@ -854,11 +864,11 @@ To find $\text{min}\{\mathbb{P}(A)\}|_{L_A = 3}$, we need to return to \eqref{Pm
 	\text{min}\{\mathbb{P}(A)\}|_{L_A = 3} = 1-\frac{2^3 \mathlarger{\sum_{i=0}^{2} \frac{1}{2^i}}}{2^3+2^4} = \frac{5}{12}
 \end{equation*}
 
-Since $\frac{5}{12} < \frac{1}{2}$, $\text{min}\{\mathbb{P}(A)\}|_{L_A \ge 3}$ will always be greater than $\frac{1}{2}$ and Player A will not necessarily have an advantage for all games where $s=2$, $L_A \ge 3$, and $L_B = L_A + 1$.
+Since $\frac{5}{12} < \frac{1}{2}$, $\text{min}\{\mathbb{P}(A)\}|_{L_A \ge 3}$ will always be less than $\frac{1}{2}$ and Player A will not necessarily have an advantage for all games where $s=2$, $L_A \ge 3$, and $L_B = L_A + 1$.
 
 There are only two possible cases left: when $s=2$, $k=1$, $L_A=1$, and $L_B=2$ and when $s=2$, $k=1$, $L_A=2$, and $L_B=3$. 
 
-The former only has two valid games possible: when A is 0 and B is 11 (or the same but with 0 and 1 swapped). Therefore we can use \eqref{2playerAProb} to determine that $\mathbb{P}(A)=\frac{3}{4}$, so A has the advantage.
+The former only has two valid games possible: when A is 0 and B is 11 and when A is 1 and B is 00. Therefore we can use \eqref{2playerAProb} to determine that $\mathbb{P}(A)=\frac{3}{4}$, so A has the advantage.
 
 The latter is an interesting case, since using \eqref{PminDifferentLengths} gives
 \begin{equation*}
@@ -881,9 +891,50 @@ It uses a pseudorandom number generator which is adapted from the hybrid LCG and
 
 \section {Creating a tool to aid in research of Penney's Game}
 
-The proofs done in Parts \ref{twoPlayerProofs} and \ref{shorterSequenceProof} were scouted for with the help of a software tool we created to visualize patterns and trends in Penney's Game.
+The proofs done in Parts \ref{twoPlayerProofs} and \ref{shorterSequenceProof} were scouted for and verified with the help of a software tool we created to visualize patterns and trends in Penney's Game.
 
-(strategies stuff here)
+The tool's core feature is the ability to instantly solve for the win probabilities of all players in the variations we discuss by using our general formula: Equations \eqref{Rdef}, \eqref{Ndef}, and \eqref{generalFormula}. From this ability, it has one other feature: the ability to make a table which visually represents all possible games in a given variation and each of the games' probabilities. Since most variations result in a huge number of games, we decided to show the probabilities as colours and not numbers. In the tool, hovering over a square will display the players' exact choices and the exact probabilities.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{s2k3}
+	\caption{Table representing the win probabilites in the basic variation of Penney's Game. Each row represents a unique sequence for Player A and each column represents a unique sequence for Player B. The lighter a square, the more likely Player A is to win. The diagonal squares are coloured in red since they are games where both players are using the same sequence, and thus the game is invalid.}
+	\label{fig:s2k3}
+\end{figure}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{s3k4}
+	\caption{Table representing win probabilities in a game using a random outcome generator with three equally likely outcomes and players predicting the next four flips instead of the three in the basic variation. Again, the brighter a square is, the more likely the player whose sequences are represented by the rows is to win. In all games which are more complicated than the basic version, patterns begin to be visible.}
+	\label{fig:s3k4}
+\end{figure}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"s3k4 uneven"}
+	\caption{The same situation as Figure \ref{fig:s3k4} except one outcome has a 50\% chance of occuring, another is 20\%, and another is 30\%. A new kind of pattern appears.}
+	\label{fig:s3k4-uneven}
+\end{figure}
+
+The tool can also create tables for three-player games, but these need three-dimensional tables. The tools displays them in two-dimensional slices that users can scroll though. Additionally, there is an option to display the win probabilities of all players at once. The first, second, and third player's win probabilities are mapped to the colours red, green, and blue respectively, as can be seen in Figure \ref{fig:s3k4-3p}.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"s3k4 3p"}
+	\caption{Table representing the same situation as Figure \ref{fig:s3k4} except there is a third player. This two-dimensional slice of the full table shows all games where the third player's chosen sequence is 1201. Notice that the the patterns in red are identical to those in Figure \ref{fig:s3k4}, since red is showing the probability of Player 1 winning, the same thing as Figure \ref{fig:s3k4}, except now in a 3-player game.}
+	\label{fig:s3k4-3p}
+\end{figure}
+
+The tool doesn't automatically visualize the whole three-dimensional table, but we manually created one in the 3d software Blender. A video showing off the render can be found at \href{https://github.com/Will-Drac/Penneys-Game/blob/main/paper/3d%20table%20render.mp4}{https://github.com/Will-Drac/Penneys-Game/blob/main/paper/3d\%20table\%20render.mp4}. Some images of it are shown in Figure \ref{fig:3d}.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{3d}
+	\caption{Visualization of a 3d win probabilities tables from three different angles. The lighter a point is, the more likely the third player (the one with a new unique sequence for each slice on the upwards axis) is to win.}
+	\label{fig:3d}
+\end{figure}
+
+The patterns in these tables tell us some new information about Penney's Game. Looking at Figure \ref{fig:s3k4}, we can notice three bright diagonal lines. These tell us that for each sequence that Player B chooses (each column), there are three sequences that Player A can choose (three rows) to get a high probability of winning (a bright square). The observation that the three appear right next to each other means that there is a pattern to them. This exact pattern is that the three sequences look like the opponent's sequence, except shifted over by one. For example, if the opponent chooses 1202, the best strategy would be to pick a sequence X120, with X being anything. There is always a best choice for X, but there is seemingly no pattern in what it is.
 
 \part {Physically modelling unfair coin flips and dice rolls \label{physicalModelling}}
 
@@ -967,26 +1018,85 @@ From steps one and two, we must rotate the centre of mass $<x, y, z>$ and then t
 	\begin{bmatrix}x'\\y'\\z'\end{bmatrix} = \begin{bmatrix}\cos\psi & -\sin\psi & 0 \\ \sin\psi & \cos\psi & 0 \\ 0 & 0 & 1\end{bmatrix} \begin{bmatrix}x\\y\\z\end{bmatrix} + \begin{bmatrix}r\\0\\0\end{bmatrix}
 \end{equation*}
 
-If the die starts as it is in Figure \ref{fig:loadeddie3d}, we have one edge with no rotation ($\psi=0$) and three edges each $\frac{\pi}{2} \text{rad}$ away from each other. To do this, we let $\psi = n\pi/2 \text{ with } n=\{0, 1, 2, 3\}$. Additionally, we are assuming that there is equal likelihood that the die lands on each of the 12 edges, so the chance that it lands on any one of the faces is $\frac{1}{2}$ So the probability coming from one of the edges that the die lands on the bottom face is:
+Using the new coordinates in \eqref{dieEdgeProb} we get,
+
+\begin{equation*}
+	\mathbb{P} = \frac{2}{\pi}\arctan\left(\frac{x'}{z'}\right) = \frac{2}{\pi}\arctan\left(\frac{x\cos\psi-y\sin\psi+r}{z}\right)
+\end{equation*}
+
+If the die starts as it is in Figure \ref{fig:loadeddie3d}, we have one edge with no rotation ($\psi=0$) and three edges each $\frac{\pi}{2} \text{rad}$ away from each other. To do this, we let $\psi = n\pi/2 \text{ with } n=\{0, 1, 2, 3\}$.
+
+Additionally, we are assuming that there is equal likelihood that the die lands on each of the 12 edges, so the chance that it lands on any one of the faces is $\frac{1}{12}$ So the probability which comes from the selected edge that the die lands on the bottom face is:
 
 \begin{equation*}
 	\mathbb{P}_n = \frac{1}{12} \cdot \frac{2}{\pi} \arctan\left(\frac{x\cos(n\frac{\pi}{2})-y\sin(n\frac{\pi}{2})+r}{z}\right)
 \end{equation*}
-since
-\begin{equation*}
-	\arctan\left(\frac{x'}{z'}\right) = \arctan\left(\frac{x\cos\psi-y\sin\psi+r}{z}\right)
-\end{equation*}
-after the centre of mass rotates by $\psi$.
 
 Finally, the total probability of the die landing on the face is the sum of the contributions by each edge of the face:
 
-\begin{equation*}
-	\mathbb{P} = \frac{1}{6\pi} \sum_{n=0}^{3} \arctan\left(\frac{x\cos(n\frac{\pi}{2})-y\sin(n\frac{\pi}{2})+r}{z}\right)
+\begin{equation*}\label{dieFaceProb}
+	\mathbb{P}_f = \frac{1}{6\pi} \sum_{n=0}^{3} \arctan\left(\frac{x\cos(n\frac{\pi}{2})-y\sin(n\frac{\pi}{2})+r}{z}\right)
 \end{equation*}
 
 One last thing must be done, since we want a single formula which returns the probability for all sides of a die. To do this, we need a procedure to align the die as it is in Figure \ref{fig:loadeddie3d} for all faces.
 
-widjawoidjwoiaj big long thing
+We imagine the die centred at the origin with "1" facing towards $-z$, "2" facing towards $+x$, and "3" facing towards $+y$. The centre of mass will be defined according to that coordinate system. For each face $f \in [1, 6] $, we will define three angles $\alpha$, $\beta$, $\gamma$ which will get the die to rotate to that face. The rotation will be followed by a translation to shift the centre of the die to be like it is in Figure \ref{fig:loadeddie3d}.
+
+\begin{equation*}
+	\alpha = \begin{cases} 
+		0 & \text{ if } f \le 2 \\
+		-\pi/2 & \text{ if } f = 3 \\
+		-3\pi/2 & \text{ if } f = 4 \\
+		-\pi & \text{ if } f \ge 5  \\
+	\end{cases}
+\end{equation*}
+
+\begin{equation*}
+	\beta = \begin{cases} 
+		0 & \text{ if } f = 1 \text{ or } f = 6 \\
+		\pi/2 & \text{ otherwise }
+	\end{cases}
+\end{equation*}
+
+\begin{equation*}
+	\gamma = \begin{cases} 
+		0 & \text{ if } f \le 3 \\
+		\pi/2 & \text{ if } f \ge 4
+	\end{cases}
+\end{equation*}	
+
+So now we can define the position of the center of mass $(x, y, z)$ in \eqref{dieFaceProb} as a function of the face selected and the position of the centre of mass in the coordinate system described in the previous paragraph $(x_o, y_o, z_o)$.
+
+\begin{equation*}
+	\begin{bmatrix}
+		x \\ y \\ z
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\cos\gamma & -\sin\gamma & 0 \\
+		\sin\gamma & \cos\gamma & 0 \\
+		0 & 0 & 1
+	\end{bmatrix}
+	\begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & \cos\alpha & -\sin\alpha \\
+		0 & \sin\alpha & \cos\alpha
+	\end{bmatrix}
+	\begin{bmatrix}
+		\cos\beta & 0 & \sin\beta \\
+		0 & 1 & 0 \\
+		-\sin\beta & 0 & \cos\beta
+	\end{bmatrix}
+	\begin{bmatrix}
+		x_o \\ y_o \\ z_o
+	\end{bmatrix}
+	 +
+	 \begin{bmatrix}
+	 	0 \\ 0 \\ r
+	 \end{bmatrix}
+\end{equation*}
+
+And in the end, we have a function (which is too big to be fully written out), which inputs $(x_o, y_o, z_o)$ and the size of the die $s$ and outputs a probability for each outcome of rolling the die. The outcomes are labelled with the variable $f$, which represents the number on the die that will end up flat against the table. To see the probability of a face ending up facing upwards (let's label it $f'$), use the function with $f=7-f'$, since numbers on opposite faces of a die add up to 7.
 
 \section{Simulating an unfair coin flip}
 

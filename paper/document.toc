@@ -5,11 +5,11 @@
 \contentsline {part}{IV\hspace {1em}Deriving a formula for win probabilities with two players}{7}{part.4}%
 \contentsline {section}{\numberline {1}The basic variation of Penney's Game}{7}{section.1}%
 \contentsline {section}{\numberline {2}Allowing for any random outcome generator with any known probability distribution}{11}{section.2}%
-\contentsline {section}{\numberline {3}Extending to games with sequences of different lengths}{12}{section.3}%
+\contentsline {section}{\numberline {3}Extending to games with sequences of different lengths}{13}{section.3}%
 \contentsline {part}{V\hspace {1em}Deriving a formula for win probabilities in games with any number of players}{13}{part.5}%
-\contentsline {part}{VI\hspace {1em}Two-player games with equal sequence lengths and even flip outcome likelihoods}{14}{part.6}%
+\contentsline {part}{VI\hspace {1em}Two-player games with equal sequence lengths and even flip outcome likelihoods}{15}{part.6}%
 \contentsline {section}{\numberline {4}Proving that when sequence S appears, Player S will always win more money than their opponent in the betting game}{15}{section.4}%
-\contentsline {section}{\numberline {5}Determining how changes of $R$ values affect $\mathbb {P}(A)$}{16}{section.5}%
+\contentsline {section}{\numberline {5}Determining how changes of $R$ values affect $\mathbb {P}(A)$}{17}{section.5}%
 \contentsline {section}{\numberline {6}Proving that the greatest win probability difference occurs when $baa...a$ is played against $aaa...a$ for $b\ne a$}{18}{section.6}%
 \contentsline {section}{\numberline {7}Determining the bounds of $\mathbb {P}(A)$ and $\mathbb {P}(B)$}{19}{section.7}%
 \contentsline {section}{\numberline {8}Using the probability bounds to study extreme games.}{19}{section.8}%
@@ -20,9 +20,9 @@
 \contentsline {part}{VIII\hspace {1em}Software}{23}{part.8}%
 \contentsline {section}{\numberline {9}Verifying the formula with simulations}{23}{section.9}%
 \contentsline {section}{\numberline {10}Creating a tool to aid in research of Penney's Game}{24}{section.10}%
-\contentsline {part}{IX\hspace {1em}Physically modelling unfair coin flips and dice rolls }{24}{part.9}%
-\contentsline {section}{\numberline {11}Deriving an approximate probability distribution for loaded dice}{24}{section.11}%
-\contentsline {section}{\numberline {12}Simulating an unfair coin flip}{27}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Finding the force on the coin as a function of the coin's probability}{28}{subsection.12.1}%
-\contentsline {part}{X\hspace {1em}Conclusion}{30}{part.10}%
-\contentsline {part}{XI\hspace {1em}References}{30}{part.11}%
+\contentsline {part}{IX\hspace {1em}Physically modelling unfair coin flips and dice rolls }{29}{part.9}%
+\contentsline {section}{\numberline {11}Deriving an approximate probability distribution for loaded dice}{29}{section.11}%
+\contentsline {section}{\numberline {12}Simulating an unfair coin flip}{33}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Finding the force on the coin as a function of the coin's probability}{34}{subsection.12.1}%
+\contentsline {part}{X\hspace {1em}Conclusion}{36}{part.10}%
+\contentsline {part}{XI\hspace {1em}References}{36}{part.11}%
