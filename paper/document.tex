@@ -66,15 +66,15 @@ Course Coordinator: Ferenc Balogh
 
 \part{Abstract}
 
-Penney’s Game is an example of where our intuitive understanding of probability completely fails; it’s a seemingly fair game with a surprisingly complicated strategy. The goal of this research is to explore Penney’s Game using new methods and in areas that it has not been explored before. By studying a similar game that is fair, we create a formula for the probability of each player winning Penney’s Game depending on the number of players, the sequences chosen by each player, the length of each sequence, the number of possible outcomes of the “flip” (coin flip or dice roll or random outcome generation), and the probability distribution of the outcomes of this flip. The formula was verified by computer simulations and then packaged into an online probability calculator. This research tool was then used to attract our attention toward patterns within Penney's Game, leading to a few new proofs. Among these, it was proven that games tend towards being fair with an infinite number of possible outcomes from the “flip” but not infinite sequence length, and that the shorter sequence always has an advantage, except in some specific and known cases. The work done in this paper is not exhaustive, there is still plenty to explore and discover, and we leave behind tools to help future researchers to do this.
+Penney’s Game is an example of where our intuitive understanding of probability completely fails; it’s a seemingly fair game with a surprisingly complicated strategy. The goal of this research is to explore Penney’s Game using new methods and in areas that it has not been explored before. By studying a similar game which is fair, we create a formula for the probability of each player winning Penney’s Game depending on the number of players, the sequences chosen by each player, the length of each sequence, the number of possible outcomes of the “flip” (coin flip or dice roll or random outcome generation), and the probability distribution of the outcomes of this flip. The formula was verified by computer simulations and then packaged into an online probability calculator. This research tool was then used to attract our attention toward patterns within Penney's Game, leading to a few new proofs. Among these, it was proven that games tend towards being fair with an infinite number of possible outcomes from the “flip” but not infinite sequence length, and that the shorter sequence always has an advantage, except in some specific and known cases. The work done in this paper is not exhaustive. There is still plenty to explore and discover, and we leave behind tools to help future researchers to do this.
 
 \part{Introduction}
 
 In its basic variation, Penney's Game is simple game invented by Walter Penney involving two players and one coin. Each player predicts which sequence of flips will appear first as the coin is being flipped. For example, Alice predicts that HHT (heads, then heads, then tails) will appear first, while Bob predicts that THT (tails, then heads, then tails) will appear first. The players flip the coin until the last three coin flips match with the sequence predicted by one of the players. That player wins. Note that this does not mean the coin is flipped three times, a match is checked for, and then it's flipped three times again. Instead, after every coin flip, the last three flips are checked to see if they match with a player's prediction.
 
-The game might seem fair, but it really is not. In that example, Alice actually has a 62.5\% chance of beating Bob. In fact, for any sequence that one player predicts, there is another that will beat it on average \parencite{penney}. A formula for finding the exact win probabilities for any sequence in this basic variation of the game was first discovered by the mathematician John Conway, but he never supplied a proof of his "leading number algorithm".
+The game might seem fair, but it is not. In that example, Alice actually has a 62.5\% chance of beating Bob. In fact, for any sequence that one player predicts, there is another that will beat it on average \parencite{penney}. A formula for finding the exact win probabilities for any sequence in this basic variation of the game (the variation being described) was first discovered by the mathematician John Conway, but he never supplied a proof of his "leading number algorithm".
 
-Since Conway, many other researchers have developed different algorithms and ways of thinking about the problem. One way is using Markov chains and martingale arguments, such as the paper by \textcite{markov}. However, we hope to use a much simpler way of understanding the game and deriving a formula for win probabilities. The general idea, which will be explained in depth during Part \ref{derivingFormula2P}, is to think about another game instead, which this time is always fair. This new game, which we will call the betting game, contains the same probabilities as Penney's Game but has a clear and powerful starting point for analysis due to its fairness. The idea of the betting game comes simultaneously from two places: a research paper which tackles Penney's game from the perspective of no-arbitrage \parencite{miller}, and \textcite{chung}'s talk which describes it in the context of the Optional Stopping Theorem. The latter will be the same approach used in this paper.
+Since Conway, many other researchers have developed different algorithms and ways of thinking about the problem. One way is using Markov chains and martingale arguments, such as the paper by \textcite{markov}. However, we use a much simpler way of understanding the game and deriving a formula for win probabilities. The general idea, which will be explained in depth during Part \ref{derivingFormula2P}, is to think about another game instead, which this time is always fair. This new game, which we will call the betting game, contains the same probabilities as Penney's Game but has a clear and powerful starting point for analysis due to its fairness. The idea of the betting game comes simultaneously from two places: a research paper which tackles Penney's game from the perspective of no-arbitrage \parencite{miller}, and \textcite{chung}'s talk which describes it in the context of the Optional Stopping Theorem. The latter will be the same approach used in this paper.
 
 Our goal is to extend the betting game analogy further than ever before to allow us to determine probabilities in many variations of Penney's Game. A formula, \eqref{generalFormula}, will be derived which can calculate the win probabilities in games with:
 
@@ -85,7 +85,7 @@ Our goal is to extend the betting game analogy further than ever before to allow
 	\item Unfair coins, loaded dice, and random outcome generators with any probability distribution
 \end{enumerate}
 
-We also hope to verify our formula with simulations, and then analyze it to discover new things about Penney's Game in some of the variations covered by the formula.
+We also verify our formula with simulations, and then analyze it to discover new things about Penney's Game in some of the variations covered by the formula.
 
 \part{Showing that Penney's Game is unintuitive, and providing some hints for understanding it}
 
@@ -123,13 +123,13 @@ We have shown that Penney's Game is unintuitive but not impossible to understand
 
 Imagine two players sitting at a table with one coin between them. Each player picks a sequence and they begin to flip the coin until the last flips match with one of the player's sequences. Up until now, the game has been identical to Penney's Game, and that is by design. Now it begins to differ. This is how the betting game works:
 
-Right before each coin flip, both players bet on their chosen sequence appearing in the next flips. This means each player will likely have multiple bets going on at the same time, since a new sequence of bets starts for each flip, and each sequence might last for multiple flips. They are also always betting on the same chosen sequence throughout the game. The bets are against each other; there is no third party that gives or takes money. If one wins \$2, it's the other player that gives it to them. Although the game ends when one player's sequence appears in the flips, there is no winner nor loser, just an exchange of money.
+Right before each coin flip, both players bet on their chosen sequence appearing in the next flips. This means each player will likely have multiple bets going on at the same time, since a new sequence of bets starts for each flip, and each sequence might last for multiple flips (if it doesn't get interrupted, it will last for three). They are also always betting on the same chosen sequence throughout the game. The bets are against each other; there is no third party that gives or takes money, so if one wins \$2, it's the other player that gives it to them. Although the game ends when one player's sequence appears in the flips, there is no winner nor loser, just an exchange of money.
 \\\\
-We will explain using an example: Let's say Alice chooses HHT and Bob chooses THT. We'll start by following the sequence of bets that starts from the first flip. 
+We will explain using an example: Let's say Alice chooses HHT and Bob chooses THT. We'll start by following only the sequence of bets that starts from the first flip. 
 
 Before the coin is flipped for the first time, Alice bets that the flips will follow her sequence, so she bets that the first will be H, the second H, and the third T. Bob simultaneously bets that the first flip will be T, the second H, and the third T. 
 
-Both players start by betting \$1 on this. If they win, they will have \$2 and they will use that to bet on the second flip, and so on, doubling each time. If they lose, all the money they wagered is gone and this sequence of bets ends. 
+Both players start each sequence of bets by betting \$1 on the first flip of the sequence. If they win, they will have \$2 which they will use to bet on the second flip, and so on, doubling each time. If they lose any bet, all the money they wagered will be gone and this sequence of bets will end. 
 
 By random chance, the first coin lands on heads. Alice now has \$2 and Bob has lost the bet: his prediction has failed and he lost the \$1 to Alice. He also has to pay \$1 to Alice for her win. So she actually has \$3 and he has -\$1. 
 
@@ -137,11 +137,11 @@ Bob's sequence of bets is finished, but Alice continues. She bets the \$2 from h
 
 Alice bets the \$4 from her correct bets so far on tails to finish her sequence of HHT. The third flip lands on heads instead, so Alice loses that \$4 to Bob, and they start back where they began: each has \$1.
 
-There can be any number of ineffective sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips.
+There can be any number of ineffective sequences of bets like this until the game ends. But remember that each time a coin was flipped, each player starts new bets on their chosen sequence of flips. There were bets that we haven't looked at yet.
 
-This game ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. Notice that the row labelled 1 shows the sequence of bets that we described above: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
+This hypothetical game ends one flip later, with Alice's sequence appearing in the coin flips. We will illustrate this game in a table. The top row represents the coin flips that actually occur. All other rows represent a new sequence of bets that the player makes. The columns show all bets made simultaneously before each flip, although all bets will be for different amounts of money. Notice that the row labelled 1 shows the sequence of bets that we described previously: the sequence that starts at the first coin flip. But there were three more sequences of bets until the game ended.
 
-To simplify, we can think of the bets slightly differently. We can ignore the constant exchange of money between players, and have them only give each other money when the game ends.
+To simplify, we can think of the bets slightly differently. We can ignore the constant exchange of money between players, and have them keep track of their profit so that they exchange money only at the end of the game.
 \\\\\\
 Alice:
 \begin{tabular}{|c|c|c|c|c|}
@@ -175,11 +175,11 @@ Bob:
 	\hline
 \end{tabular}
 \\\\\\
-In all rows except 4, Bob loses the sequence of bets on the first one. So all others after it are not coloured, indicating that they don't have an opportunity to happen at all. He won the first bet in row 4, but his bets were cut off from Alice winning the game, meaning that Bob gets to keep the \$2 he won from it.
+In all rows except 4, Bob loses the sequence of bets immediately. So all others after it are not coloured, indicating that they don't have an opportunity to happen at all. He won the first bet in row 4, but this sequence of bets was cut off by Alice winning her three bets in a row and ending the game, meaning that Bob got to keep the \$2 he won from row 4.
 
 In total, Bob owes Alice \$8, but Alice owes Bob \$2. After the exchange, Alice has profited \$6 and Bob has lost \$6.
 
-If either player had received money from a sequence of bets which started at another flip, it would get added to the total.
+If, in another game, either player had received money from a sequence of bets which started at another flip, the money would get added to the total before the exchange.
 
 It is very important to notice that the final share of money is not unique to this game in particular. In any game where Alice's sequence of HHT appears before Bob's sequence of THT, Alice will end up getting \$6 from Bob. This is because all of the flips before the last three do not matter: the prior bets of both Alice and Bob will fail eventually. The only two ways for a player to make money from a sequence of bets are:
 
@@ -267,7 +267,7 @@ In total, when Bob's sequence appears, Alice gives him \$10.
 
 Note that something interesting is happening here. When Alice's sequence appears, Alice makes \$6 from Bob, but when Bob's sequence appears, he makes \$10 from Alice. This might make it seem like Bob has an advantage in this game, but there's a problem with that.
 \\\\
-\underline{Here is the point of all this:} All Alice and Bob are doing is betting on a fair coin, and either doubling or losing the money they put into the bet. Each individual bet is \underline{fair}. But because of the linearity of expectation, it doesn't matter if you make a fair bet once or 100 times, on average, you should expect to neither lose nor gain money. Your expected profit should be 0.
+\textbf{Here is the point of all this:} All Alice and Bob are doing is betting on a fair coin, and either doubling or losing the money they put into the bet. Each individual bet is \underline{fair}. But because of the linearity of expectation, it doesn't matter if you make a fair bet once or 100 times, on average, you should expect to neither lose nor gain money. Your expected profit should be 0.
 
 But it seems like Bob is doing better than Alice, and that doesn't make sense \textit{assuming} that Bob's sequence and Alice's sequence have an equal chance of appearing. So let's simply assume that they don't. We'll take $\mathbb{P}(A)$ to mean the probability that Alice's sequence appears and ends the game, and $\mathbb{P}(B)$ to mean the probability that Bob's sequence appears and ends the game.
 
@@ -287,7 +287,7 @@ Now, of course, either Alice's or Bob's sequence must appear, so
 
 We now have two equations and two unknowns, so $\mathbb{P}(A)$ and $\mathbb{P}(B)$ can be found. After some algebra, $\mathbb{P}(A) = 62.5\%$ and $\mathbb{P}(B) = 37.5\%$.
 
-Importantly, this means that if Alice and Bob were playing Penney's Game with the sequences HHT and THT, Alice would have a 62.5\% chance of winning and Bob would have a 37.5\% chance of winning.
+Importantly, this means that if Alice and Bob were playing Penney's Game with the sequences HHT and THT, Alice would have a 62.5\% chance of winning and Bob would have a 37.5\% chance of winning. This is because Penney's Game and the betting game end in exactly the same way, \textbf{so $\mathbb{P}(A)$ and $\mathbb{P}(B)$ apply to Penney's Game too}.
 
 Generalizing beyond this example, we can define the net profit of Player X against Player Y when sequence Z appears (Z being either Player X or Player Y's sequence) as:
 
@@ -329,27 +329,25 @@ And the subscript of a sequence indexes its elements. For example, in $X$: HTT, 
 
 \section{Allowing for any random outcome generator with any known probability distribution}
 
-We have described Penney's Game as being played with a fair coin, but this is not necessary. We can extend the formula to account for any random outcome generator with any known probability distribution. For example, a random outcome generator can be a loaded 20-sided die or a coin flipped in a certain way so that it's more likely to land on heads\footnote{We provide a way to physically model loaded die and unfair coins in Part \ref{physicalModelling}.}. From now on, we will generalize all of these random outcome generators by imagining them as a random number generator that spits out integers $[0, 1, ..., n-1]$ for $n$ possible outcomes of the "flip". For example, instead of writing "heads" / "H" and "tails" / T" for a coin, we will write "0" and "1" because a coin has $n=2$. And a 6-sided die will be thought of as a generator outputting numbers $0, 1, 2, 3, 4, 5$.
+We have described Penney's Game as being played with a fair coin, but this is not necessary. We can extend the formula to account for any random outcome generator with any known probability distribution. For example, a random outcome generator can be a loaded 20-sided die or a coin flipped in a certain way so that it's more likely to land on heads\footnote{We provide a way to physically model loaded die and unfair coins in Part \ref{physicalModelling}.}. We will generalize all of these random outcome generators by imagining them as a random number generator that outputs integers $[0, 1, ..., n-1]$ for $n$ possible outcomes of the "flip". For example, instead of writing "heads" / "H" and "tails" / T" for a coin, we will write "0" and "1" because a coin has $n=2$. HHT will be written 001. A 6-sided die will be thought of as a generator outputting numbers $0, 1, 2, 3, 4, 5$.
 
 To keep the betting game a valid analogy to Penney's Game, we need to keep the condition that the game must be fair, no matter which outcome generator is being used. This has a simple fix.
 
-With a fair two-sided coin. We said that each bet is a double-or-nothing. This is because for a bet in which you put $\$X$, there is a 50\% chance of winning $\$X$ and a 50\% chance of losing $\$X$. Mathematically, the expected profit is 0, so
+The expected profit of a bet must be \$0 for the game to be fair, so
 
 \begin{equation*}
 	W \cdot \mathbb{P}(W) + L \cdot \mathbb{P}(L)=0
 \end{equation*}
 
-Meaning that the net profit from winning ($W$) weighted by the probability of winning ($\mathbb{P}(W)$), added to the net profit from losing ($L$) weighted by the probability of losing ($\mathbb{P}(L)$) should be zero.
+Meaning that the net profit from winning ($W$) weighted by the probability of winning ($\mathbb{P}(W)$), added to the net profit from losing ($L$) weighted by the probability of losing ($\mathbb{P}(L)$) should be zero. Since this bet must either be won or lost, $\mathbb{P}(W) + \mathbb{P}(L) = 1$, so $\mathbb{P}(L) = 1-\mathbb{P}(W)$.
 
-Since this bet must either be won or lost, $\mathbb{P}(W) + \mathbb{P}(L) = 1$, so $\mathbb{P}(L) = 1-\mathbb{P}(W)$.
-
-For example, in the case of a fair coin, 
+With a fair two-sided coin. We said that each bet is a double-or-nothing. This is because for a bet in which you put $\$X$, there is a 50\% chance of winning $\$X$ and a 50\% chance of losing $\$X$. Therefore $W=X$, $\mathbb{P}(W)=\mathbb{P}(L)=\frac{1}{2}$, and $L=-X$.
 
 \begin{equation*}
 	X \cdot \frac{1}{2} + (-X) \cdot \frac{1}{2}=0
 \end{equation*}
 
-Now we can generalize for any $\mathbb{P}(W)$. We will say that the outcome of any bet will either be losing what you put into it, $L=-X$, or winning some multiple of what you put into it, $W=\lambda X$. We want to see which multiple $\lambda$ must be used as a function of $\mathbb{P}(W)$.
+Now we can generalize for any $\mathbb{P}(W)$. We will say that the outcome of any bet will either be losing what you put into it, $L=-X$, or winning some multiple of what you put into it, $W=\lambda X$. We want to see which multiple $\lambda$ must be used to keep the game fair.
 
 \begin{equation*}
 	(\lambda X) \cdot \mathbb{P}(W) + (-X) \cdot (1-\mathbb{P}(W)) = 0
@@ -359,7 +357,7 @@ Now we can generalize for any $\mathbb{P}(W)$. We will say that the outcome of a
 	\lambda = \frac{1}{\mathbb{P}(W)} - 1
 \end{equation*}
 
-In our table and our formula for $R$, we don't care about how much gets added to the profit, but instead how much profit there is after a win. So after winning a bet of $X$, we will be left with a sum of $X'$ such that
+In our table and our formula for $R$, we don't care about how much gets added to the profit, but instead how much profit a player has made after a win. So after winning a bet of $X$, we will be left with a sum of $X'$ such that
 
 \begin{equation*}
 	\mathbf{X'} = X + \lambda X = X + \frac{X}{\mathbb{P}(W)} - X = \mathbf{X\frac{1}{\mathbb{P}(W)}}
@@ -371,17 +369,17 @@ So instead of a double or nothing, it must be a \textit{multiply your bet by $\f
 	R_X(Y) = \sum_{i=1}^{3} \prod_{j=1}^{i} \frac{1_{[Y_j = X_{3-i+j}]}}{\mathbb{P}(Y_j)}
 \end{equation}
 
-$\mathbb{P}(Y_j)$ is written instead of $\mathbb{P}(W)$ because, in this formula, the bet is always being placed on the $j^{\text{th}}$ element of sequence $Y$ appearing, which we define to be $\mathbb{P}(Y_j)$. So $\mathbb{P}(Y_j)$ is the probability of winning for all bets. For example, with a fair coin, if sequence Y is HHT and $j=2$, then $\mathbb{P}(Y_j) = \mathbb{P}(H) = \frac{1}{2} = \mathbb{P}(W)$ and we return to what we had in \eqref{Rbasic} because $\frac{1}{(\frac{1}{2})} = 2$.
+$\mathbb{P}(Y_j)$ is written instead of $\mathbb{P}(W)$ because, in this formula, the bet is always being placed on the $j^{\text{th}}$ element of sequence $Y$ appearing, which we define to be $\mathbb{P}(Y_j)$. \textbf{So $\mathbb{P}(Y_j)$ represents the probability of winning for any bet.} For example, with a fair coin, if sequence Y is HHT and this bet has the index $j=2$, then $\mathbb{P}(Y_j) = \mathbb{P}(H) = \frac{1}{2} = \mathbb{P}(W)$ and we return to what we had in \eqref{Rbasic} because $\frac{1}{(\frac{1}{2})} = 2$.
 
 \section{Extending to games with sequences of different lengths}
 
-As it was previously discussed, a sequence of bets can only return money (and therefore only matters) if either of these things happen:
+As it was previously discussed, a sequence of bets can only return money (and therefore only matter) if either of these things happen:
 \begin{enumerate}
 	\item The bets go to completion. In other words, if all bets in the sequence succeed. This will end the game.
 	\item A sequence of bets gets cut off by the game ending.
 \end{enumerate}
 
-This allowed us to only look at the last 3 sequences of bets in the basic variation, because there will be 3 bets going on when the game ends, because the sequences predict the next three flips. For a game involving sequences of length $k$, all we have to change is that we should now look at the last $k$ sequences of bets before a player ends the betting. This is again a simple fix in the formula for $R$, introducing a $k$ in the place of the 3:
+This allowed us to only look at the last 3 sequences of bets in the basic variation, because there will be 3 bets going on when the game ends, because the sequences predict the next 3 flips. For a game involving sequences of length $k$, all we have to change is that we should now look at the last $k$ sequences of bets before a player ends the betting. This is again a simple fix in the formula for $R$, introducing a $k$ in the place of the 3:
 
 \begin{equation}\label{RanyLength}
 	R_X(Y) = \sum_{i=1}^{k} \prod_{j=1}^{i} \frac{1_{[Y_j = X_{k-i+j}]}}{\mathbb{P}(Y_j)}
@@ -391,7 +389,7 @@ At this point, our formula for $R$ is identical to the one derived by \textcite{
 
 However, we can make one more small change to allow for games in which the players are predicting a different number of coin flips into the future compared to each other. For a sequence $S$, we will define its length (the number of flips predicted in the future) to be $L_S$.
 
-Using the same logic as before, we find that the number of sequences of bets that must be checked when calculating $R_X(Y)$ must be $k = \text{min}\{L_X, L_Y\}$. Additionally, the subscript of X in $1_{[Y_j = X_{k-i+j}]}$ continues to involve the length of X, which has been changed from $k$ to $L_X$. This completes our work on $R$:
+Using the same logic as before, we find that the number of sequences of bets that must be checked when calculating $R_X(Y)$ must be $k = \text{min}\{L_X, L_Y\}$. Additionally, the subscript of X in $1_{[Y_j = X_{k-i+j}]}$ must continue to involve the length of X, which has been changed from $k$ to $L_X$. This completes our work on $R$:
 
 \begin{equation}\label{Rdef}
 	R_{X}(Y) = \sum_{i=1}^{\text{min}\{L_{X}, L_{Y}\}} \prod_{j=1}^{i} \frac{1_{[Y_{j} = X_{L_{X} - i + j}]}}{\mathbb{P}(Y_{j})}
@@ -401,13 +399,13 @@ It is important to note that having two or more sequences of different lengths l
 
 Games like this can be dealt with using a rule for picking sequences such as "one sequence must not be contained within another or else the game will be considered invalid."
 
+As an interesting byproduct of the function $R$, calculating $R_X(X)$ will return the expected wait time for sequence $X$.
+
 \part{Deriving a formula for win probabilities in games with any number of players}
 
-The last way that we will generalize our formula is to make it work with any number of players.
+The last way that we will generalize our formula is to make it work with any number of players. We will define $n$ to represent the number of players, and we will store the predicted sequences of all players in a list: $\{S_1, S_2, ..., S_n\}$.
 
-We will define $n$ to represent the number of players, and we will store the predicted sequences of all players in a list: $\{S_1, S_2, ..., S_n\}$.
-
-The first thing we can do is edit \eqref{NtwoPlayers}. This equation says that in the betting game with two players, money won by one player is paid by the other. We can make this work with more than two players. A way to do this which keeps the game fair for everyone (this is still necessary), is to say that at the end of the game, each player's winnings are paid by all other players equally. For example, in a game with 5 players, if one player wins \$1, all the others will give that player \$0.25 when the game ends. Mathematically, that rule can be expressed like this:
+The first thing we can do is edit \eqref{NtwoPlayers}. This equation says that in the betting game with two players, money won by one player is paid by the other. We can make this work with more than two players. A way to do this which keeps the game fair for everyone (this is always necessary) is to say that at the end of the game, each player's winnings are paid by all other players equally. For example, in a game with 5 players, if one player wins \$1, all the others will give that player \$0.25 when the game ends. Mathematically, that rule can be expressed like this:
 
 \begin{equation}\label{Ndef}
 	N_{X}(Y) = \frac{1}{n-1} \mathlarger{[}nR_{X}(Y) - \sum_{i=1}^{n}R_{X}(S_i)\mathlarger{]}
@@ -458,18 +456,20 @@ Translating this system of linear equations into a matrix equation, we get the g
 	\end{bmatrix}
 \end{equation}
 
-Note that we were able to remove the equation for the last player and replace it by $\mathbb{P}(S_1) + \mathbb{P}(S_2) + ... + \mathbb{P}(S_n) = 1$, since only $n$ equations are necessary.
+Note that we were able to remove the equation for the last player and replace it by $\mathbb{P}(S_1) + \mathbb{P}(S_2) + ... + \mathbb{P}(S_n) = 1$, since only $n$ equations are necessary and without this extra equation there will be infinitely many solutions.
+
+To calculate the vector holding the win probabilities, all $N$ values must be calculated using \eqref{Ndef} and \eqref{Rdef}, then the matrix must be inverted and multiplied by the vector on the right of the equation.
 
 \part{Two-player games with equal sequence lengths and even flip outcome likelihoods}\label{twoPlayerProofs}
 
-Solving \eqref{Ndef} and \eqref{generalFormula} with $n=2$, we get a formula for the probabilities in a two-player game. This formula is, of course, identical to \eqref{PtwoPlayersFirst}, which was derived earlier on.
+Solving \eqref{Ndef} and \eqref{generalFormula} with $n=2$, we get a formula for the probabilities in a two-player game. This formula is, of course, identical to \eqref{PtwoPlayersFirst}, which was derived previously.
 \begin{equation}\label{2playerAProb}
 	\mathbb{P}(A)=\frac{R_B(B)-R_B(A)}{R_A(A)-R_A(B)+R_B(B)-R_B(A)}
 \end{equation}
 \begin{equation}\label{2playerBProb}
 	\mathbb{P}(B)=\frac{R_A(A)-R_A(B)}{R_B(B)-R_B(A)+R_A(A)-R_A(B)}
 \end{equation}
-And since either Player A or Player B must win in a game,
+And again, since either Player A or Player B must win in a game,
 \begin{equation*}
 	\mathbb{P}(A)+\mathbb{P}(B)=1
 \end{equation*}
@@ -528,7 +528,7 @@ Therefore, if $s^k > \mathlarger\sum_{i=1}^{k-1}s^{k-i}$, ${R_A(A) > R_A(B)}$ wi
 $\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ can be rewritten as
 $\mathlarger{s^k \sum_{i=1}^{k-1}\left(\frac{1}{s}\right)^i}$, and since it's a sum of positive numbers, it must be less than $\mathlarger{s^k\sum_{i=1}^{\infty}\left(\frac{1}{s}\right)^i}$, a geometric series which is equal to $\mathlarger{s^k\frac{s}{s-1} - s^k}$.
 
-Now, if $s^k \ge s^k\frac{s}{s-1} - s^k$, then $s^k$ will definitely be larger than $\mathlarger{\sum_{i=1}^{k-1}s^{k-1}}$ and so $R_A(A)$ will be greater than $R_A(B)$ in all cases.
+Now, if $s^k \ge s^k\frac{s}{s-1} - s^k$, then $s^k$ will definitely be larger than $\mathlarger{\sum_{i=1}^{k-1}s^{k-i}}$ and so $R_A(A)$ will be greater than $R_A(B)$ in all cases.
 
 \begin{equation*}
 	s^k \ge s^k\frac{s}{s-1} - s^k
@@ -546,7 +546,7 @@ This proves that ${R_A(A) > R_A(B)}$. If the exact same process is done after sw
 
 So the player who has chosen a sequence \underline{will} always get the greatest return when that sequence appears. For example, if Player A's sequence appears in the flips and is therefore owed \$10 from Player B, Player B cannot possibly be owed any more than \$9 from Player A.
 
-\section{Determining how changes of $R$ values affect $\mathbb{P}(A)$}
+\section{Determining how changes in $R$ values affect $\mathbb{P}(A)$ and $\mathbb{P}(B)$}
 
 It will be useful to know whether increasing each $R$ value will increase or decrease $\mathbb{P}(A)$. Note that because of \eqref{PA+PB=1}, a value that increases $\mathbb{P}(A)$ will necessarily decrease $\mathbb{P}(B)$. We focus on $\mathbb{P}(A)$ and the results for $\mathbb{P}(B)$ will simply be the opposite.
 
@@ -610,11 +610,11 @@ Note that swapping the symbols A and B will give you the results of an equivalen
 
 \section{Proving that the greatest win probability difference occurs when $baa...a$ is played against $aaa...a$ for $b\ne a$}
 
-As a specific example of the case described in the header, let A: 100...0 and B: 000...0 in a game with sequences of length $k$ and with $s$ possible outcomes from the flip. It doesn't matter which symbols are used because they all have equal probabilities.
+As a specific example of the case described in the header, let A: 100...0 and B: 000...0 in a game with sequences of length $k$ and with $s$ possible outcomes from the flip. It doesn't matter which symbols are used because they all have equal probabilities. For this proof, we aim to maximize $\mathbb{P}(A)$ and minimize $\mathbb{P}(B)$ for the greatest difference in probability.
 \\\\
 From the previous section, $s^k$ is the minimum possible value of $R_A(A)$, and this maximizes $\mathbb{P}(A)$ by \eqref{R_A(A)change}. Additionally, $\mathlarger\sum_{i=1}^{k-1}s^{k-i}$ is the maximum possible value of $R_A(B)$, maximizing $\mathbb{P}(A)$ by \eqref{R_A(B)change}.
 \\\\\\
-Determining the other return values, $R_B(B)$ and $R_B(A)$:
+\underline{Determining the other return values, $R_B(B)$ and $R_B(A)$:}
 \\\\\\
 ${R_B(B)}$:
 \begin{tabular}{|ccccc|c|}
@@ -658,7 +658,7 @@ $=0$
 \\\\
 Which is the minimum possible value, maximizing $\mathbb{P}(A)$ by \eqref{R_B(A)change}.
 \\\\\\
-In summary, these two sequences played against each other provide the maximum value of $\mathbb{P}(A)$. This finding will be used in Section \ref{bounds}.
+In summary, these two sequences played against each other produce the maximum value of $\mathbb{P}(A)$ and therefore the minimum value of $\mathbb{P}(B)$. This will be used in Section \ref{bounds}.
 
 \section{Determining the bounds of $\mathbb{P}(A)$ and $\mathbb{P}(B)$}\label{bounds}
 
@@ -691,7 +691,7 @@ Now the bounds for the probability that any sequence $S$ wins can be expressed a
 \subsection{Proving that the game tends to be fair with infinite possible flip outcomes but finite sequence length}
 
 \begin{equation*}
-	\lim_{s \rightarrow \infty}\sum_{i=0}^{k-1}\frac{1}{s^i} = \lim_{s \rightarrow \infty} \left[1 + \frac{1}{s} + \frac{1}{s^2} + \dots + \frac{1}{s^{k-1}}\right] = 1
+	\lim_{s \rightarrow \infty}\sum_{i=0}^{k-1}\frac{1}{s^i} = \lim_{s \rightarrow \infty} \left[1 + \textcolor{red}{\frac{1}{s} + \frac{1}{s^2} + \dots + \frac{1}{s^{k-1}}}\right] = 1
 \end{equation*}
 Using this insight in \eqref{PBounds},
 \begin{equation*}
@@ -722,7 +722,7 @@ Using \eqref{PBoundsKToInfty} and having $s\rightarrow\infty$,
 \end{equation*}
 And so by the Squeeze Theorem, $\mathlarger{\lim_{(k, s)\rightarrow(\infty, \infty)} \mathbb{P}(S) = \frac{1}{2}}$
 
-\part{Proving that in two-player games, the player who is predicting a shorter sequence will always have an advantage (except in one specific case)}\label{shorterSequenceProof}
+\part{Proving that in two-player games, the player who is predicting a shorter sequence will always have an advantage (except in a few specific cases)}\label{shorterSequenceProof}
 
 First, we will prove that for all games with A being shorter than B, A: 000...0 and B: 1...100...0 leads to the minimum possible probability for A to win.
 \\\\\\
@@ -793,7 +793,7 @@ ${R_B(B)}$:
 \end{tabular}
 $=s^{L_B}$
 \\\\
-Which is the minimum possible, value since $B=B$. This minimizes $\mathbb{P}(A)$ by \eqref{R_B(B)change}.
+Which is the minimum possible value, since $B=B$. This minimizes $\mathbb{P}(A)$ by \eqref{R_B(B)change}.
 \\\\\\
 ${R_B(A)}$:
 \begin{tabular}{|cccccccc|c|}
@@ -903,15 +903,37 @@ The latter is an interesting case, since using \eqref{PminDifferentLengths} give
 
 So A always has an advantage except in one game: when A chooses 00 and B chooses 110 (or A chooses 11 and B chooses 001), in which case the game is fair.
 
+\textbf{In summary,}
+
+\begingroup
+\setlength{\tabcolsep}{30pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	$\mathbf{s}$ & $\mathbf{L_B-L_A}$ & $\mathbf{L_A}$ & \textbf{A has the advantage?} \\
+	\hline
+	$\ge 3$ & Any & Any & Yes \\
+	\hline
+	2 & $\ge 2$ & Any & Yes \\
+	\hline
+	2 & 1 & $\ge 3$ & No \\
+	\hline
+	2 & 1 & 2 & Can Tie \\
+	\hline
+	2 & 1 & 1 & Yes \\
+	\hline
+\end{tabular}
+\endgroup
+
 \part {Software}
 
-This paper comes with two bits of software: a simulator which can find experimental win probability values with extremely high precision and a calculator which we used to help guide where research should be done. Both can be found at \href{https://will-drac.github.io/Penneys-Game/}{will-drac.github.io/Penneys-Game/}.
+This paper comes with two software programs: a simulator which can find experimental win probability values with extremely high precision and a calculator which we used as a tool to help guide where research should be done. Both can be found at \href{https://will-drac.github.io/Penneys-Game/}{will-drac.github.io/Penneys-Game/}.
 
 \section{Verifying the formula with simulations}
 
-We are confident that all our results are correct, because they match with billions of data points found by our virtual Penney's Game simulator, which can be found on the website above. The simulator works in a browser and runs computations on the device's GPU using WebGPU. The simulator works with all of the variations discussed in this paper.
+We are confident that all our results are correct, because they match with billions of data points generated by our virtual Penney's Game simulator, which can be found on the website above. The simulator works in a browser and runs computations on the device's GPU using WebGPU. The simulator works with all of the variations discussed in this paper.
 
-Each thread plays a game until one player has won and writes down the winner in a local bin in GPU memory. The results from all of these bins then get summed using multiple passes of a parallel reduction algorithm which is also run on the GPU, until there is just one bin containing the total number of wins from each player. This vector of $<\text{Player 1 wins}, \text{Player 2 wins}, ..., \text{Player $n$ wins}>$ then gets passed to the CPU and divided by the total number of games played to obtain the experimental win probability for each player.
+Each thread plays a game until one player has won. It then writes down the winner in a local bin in GPU memory. The results from all of these bins then get summed using multiple passes of a parallel reduction algorithm which is also run on the GPU, until there is just one bin containing the total number of wins from each player. These values then gets passed to the CPU and divided by the total number of games played to obtain the experimental win probability for each player.
 
 It uses a pseudorandom number generator which is adapted from the hybrid LCG and Tausworthe generator described in Nvidia's GPU Gems 3 \parencite{prng}.
 
@@ -921,10 +943,14 @@ The proofs done in Parts \ref{twoPlayerProofs} and \ref{shorterSequenceProof} we
 
 The tool's core feature is the ability to very quickly solve for the win probabilities of all players in the variations we discuss by implementing our general formula: Equations \eqref{Rdef}, \eqref{Ndef}, and \eqref{generalFormula}. From this ability, it has one other feature: the ability to create a table which visually represents all possible games in a given variation and each of the games' probabilities. Since most variations result in a huge number of games, we decided to show the probabilities as colours and not numbers. In the tool, hovering over a square will display the players' exact choices and the exact probabilities that the square represents.
 
+The following pages feature tables produced by the tool.
+
+\newpage
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{s2k3}
-	\caption{Table representing the win probabilites in the basic variation of Penney's Game. Each row represents a unique sequence for Player A and each column represents a unique sequence for Player B. The lighter a square, the more likely Player A is to win. The diagonal squares are coloured in red since they are games where both players are using the same sequence, and thus the game is invalid.}
+	\caption{Table representing all games in the basic variation of Penney's Game. Each row represents a unique sequence for Player A and each column represents a unique sequence for Player B. The lighter a square is, the more likely Player A is to win. The diagonal squares are coloured in red since they are games where both players are using the same sequence, and thus the game is invalid.}
 	\label{fig:s2k3}
 \end{figure}
 
@@ -960,7 +986,9 @@ The tool doesn't automatically visualize the whole three-dimensional table, but 
 	\label{fig:3d}
 \end{figure}
 
-The patterns in these tables tell us some new information about Penney's Game. Looking at Figure \ref{fig:s3k4}, we can notice three bright diagonal lines. These tell us that for each sequence that Player B chooses (each column), there are three sequences that Player A can choose (three rows) to get a high probability of winning (a bright square). The observation that the three appear right next to each other means that there is a pattern to them. This exact pattern is that the three sequences look like the opponent's sequence, except shifted over by one spot to the right. For example, if the opponent chooses 1202, the best strategy would be to pick a sequence X120, with X being anything. There is always a best choice for X, but there is seemingly no pattern in what it is.
+The patterns in these tables tell us some new information about Penney's Game. Looking at Figure \ref{fig:s3k4}, we can notice three bright diagonal lines. These tell us that for each sequence that Player B chooses (each column), there are three sequences that Player A can choose (three rows) to get a high probability of winning (a bright square). The observation that the three appear right next to each other means that there is a pattern to them. This exact pattern is that the three sequences look like the opponent's sequence, except shifted over by one spot to the right. For example, if the opponent chooses \underline{120}2, the best strategy would be to pick a sequence X120. There is always a best choice for X, but there is seemingly no pattern in what it is. 
+
+This shifting strategy is the same for any two-player game with equal sequence lengths and even flip outcome probabilities. With the correct $X$, it will produce the best response to any choice of sequence that an opponent might make.
 
 The patterns in 3-player games are much more complicated and seem to interfere with each other so that there is no simple strategy.
 
@@ -970,7 +998,7 @@ Our equations can take into account random outcome generators with any probabili
 
 \section{Deriving an approximate probability distribution for loaded dice}
 
-Our goal in this section is to find a formula for the probability that a loaded die (a die with its centre of mass offset) lands on each of its faces. We will be making many key assumptions which are not true, but may be close enough.
+Our goal in this section is to find a formula for the probability that a loaded die (a die with its centre of mass offset) lands on each of its faces. We will be making many key assumptions which are not true, but may be an accurate enough approximation.
 
 \begin{enumerate}
 	\item There is some point in the rolling of a die at which it is touching the table at one edge, without any rotational or translational motion. Imagine a die teetering on one edge, about to fall over so that it lands on a face but it hasn't started moving yet. This is pictured in Figure \ref{fig:loadeddie}.
@@ -985,7 +1013,7 @@ Our goal in this section is to find a formula for the probability that a loaded 
 	\label{fig:loadeddie}
 \end{figure}
 
-Let's take the centre of mass to be at the point $(x_e, y_e, z_e)$ ($e$ indicating that it's the position when the die is aligned at an edge). After a rotation by $\theta$, its new position $(x_{\theta}, y_{\theta}, z_{\theta})$ will be:
+Let's take the centre of mass to be at the point $(x_e, y_e, z_e)$ ($e$ indicating that it's the position when the die is aligned at an edge, as seen in Figure \ref{fig:loadeddie}). After a rotation by $\theta$, its new position $(x_{\theta}, y_{\theta}, z_{\theta})$ will be:
 
 \begin{equation*}
 	\begin{bmatrix} x_{\theta} \\ y_{\theta} \\ z_{\theta} \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 & -\sin\theta \\ 0 & 1 & 0 \\ \sin\theta & 0 & \cos\theta \end{bmatrix} \begin{bmatrix} x_e \\ y_e \\ z_e \end{bmatrix}
@@ -995,7 +1023,7 @@ Let's take the centre of mass to be at the point $(x_e, y_e, z_e)$ ($e$ indicati
 Because of our assumptions, the probability that the die lands back on the face which makes $\theta = 0$ will be:
 
 \begin{equation*}
-	\mathbb{P} = \frac{\text{angles where the C.O.M will make it rotate clockwise}}{\text{total angles possible}}
+	\mathbb{P} = \frac{\text{angles where the C.O.M will make it fall clockwise}}{\text{total angles possible}}
 \end{equation*}
 
 \begin{equation*}
@@ -1027,34 +1055,34 @@ Let's imagine a die of side length $s$ and $r=\frac{s}{2}$. We will place the di
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{loadedDie3d}
-	\caption{Setup for calculating the probability of a loaded dice landing on the down-facing side. The green arrows represent the rotation and translation which are used to line up the selected edge with the y-axis.}
+	\caption{Setup for calculating the probability of a loaded dice landing on the down-facing "selected face". The green arrows represent the rotation and translation which are used to line up the selected edge with the y-axis.}
 	\label{fig:loadeddie3d}
 \end{figure}
 
-For each edge of the face which is currently pointing in the $-z$ direction, we will:
+For each edge of the selected face (let's call it the "selected edge"), we will:
 
 \begin{enumerate}
 	\item Rotate the die so that the selected edge is centred on $(-r, 0, 0)$ and parallel to the y-axis.
 	\item Translate the die forward in the x-direction so that the edge is centred at the origin. We now have the situation in Figure \ref{fig:loadeddie} for our selected face but with $\theta=0$ because we haven't started checking the angles yet.
 	\item Determine the probability that it lands on the selected (down-facing) face using \eqref{dieEdgeProb}.
-	\item Mix the probabilities from each edge to get the final probability for the face.
+	\item Mix the probabilities from each selected edge to get the final probability of the die landing on the selected face.
 \end{enumerate}
 
-From steps 1. and 2., we must rotate the centre of mass $(x_f, y_f, z_f)$ ($f$ indicating that it's the position when the die is aligned at a face) and then translate it to follow the die being rotated and translated. It will end up at $(x_e, y_e, z_e)$.
+From steps 1. and 2., we must rotate the centre of mass $(x_f, y_f, z_f)$ ($f$ indicating that it's the position when the die is aligned at a face, as seen in Figure \ref{fig:loadeddie3d}) and then translate it to follow the die being rotated and translated. The C.O.M will end up at $(x_e, y_e, z_e)$ because the die will be oriented like in Figure \ref{fig:loadeddie}.
 
 \begin{equation*}
 	\begin{bmatrix}x_e\\y_e\\z_e\end{bmatrix} = \begin{bmatrix}\cos\phi & -\sin\phi & 0 \\ \sin\phi & \cos\phi & 0 \\ 0 & 0 & 1\end{bmatrix} \begin{bmatrix}x_f\\y_f\\z_f\end{bmatrix} + \begin{bmatrix}r\\0\\0\end{bmatrix}
 \end{equation*}
 
-Using the newly translated and rotated C.O.M in \eqref{dieEdgeProb} we get,
+So \eqref{dieEdgeProb} with $(x_e, y_e, z_e)$ in terms of $(x_f, y_f, z_f)$ is:
 
 \begin{equation*}
 	\mathbb{P} = \frac{2}{\pi}\arctan\left(\frac{x_e}{z_e}\right) = \frac{2}{\pi}\arctan\left(\frac{x_f\cos\phi-y_f\sin\phi+r}{z_f}\right)
 \end{equation*}
 
-If the die starts as it is in Figure \ref{fig:loadeddie3d}, we have one edge which requires no rotation ($\phi=0$ will have it oriented properly) and three edges each $\frac{\pi}{2} \text{rad}$ away from each other. To do this, we let $\phi = n\pi/2 \text{ with } n=\{0, 1, 2, 3\}$.
+If the die starts as it is in Figure \ref{fig:loadeddie3d}, we have one edge which requires no rotation to get selected ($\phi=0$ will have it oriented properly) and three other edges, each with an additional rotation of $\frac{\pi}{2} \text{rad}$ relative to the previous. To model this, we let $\phi = n\pi/2 \text{ with } n=\{0, 1, 2, 3\}$ to cover all four edges being selected.
 
-Additionally, we are assuming that there is equal likelihood that the die lands on each of the 12 edges, so the chance that it lands on any one of the edges is $\frac{1}{12}$. The contribution to the probability that the die lands on the bottom face coming from the selected edge is:
+Additionally, we are assuming that there is equal likelihood that the die lands on each of the 12 edges, so the chance that it lands on any one of the edges is $\frac{1}{12}$. The contribution to the probability that the die lands on the selected face coming from the selected edge is:
 
 \begin{equation*}
 	\mathbb{P}_n = \frac{1}{12} \cdot \frac{2}{\pi} \arctan\left(\frac{x_f\cos(n\frac{\pi}{2})-y_f\sin(n\frac{\pi}{2})+r}{z_f}\right)
@@ -1066,9 +1094,9 @@ Finally, the total probability of the die landing on the selected face is the su
 	\mathbb{P}_F = \frac{1}{6\pi} \sum_{n=0}^{3} \arctan\left(\frac{x_f\cos(n\frac{\pi}{2})-y_f\sin(n\frac{\pi}{2})+r}{z_f}\right)
 \end{equation}
 
-One last thing must be done, since we want a single formula which returns the probability for all sides of a die. To do this, we need a procedure to align the die as it is in Figure \ref{fig:loadeddie3d} for all faces.
+One last thing must be done, since we want a single formula which returns the probability for all sides of a die. We need a procedure to align the die as it is in Figure \ref{fig:loadeddie3d} for all faces, so that any face may be selected.
 
-We imagine the die centred at the origin with the symbol "1" facing towards $-z$, "2" facing towards $+x$, and "3" facing towards $+y$. The centre of mass will be defined according to that coordinate system. For each face $F \in [1, 6] $, we will define three angles $\alpha$, $\beta$, $\gamma$ which will get the die to rotate so that the selected face is pointing to $-z$. The rotation will be followed by a translation to shift the centre of the die to be like it is in Figure \ref{fig:loadeddie3d}.
+We imagine the die centred at the origin with the symbol "1" facing towards $-z$, "2" facing towards $+x$, and "3" facing towards $+y$. The centre of mass $(x_o, y_o, z_o)$ ($o$ indicating that it's the position when the die is aligned at the origin) will be defined according to that coordinate system. For each face, indexed by $F \in [1, 6] $, we will define three angles $\alpha$, $\beta$, $\gamma$ which will get the die to rotate so that the selected face is pointing to $-z$. The rotation will be followed by a translation to shift the centre of the die to be like it is in Figure \ref{fig:loadeddie3d}.
 
 \begin{equation*}
 	\alpha = \begin{cases} 
@@ -1093,7 +1121,7 @@ We imagine the die centred at the origin with the symbol "1" facing towards $-z$
 	\end{cases}
 \end{equation*}	
 
-So now we can define the position of the center of mass $(x_f, y_f, z_f)$ in \eqref{dieFaceProb} as a function of the face selected and the position of the centre of mass in the coordinate system described in the previous paragraph $(x_o, y_o, z_o)$ ($o$ indicating that it's the position when the die is aligned at the origin).
+So now we can define the position of the center of mass $(x_f, y_f, z_f)$ in \eqref{dieFaceProb} as a function of the face selected and the position of the centre of mass in the coordinate system described in the previous paragraph: $(x_o, y_o, z_o)$.
 
 \begin{equation*}
 	\begin{bmatrix}
@@ -1124,7 +1152,9 @@ So now we can define the position of the center of mass $(x_f, y_f, z_f)$ in \eq
 	 \end{bmatrix}
 \end{equation*}
 
-And in the end, we have a function (which is too big to be fully written out), which inputs $(x_o, y_o, z_o)$ and the size of the die $s$ and outputs a probability for each outcome of rolling the die. The outcomes are labelled with the variable $F$, which represents the number on the die that will end up flat against the table. To retrieve the probability of a face ending up facing upwards (let's label it $F'$), use the function with $F=7-F'$, since numbers on opposite faces of a die add up to 7.
+And in the end, we have a function (which is too big to be fully written out), which inputs $(x_o, y_o, z_o)$ and the side length of the die $s$ and outputs a probability for each outcome of rolling the die. The outcomes are indexed with the variable $F$, which represents the number on the die that will end up flat against the table. To retrieve the probability of a face ending up facing upwards (let's label it $F'$), use the function with $F=7-F'$, since numbers on opposite faces of a die add up to 7.
+
+$\mathbb{P}_F$ would be used as our value for $\mathbb{P}(Y_j)$.
 
 \section{Simulating an unfair coin flip}
 
@@ -1138,16 +1168,16 @@ And in the end, we have a function (which is too big to be fully written out), w
 	\end{cases}
 \end{equation}
 
-This is what would give us our value for $\mathbb{P}(Y_j)$. To add on to their work, we created a flipping coin simulator which demonstrates the phenomenon they describe. The simulator can be found at \href{https://will-drac.github.io/Penneys-Game/flipping%20coin/}{will-drac.github.io/Penneys-Game/flipping\%20coin/}
+$p$ would be used as our value for $\mathbb{P}(Y_j)$. To add on to their work, we created a flipping coin simulator which demonstrates the phenomenon they describe. The simulator can be found at \href{https://will-drac.github.io/Penneys-Game/flipping%20coin/}{will-drac.github.io/Penneys-Game/flipping\%20coin/}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{flippingCoin}
-	\caption{Freeze frame of the simulator, showing the coin's normal in yellow and the axis of rotation in cyan. As described by Diaconis \textit{et al.}, the normal rotates around the axis.}
+	\includegraphics[width=0.7\linewidth]{flippingCoin}
+	\caption{Freeze frame of the simulator, showing the coin's normal in yellow and the axis of rotation in cyan. As described by Diaconis \textit{et al.}, the normal rotates about the axis.}
 	\label{fig:flippingcoin}
 \end{figure}
 
-\subsection{Finding the force on the coin as a function of the coin's probability}
+\subsection{Finding the force to apply to the coin as a function of the coin's desired probability}
 
 Another addition to \textcite{unfairCoin}'s work is a derivation of the force vector required to give the coin a particular probability.
 
@@ -1157,7 +1187,7 @@ Inverting \eqref{coinProbByAngle}, we get the angle between the coin's normal di
 	\psi(p) = \arctan\left(\left[\sin(\pi p-\frac{\pi}{2})\right]^{-\frac{1}{2}}\right) \text{ for } p \in \left[\frac{1}{2}, 1\right]
 \end{equation}
 
-We imagine a coin with mass $M$ and radius $R$ receiving a force $\vec{F}$ which is anywhere except at the coin's centre (because that would result in no rotation), and the force having a large enough magnitude that the coin will make enough flips in the air so that the outcome is really random. We define a coordinate system as seen in Figure \ref{fig:coincoords}. The surface normal of the coin is made to be $\hat{n} = <0, 0, 1>$.
+We imagine a coin with mass $M$ and radius $R$ receiving a force $\vec{F}$ which is anywhere except at the coin's centre (because that would result in no rotation), and the force having a large enough magnitude that the coin will make enough flips in the air so that the outcome is really random. We define a coordinate system as seen in Figure \ref{fig:coincoords}. The surface normal of the coin before being flipped is made to be $\hat{n} = <0, 0, 1>$.
 
 \begin{figure}[H]
 	\centering
@@ -1226,7 +1256,7 @@ Since $\psi$ is defined as the angle between the normal $\hat{n}$ and the axis o
 	\psi = \arccos \left(\frac{F_y/2}{\sqrt{(F_z)^2+(\frac{F_y}{2})^2}}\right) = \arctan\left(\frac{2F_z}{F_y}\right)
 \end{equation*}
 
-A general form of a definition for $\vec{F}$ which satisfies $\psi = \arctan\left(\frac{2F_z}{F_y}\right)$ is
+A general form of a function for $\vec{F}$ which satisfies $\psi = \arctan\left(\frac{2F_z}{F_y}\right)$ is
 
 \begin{equation*}
 	\vec{F}(p) = \begin{bmatrix}a\\2b\cos\left(\psi\right)\\b\sin\left(\psi\right)\end{bmatrix}
@@ -1236,11 +1266,11 @@ With $a$ being any real number and $b$ being any non-zero real number. Substitut
 
 \part {Conclusion}
 
-We successfully extended the analogy of the betting game and created a formula for probability of each player winning in many variations of Penney's Game: games with any number of players, players predicting any number of flips even if they are different to each other, any kind of random outcome generator, and any probability distribution on the random outcome generator. We then physically modelled what it means to have a skewed probability distribution on dice and coins. We were also able to create a simulator which is able to verify our results beyond doubt. Finally, we developed a software tool which helped us to determine other trends and patterns in the game: the game limits to being fair as the number of possible outcomes of the flip tends to infinity but not as length of sequence tends to infinity in two-player games, and the shorter sequence almost always has an advantage, except in a few known cases.
+We successfully extended the analogy of the betting game and created a formula for probability of each player winning in many variations of Penney's Game: games with any number of players, players predicting any number of flips even if they are different to each other, any kind of random outcome generator, and any probability distribution for the random outcome generator. We then physically modelled what it means to have a skewed probability distribution on dice and coins. We also created a simulator which was able to verify our results beyond doubt. Finally, we developed a software tool which helped us to determine other trends and patterns in the game: the game limits to being fair as the number of possible outcomes of the flip tends to infinity but not as sequence length tends to infinity in two-player games, there is a general strategy for two-player games, and the shorter sequence in two-player games always has an advantage, except in a few known cases.
 
 \section{Acknowledgements}
 
-A huge thanks to the supervisor for this project, Derrick Chung, for guiding the research while leaving plenty of room to explore. His experience and advice proved extremely valuable. Another big thanks goes out to Dr. Ferenc Balogh for coordinating the Independent Research Project in Science course here at John Abbott College. None of this would have been possible without both of these great people.
+A huge thanks to the supervisor for this project, Derrick Chung, for guiding the research while leaving plenty of room to explore. His experience and advice proved extremely valuable. Another big thanks goes to Dr. Ferenc Balogh for coordinating the Independent Research Project in Science course here at John Abbott College. None of this would have been possible without both of these great people.
 
 \part {References}
 \printbibliography[heading=none]

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.31)  21 MAY 2025 22:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.31)  28 MAY 2025 09:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -761,7 +761,7 @@ g> <./John-Abbott.png>] (document.toc [2])
 \openout5 = `document.toc'.
 
  [3] [4] [5]
-<./prob graph.png, id=212, 722.7pt x 460.8417pt>
+<./prob graph.png, id=213, 722.7pt x 460.8417pt>
 File: ./prob graph.png Graphic file (type png)
 <use ./prob graph.png>
 Package pdftex.def Info: ./prob graph.png  used on input line 100.
@@ -913,33 +913,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 212--248
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
-
- []
-
 [9]
+Underfull \hbox (badness 10000) in paragraph at lines 249--267
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--267
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--267
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 268--271
 
  []
 
-[10] [11]
-Overfull \hbox (10.10439pt too wide) in paragraph at lines 376--376
+[10] [11] [12]
+Overfull \hbox (10.10439pt too wide) in paragraph at lines 374--374
 []\T1/cmr/bx/n/17.28 Extending to games with se-quences of dif-fer-ent lengths 
 
  []
 
-[12] [13] [14]
+[13] [14] [15]
 Underfull \hbox (badness 10000) in paragraph at lines 482--527
 
  []
@@ -978,35 +978,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 482--527
 Underfull \hbox (badness 10000) in paragraph at lines 482--527
 
  []
-
-[15]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
 
 [16]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 549.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 575--578
 
  []
 
-
+[17]
 Underfull \hbox (badness 10000) in paragraph at lines 591--594
 
  []
 
-[17]
+
 Underfull \hbox (badness 10000) in paragraph at lines 605--608
 
  []
@@ -1116,12 +1124,12 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 663.
 
-
+[19]
 Overfull \hbox (6.79767pt too wide) in paragraph at lines 689--689
 []\T1/cmr/bx/n/17.28 Using the prob-a-bil-ity bounds to study ex-treme games. 
  []
 
-[19]
+[20]
 Underfull \hbox (badness 10000) in paragraph at lines 727--819
 
  []
@@ -1191,143 +1199,142 @@ Underfull \hbox (badness 10000) in paragraph at lines 727--819
 
  []
 
-[20] [21] [22] [23]
-<s2k3.png, id=372, 167.9073pt x 167.9073pt>
+[21] [22] [23] [24] [25]
+<s2k3.png, id=387, 167.9073pt x 167.9073pt>
 File: s2k3.png Graphic file (type png)
 <use s2k3.png>
-Package pdftex.def Info: s2k3.png  used on input line 926.
+Package pdftex.def Info: s2k3.png  used on input line 952.
 (pdftex.def)             Requested size: 226.56659pt x 226.56512pt.
- [24]
-<s3k4.png, id=379, 190.7928pt x 190.7928pt>
+<s3k4.png, id=388, 190.7928pt x 190.7928pt>
 File: s3k4.png Graphic file (type png)
 <use s3k4.png>
-Package pdftex.def Info: s3k4.png  used on input line 933.
+Package pdftex.def Info: s3k4.png  used on input line 959.
 (pdftex.def)             Requested size: 226.56659pt x 226.57751pt.
-<s3k4 uneven.png, id=380, 190.7928pt x 190.7928pt>
+<s3k4 uneven.png, id=389, 190.7928pt x 190.7928pt>
 File: s3k4 uneven.png Graphic file (type png)
 <use s3k4 uneven.png>
-Package pdftex.def Info: s3k4 uneven.png  used on input line 940.
+Package pdftex.def Info: s3k4 uneven.png  used on input line 966.
 (pdftex.def)             Requested size: 407.81711pt x 407.83836pt.
- [25
+ [26
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
+l.970 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
+l.970 
        <./s2k3.png> <./s3k4.png>]
 File: s3k4 3p.png Graphic file (type png)
 <use s3k4 3p.png>
-Package pdftex.def Info: s3k4 3p.png  used on input line 949.
+Package pdftex.def Info: s3k4 3p.png  used on input line 975.
 (pdftex.def)             Requested size: 317.19185pt x 317.20793pt.
- [26
+ [27
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.953 
+l.979 
        <./s3k4 uneven.png>]
-Overfull \hbox (26.09128pt too wide) in paragraph at lines 954--955
+Overfull \hbox (26.09128pt too wide) in paragraph at lines 980--981
 [][]\T1/cmr/m/n/12 https://github.com/Will-Drac/Penneys-Game/blob/main/paper/3d
 %20table%20render.mp4[][].
  []
 
-<3d.png, id=407, 3408.735pt x 1082.0425pt>
+<3d.png, id=415, 3408.735pt x 1082.0425pt>
 File: 3d.png Graphic file (type png)
 <use 3d.png>
-Package pdftex.def Info: 3d.png  used on input line 958.
+Package pdftex.def Info: 3d.png  used on input line 984.
 (pdftex.def)             Requested size: 407.81711pt x 129.44324pt.
-[27
+[28
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.964 
+l.990 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.964 
+l.990 
        <./3d.png>]
-<loadedDie.png, id=418, 502.87875pt x 496.85625pt>
+<loadedDie.png, id=426, 502.87875pt x 496.85625pt>
 File: loadedDie.png Graphic file (type png)
 <use loadedDie.png>
-Package pdftex.def Info: loadedDie.png  used on input line 983.
+Package pdftex.def Info: loadedDie.png  used on input line 1011.
 (pdftex.def)             Requested size: 226.56659pt x 223.84859pt.
- [28] [29
+ [29] [30
 pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1021 \end{equation}
+l.1049 \end{equation}
                       <./loadedDie.png>]
-<loadedDie3d.png, id=433, 624.08156pt x 645.16031pt>
+<loadedDie3d.png, id=442, 624.08156pt x 645.16031pt>
 File: loadedDie3d.png Graphic file (type png)
 <use loadedDie3d.png>
-Package pdftex.def Info: loadedDie3d.png  used on input line 1029.
+Package pdftex.def Info: loadedDie3d.png  used on input line 1057.
 (pdftex.def)             Requested size: 317.19185pt x 327.90514pt.
- [30
+ [31
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1041 \end{enumerate}
-                       <./loadedDie3d.png>] [31]
-<flippingCoin.png, id=460, 347.04657pt x 347.04657pt>
+l.1069 \end{enumerate}
+                       <./loadedDie3d.png>] [32]
+<flippingCoin.png, id=471, 347.04657pt x 347.04657pt>
 File: flippingCoin.png Graphic file (type png)
 <use flippingCoin.png>
-Package pdftex.def Info: flippingCoin.png  used on input line 1145.
-(pdftex.def)             Requested size: 226.56659pt x 226.57314pt.
- [32]
-<coinCoords.png, id=470, 524.71031pt x 487.06969pt>
+Package pdftex.def Info: flippingCoin.png  used on input line 1175.
+(pdftex.def)             Requested size: 317.19185pt x 317.20029pt.
+ [33]
+<coinCoords.png, id=481, 524.71031pt x 487.06969pt>
 File: coinCoords.png Graphic file (type png)
 <use coinCoords.png>
-Package pdftex.def Info: coinCoords.png  used on input line 1164.
+Package pdftex.def Info: coinCoords.png  used on input line 1194.
 (pdftex.def)             Requested size: 317.19185pt x 294.44395pt.
- [33
+ [34
 pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1168 
-        <./flippingCoin.png>] [34
+l.1198 
+        <./flippingCoin.png>] [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.10}) h
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1189 \begin{equation*}
-                         <./coinCoords.png>] [35]
+l.1219 \begin{equation*}
+                         <./coinCoords.png>] [36]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
-246.
+276.
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-[36] (document.aux)
+[37] (document.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `document.out' has not changed.
-(rerunfilecheck)             Checksum: 6C22CCAF17FD2E82C49AF26C3A9A32FE;10462.
+(rerunfilecheck)             Checksum: BB341DE31535AFE012AA592B3F058211;10631.
 Package logreq Info: Writing requests to 'document.run.xml'.
 \openout1 = `document.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19746 strings out of 474486
- 341073 string characters out of 5743755
- 1953542 words of memory out of 5000000
+ 19747 strings out of 474486
+ 341080 string characters out of 5743755
+ 1951542 words of memory out of 5000000
  41661 multiletter control sequences out of 15000+600000
  584384 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 66i,10n,81p,1370b,2193s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 66i,10n,81p,1371b,2193s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
 1200.pk> <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\eccc1200.pk> <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
@@ -1346,24 +1353,25 @@ Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk
 440.pk> <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600
 \ecrm2074.pk><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmbx12.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmex10.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/willd/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/willd/AppData/Local/P
-rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/willd/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/wil
-ld/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb
-><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mr12.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmr17.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmr6.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmr8.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/willd/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/willd/AppData/Local/P
-rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/willd/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on document.pdf (36 pages, 4499880 bytes).
+/public/amsfonts/cm/cmbx8.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/willd/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/willd/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/willd/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/willd
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/U
+sers/willd/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cm
+mib8.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmr17.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmr6.pfb><C:/Users/willd/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/willd/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/willd/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/willd/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/willd
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on document.pdf (37 pages, 4515856 bytes).
 PDF statistics:
- 1099 PDF objects out of 1200 (max. 8388607)
- 121 named destinations out of 1000 (max. 500000)
+ 1121 PDF objects out of 1200 (max. 8388607)
+ 122 named destinations out of 1000 (max. 500000)
  280 words of extra memory for PDF output out of 10000 (max. 10000000)
 
