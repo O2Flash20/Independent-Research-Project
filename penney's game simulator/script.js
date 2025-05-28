@@ -1,6 +1,7 @@
 import simulateCode from "./shaders/simulate.wgsl.js"
 import sumCode from "./shaders/sum.wgsl.js"
 
+// puts the sequences into a formatted string to get passed to the GPU
 function formatSequences(sequences, maxSequenceLength) {
     let output = ""
 
@@ -15,6 +16,7 @@ function formatSequences(sequences, maxSequenceLength) {
     return output
 }
 
+// formats an array to be passed to the GPU and recognized by wgsl
 function formatWgslArray(array) {
     let output = ""
     for (let i = 0; i < array.length; i++) {
@@ -40,11 +42,12 @@ function winChecksCode(numSequences) {
     return code
 }
 
-// it will use workgroups set up in 3d, so simulateWorkgroups1D is one dimension of the cube of workgroups
+// it will use workgroups set up in 3d to get more workgroups, so simulateWorkgroups1D is one dimension of the cube of workgroups
 export async function startSimulation(sequences, probabilities, simulateWorkgroups1D, callback) {
     let wins = []
     for (let i = 0; i < sequences.length; i++) { wins.push(0) }
 
+    // runs the simulation 50 times (so that the user can see it update 50 times) and accumulates the result in 'wins'
     const numSteps = 50
     for (let i = 0; i < numSteps; i++) {
         const thisRoundResults = await simulate(sequences, probabilities, simulateWorkgroups1D)
@@ -89,12 +92,15 @@ async function simulate(sequences, probabilities, simulateWorkgroups1D) {
     }
 
 
+
+    // the bins collect all of the wins for each player. each one has its own variable on the GPU
     let binsWgsl = ""
     for (let i = 0; i < numSequences; i++) {
         binsWgsl += `@group(0) @binding(${i}) var <storage, read_write> binsSequence${i}: array<atomic<u32>>;\n`
     }
 
 
+    // setting up the shader code with a bunch of edits made by splicing in strings from here in js
     const simulateModule = device.createShaderModule({
         label: "penney's game simulating module",
         code: simulateCode
@@ -116,7 +122,7 @@ async function simulate(sequences, probabilities, simulateWorkgroups1D) {
         compute: { module: simulateModule }
     })
 
-    let binsBuffers = [] //create one bins buffer for each sequence: this will be where 
+    let binsBuffers = [] //create one bins buffer for each sequence
     let bindGroupEntries = []
     for (let i = 0; i < numSequences; i++) {
         binsBuffers.push(
@@ -142,6 +148,7 @@ async function simulate(sequences, probabilities, simulateWorkgroups1D) {
 
 
 
+    // after the simulation, all of the wins will be spread out across arrays, we sum them all together in another pass
     const sumModule = device.createShaderModule({
         label: "module to sum all the bins together",
         code: sumCode
@@ -162,15 +169,16 @@ async function simulate(sequences, probabilities, simulateWorkgroups1D) {
     pass.setPipeline(simulatePipeline)
     pass.setBindGroup(0, simulateBindGroup)
     pass.dispatchWorkgroups(simulateWorkgroups1D, simulateWorkgroups1D, simulateWorkgroups1D)
+    // at this point, the number of wins for each player will be calculated but spread out in each player's bins
 
 
 
     pass.setPipeline(sumPipeline)
 
 
-    for (let i = 0; i < numSequences; i++) { //for each sequence, sum up its wins
+    for (let i = 0; i < numSequences; i++) { //for each player (sequence), sum up its wins into one place
 
-        const numSteps = Math.ceil(Math.log2(simulateWorkgroups1D ** 3)) //the number of steps it will take to get that done
+        const numSteps = Math.ceil(Math.log2(simulateWorkgroups1D ** 3)) //the number of steps it will take to get that done for each player
         for (let j = 0; j < numSteps; j++) {
             const sumUniformArray = new Uint32Array(2)
             const thisStride = 2 ** j
@@ -200,6 +208,8 @@ async function simulate(sequences, probabilities, simulateWorkgroups1D) {
 
 
     pass.end()
+    // now, for each player, their wins are all in one place in the GPU
+    // we need to get it onto the CPU
 
 
     let resultsBuffers = []

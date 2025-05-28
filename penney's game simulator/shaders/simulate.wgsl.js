@@ -69,12 +69,15 @@ fn sequencesMatch(s1: array<u32, maxSequenceLength>, s1Length: u32, s2: array<u3
     return true;
 }
 
-@compute @workgroup_size(16, 16) fn simulateGames(
-    @builtin(workgroup_id) id: vec3u, @builtin(local_invocation_index) index: u32 //the position of this workgroup (same for all within a workgroup)
+// this is the maximum number of invocations of a workgroup
+@compute @workgroup_size(16, 16, 1) fn simulateGames(
+    @builtin(workgroup_id) id: vec3u, //the position of this workgroup (same for all invocations within a workgroup)
+    @builtin(local_invocation_index) index: u32, //the position inside of a workgroup
 ) {
     let binIndex = id.x*workgroups1D*workgroups1D + id.y*workgroups1D + id.z; //a unique place to put the results of each work group (all in a work group put it here)
-    let randomIndex = index + 112332*(binIndex+1) + timeOffset; // multiplied by a big number so that there can be up to that many flips with completely unique random numbers (because then it end up with the next workgroups's numbers)
-    z1 = 2134*randomIndex; z2 = 432*randomIndex; z3 = 358*randomIndex; z4 = 123123*randomIndex;
+    let I = index + 3204*(binIndex+1) + timeOffset; // multiplied by a big number to space the indices out for no overlap
+
+    z1 = 2134*I; z2 = 432*I; z3 = 358*I; z4 = 123123*I;
 
     var flipsSequence = array<u32, maxSequenceLength>(); // [before-last, last, this]
     var i: u32 = 0; // the number of flips that have occurred in this game
@@ -82,7 +85,7 @@ fn sequencesMatch(s1: array<u32, maxSequenceLength>, s1Length: u32, s2: array<u3
     while (true) { // keep going until someone wins
         i++;
 
-        let thisFlip = pickValueWeighted(hybridTaus(randomIndex+i), probabilities);
+        let thisFlip = pickValueWeighted(hybridTaus(), probabilities);
         flipsSequence = shiftSequence(flipsSequence, thisFlip);
 
         _WINCHECKS //a lot is going on in here, defined in js

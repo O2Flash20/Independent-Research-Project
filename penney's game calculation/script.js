@@ -1,3 +1,4 @@
+// A class with a very simple implementation of matrices, to do the calculation
 // Matrix.entries[row][column]
 class Matrix {
     constructor(rows, columns) {
@@ -124,6 +125,7 @@ class Matrix {
     }
 }
 
+// the R function in the paper
 function getReturn(sequenceAppeared, thisSequence, probabilities) {
     const LA = sequenceAppeared.length
     const LB = thisSequence.length
@@ -142,6 +144,7 @@ function getReturn(sequenceAppeared, thisSequence, probabilities) {
     return v
 }
 
+// the N function in the paper
 function getNetProfit(sequenceAppeared, thisSequence, sequences, probabilities) {
     const n = sequences.length
 
@@ -174,7 +177,7 @@ function containsOtherSequence(sequences, index) {
     return false
 }
 
-// checks if the end of this sequence matches with the end of another sequence. if it does, both are disqualitied
+// checks if the end of this sequence matches with the end of another sequence. if it does, both are disqualified
 function isEndOfOtherSequence(sequences, index) {
     const S = sequences[index]
 
@@ -192,8 +195,10 @@ function isEndOfOtherSequence(sequences, index) {
     return false
 }
 
+// the matrix equation in the paper
 function getWinProbabilities(sequences, probabilities) {
 
+    /*
     // removing sequences that contain another
     let sequencesTrimmed = []
     let removedSequences = []
@@ -208,6 +213,10 @@ function getWinProbabilities(sequences, probabilities) {
 
     // if no sequences remain after being trimmed, return an empty array
     if (sequencesTrimmed.length < 2) { return new Array(sequences.length) }
+    */
+
+    let sequencesTrimmed = sequences
+    let removedSequences = []
 
     const n = sequencesTrimmed.length
 
@@ -248,6 +257,7 @@ function getWinProbabilities(sequences, probabilities) {
 
 }
 
+// a function to get all sequences possible in a game using an index
 function indexToSequence(index, sequenceLength, outcomePossibilities) {
     let result = []
     for (let i = 0; i < sequenceLength; i++) {
@@ -435,6 +445,7 @@ function setupPlayersInputs() {
 document.getElementById("calculateChancesButton").addEventListener("click", function () {
     displayWinChances()
 })
+// displays the win chances of the sequences selected when the calculate button is clicked
 function displayWinChances() {
     const chances = getWinProbabilities(sequences, outcomesProbabilities)
     const H = document.getElementById("winChancesDisplay")
@@ -482,6 +493,7 @@ function addCreateTableButton() {
     H.append(button)
 }
 
+// puts together the 2d version of the table containing all games
 function createTable() {
     const H = document.getElementById("tableCreatorDiv")
     H.innerHTML = "" //clear the element
@@ -530,6 +542,8 @@ function createTable() {
     H.append(info)
 }
 
+
+
 function addCreate3dTableButton() {
     const H = document.getElementById("tableCreatorDiv")
 
@@ -542,6 +556,7 @@ function addCreate3dTableButton() {
     H.append(button)
 }
 
+// puts together the 3d version of the table containing all games
 function create3dTable(playerShown) {
     const H = document.getElementById("tableCreatorDiv")
     H.innerHTML = "" //clear the element
@@ -675,82 +690,7 @@ function create3dTable(playerShown) {
     })
 }
 
-// not exactly right
-function getBestSequence(opponentSequence, outcomePossibilities) {
-    const sequenceLength = opponentSequence.length
-
-    let thisSequence = []
-    for (let i = 0; i < sequenceLength; i++) {
-        let iA = 0
-        for (let j = 0; j < sequenceLength; j++) {
-            iA += opponentSequence[j] * Math.pow(outcomePossibilities, j + 1)
-        }
-        thisSequence.push(
-            (Math.floor((iA % Math.pow(outcomePossibilities, sequenceLength)) / Math.pow(outcomePossibilities, i)) % outcomePossibilities)
-        )
-    }
-
-    return thisSequence
-}
-
-// gives each sequence a number
-function iB(opponentSequence, outcomePossibilities) {
-    let sum = 0
-    for (let i = 0; i < opponentSequence.length; i++) {
-        sum += opponentSequence[i] * Math.pow(outcomePossibilities, i)
-    }
-
-    return (outcomePossibilities * sum) % Math.pow(outcomePossibilities, opponentSequence.length)
-}
-
-// index back to sequence
-function iBToSequence(iB, sequenceLength, outcomePossibilities) {
-    let thisSequence = []
-    for (let i = 0; i < sequenceLength; i++) {
-        thisSequence.push(
-            Math.floor(iB / Math.pow(outcomePossibilities, i)) % outcomePossibilities
-        )
-    }
-
-    return thisSequence
-}
-
-// gets the index offset from the simple prediction for the best sequence for player 2
-function bestOffset(opponentSequence, outcomePossibilities) {
-    let probabilities = []
-    for (let i = 0; i < outcomePossibilities; i++) {
-        probabilities.push(1 / outcomePossibilities)
-    }
-
-    let bestWinRate = 0
-    let bestIndex = -1
-    for (let i = 0; i < outcomePossibilities; i++) {
-        let thisWinRate = getWinProbabilities([
-            iBToSequence(iB(opponentSequence, outcomePossibilities) + i, opponentSequence.length, outcomePossibilities),
-            opponentSequence
-        ], probabilities)[0]
-        if (thisWinRate > bestWinRate) {
-            bestWinRate = thisWinRate
-            bestIndex = i
-        }
-    }
-
-    return bestIndex
-}
-
-// gets the offset for each sequence in the two player game
-function actualBest(sequenceLength, outcomePossibilities) {
-    let points = ""
-    for (let i = 0; i < Math.pow(outcomePossibilities, sequenceLength); i++) {
-        const thisSequence = indexToSequence(i, sequenceLength, outcomePossibilities)
-        const offset = bestOffset(thisSequence, outcomePossibilities)
-
-        points += `(${i}, ${offset}), `
-    }
-
-    console.log(points)
-}
-// do this for all sequences and visualize whether offset 0, 1, 2, ... is the best
+// all of the functions below are just functions i wrote to verify my research, they are not visible on the web page
 
 function getPlayer2BestStrategy(opponentSequence, outcomePossibilities) {
     let probabilities = []
@@ -800,6 +740,7 @@ function player1SequenceWinRate(sequence, outcomePossibilities) {
     return lowestWinChance
 }
 
+// the best option for the first player to choose if they dont know the other player's sequence
 function getPlayer1BestStrategy(sequenceLength, outcomePossibilities) {
     let highestWinRate = 0
     let bestSequences = []
@@ -851,6 +792,7 @@ function getPlayer3BestStrategy(sequenceLength, outcomePossibilities) {
     return results
 }
 
+// probability that a sequence appears over time if it was flipped for on its own
 function getProbabilityOverTime(sequence) {
     let output = []
 
@@ -879,6 +821,7 @@ function getProbabilityOverTime(sequence) {
     return string
 }
 
+// return the flip at which you should expect a sequence to appear
 function expectedWaitTime(sequence) {
     let output = 0
 

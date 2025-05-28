@@ -1,5 +1,6 @@
 import { startSimulation } from "./script.js"
 
+// This is all to get the ui of the web page to work
 
 let sequenceLengths = [3, 3]
 let sequences = [[0, 0, 0], [1, 1, 1]]

@@ -40,7 +40,7 @@ let forcePos
 let renderMode = "start"
 
 
-
+// loading all the models and textures to render
 function preload() {
     coinModel = loadModel("assets/coin assets/coin.obj")
     coinTexture = loadImage("assets/coin assets/coinTexture.png")
@@ -54,6 +54,7 @@ function preload() {
 
 
 
+// setting up the scene
 function setup() {
     forcePositionCanvas = createGraphics(300, 300)
     forcePositionCanvas.parent(document.getElementById("forcePositionCanvasHolder"))
@@ -87,6 +88,7 @@ function setup() {
 
 let forcePosGrabbed = false
 let forceTipGrabbed = false
+// lets you drag the force position and direction
 document.getElementById("forcePositionCanvasHolder").addEventListener("mousedown", (e) => {
     const forceCanvasPos = getForceCanvasPos()
 
@@ -107,9 +109,7 @@ document.getElementById("forcePositionCanvasHolder").addEventListener("mousedown
         }
     }
 })
-
 document.getElementById("forcePositionCanvasHolder").addEventListener("mouseup", () => { forcePosGrabbed = false; forceTipGrabbed = false })
-
 document.getElementById("forcePositionCanvasHolder").addEventListener("mousemove", (e) => {
     const bounds = document.getElementById("forcePositionCanvasHolder").getBoundingClientRect()
     const clickPos = createVector(e.x - bounds.left, e.y - bounds.top)
@@ -131,6 +131,7 @@ document.getElementById("forcePositionCanvasHolder").addEventListener("mousemove
 })
 
 
+// lets you control the force in the other direction
 document.getElementById("forceDirXAxis").addEventListener("input", (e) => {
     document.getElementById("forceDirXAxisDisplay").innerText = e.target.value
     forceDirXAxis = parseFloat(PI / 180 * e.target.value)
@@ -138,15 +139,14 @@ document.getElementById("forceDirXAxis").addEventListener("input", (e) => {
 })
 
 
+// other inputs
 document.getElementById("forceMagnitude").addEventListener("input", (e) => {
     forceMag = parseFloat(e.target.value)
 })
 
-
 document.getElementById("initialVelocity").addEventListener("input", (e) => {
     coinInitialUpVel = parseFloat(e.target.value)
 })
-
 
 document.getElementById("flipCoin").addEventListener("click", flipCoin)
 
@@ -154,7 +154,7 @@ document.getElementById("flipCoin").addEventListener("click", flipCoin)
 
 let t = 0
 let startedFalling = false
-let endAlert = 0
+let endAlert = 0 //0: Do not alert, 1: Alert that it landed on Heads, 2: Alert that it landed on Tails
 function draw() {
 
     if (endAlert !== 0) {
@@ -172,7 +172,7 @@ function draw() {
     }
 
 
-
+    // drawing everything
     forcePositionCanvas.background(0)
 
     forcePositionCanvas.stroke(0)
@@ -187,6 +187,7 @@ function draw() {
     forcePositionCanvas.fill(255, 0, 0)
     forcePositionCanvas.ellipse(forceDrawPos.x, forceDrawPos.y, forcePositionCanvas.width * 0.1)
 
+    // drawing the force on the 2d canvas
     // up is negative z
     forcePositionCanvas.stroke(255, 0, 0)
     forcePositionCanvas.strokeWeight(5)
@@ -202,6 +203,7 @@ function draw() {
 
 
 
+    // drawing the force on the third canvas
     forceAngleCanvas.background(0)
 
     forceAngleCanvas.stroke(127)
@@ -229,11 +231,11 @@ function draw() {
 
     // const dt = deltaTime / 1000
     const dt = 0.004
-    t += dt
+    t += dt //simulation timer
 
     // rotation axis of the coin
     const axis = coinRotVel.copy().normalize()
-    const coinRotationMatrix = getRotationMatrix(axis, coinRotVel.mag() * t)
+    const coinRotationMatrix = getRotationMatrix(axis, coinRotVel.mag() * t) //a matrix to rotate the coin along its axis
 
 
 
@@ -245,7 +247,7 @@ function draw() {
         const upVector = vectorMatrixMult(coinRotationMatrix, createVector(0, 1, 0))
         endAlert = upVector.y > 0 ? 1 : 2
     }
-    else if (renderMode == "fly") {
+    else if (renderMode == "fly") { //update the linear motion of the coin from gravity
         coinLinVel.add(createVector(0, -9.81 * dt, 0))
         coinPos.add(coinLinVel.copy().mult(dt))
         if (coinLinVel.y < 0) { startedFalling = true }
@@ -302,11 +304,12 @@ function draw() {
 
 
 
-    //after this, all object will be drawn relative to the ground and not the coin position
+    //after this, all objects will be drawn relative to the ground and not the coin position
     translate(-coinPos.x * worldScale, -coinPos.y * worldScale, -coinPos.z * worldScale)
 
 
 
+    // drawing the ground
     shininess(1)
     texture(groundTexture)
     push()
@@ -328,7 +331,7 @@ function flipCoin() {
 
     coinRotVel = getRotVel(
         forceDir.copy().mult(forceMag), //force
-        forcePos, //force position (make sure it's on the coin, y=0, x & z < r)
+        forcePos, //force position (make sure it's on the coin, y=0, x^2 + z^2 <= r^2)
         0.001, //time the force is applied
         coinMass,
         coinRadius
@@ -374,7 +377,6 @@ function vectorPointMatrix(direction) {
 }
 
 // returns the rotational velocity of the coin given a force acting on it
-// https://physics.stackexchange.com/questions/268698/compute-an-objects-inertia-around-an-arbitrary-axis-using-its-known-values-for
 function getRotVel(force, forcePosition, forceTime, coinMass, coinRadius) {
     // it should be forcePosition cross force technically but something's off somewhere else
     const torque = force.copy().cross(forcePosition)
