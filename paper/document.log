@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.31)  28 MAY 2025 09:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.31)  31 MAY 2025 20:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -350,24 +350,338 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks25
 \@floatcapt=\box57
 )
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
+sty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
+y
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-common.tex
+\pgfutil@everybye=\toks26
+\pgfutil@tempdima=\dimen160
+\pgfutil@tempdimb=\dimen161
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-latex.def
+\pgfutil@abb=\box58
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
+code.tex
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
+sty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
+sty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex
+\pgfkeys@pathtoks=\toks27
+\pgfkeys@temptoks=\toks28
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+libraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks29
+))
+\pgf@x=\dimen162
+\pgf@y=\dimen163
+\pgf@xa=\dimen164
+\pgf@ya=\dimen165
+\pgf@xb=\dimen166
+\pgf@yb=\dimen167
+\pgf@xc=\dimen168
+\pgf@yc=\dimen169
+\pgf@xd=\dimen170
+\pgf@yd=\dimen171
+\w@pgf@writea=\write3
+\r@pgf@reada=\read3
+\c@pgf@counta=\count289
+\c@pgf@countb=\count290
+\c@pgf@countc=\count291
+\c@pgf@countd=\count292
+\t@pgf@toka=\toks30
+\t@pgf@tokb=\toks31
+\t@pgf@tokc=\toks32
+\pgf@sys@id@count=\count293
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
+fg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+ssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count294
+\pgfsyssoftpath@bigbuffer@items=\count295
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+sprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+e.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
+code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
+r.code.tex
+\pgfmath@dimen=\dimen172
+\pgfmath@count=\count296
+\pgfmath@box=\box59
+\pgfmath@toks=\toks33
+\pgfmath@stack@operand=\toks34
+\pgfmath@stack@operation=\toks35
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.basic.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.trigonometric.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.random.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.comparison.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.base.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.round.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.misc.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.integerarithmetics.code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
+code.tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
+.code.tex
+\c@pgfmathroundto@lastzeros=\count297
+))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
+tex)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen173
+\pgf@picmaxx=\dimen174
+\pgf@picminy=\dimen175
+\pgf@picmaxy=\dimen176
+\pgf@pathminx=\dimen177
+\pgf@pathmaxx=\dimen178
+\pgf@pathminy=\dimen179
+\pgf@pathmaxy=\dimen180
+\pgf@xx=\dimen181
+\pgf@xy=\dimen182
+\pgf@yx=\dimen183
+\pgf@yy=\dimen184
+\pgf@zx=\dimen185
+\pgf@zy=\dimen186
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen187
+\pgf@path@lasty=\dimen188
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen189
+\pgf@shorten@start@additional=\dimen190
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+escopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box60
+\pgf@hbox=\box61
+\pgf@layerbox@main=\box62
+\pgf@picture@serial@count=\count298
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+egraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen191
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen192
+\pgf@pt@y=\dimen193
+\pgf@pt@temp=\dimen194
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+equick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+earrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen195
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen196
+\pgf@sys@shading@range@num=\count299
+\pgf@shadingcount=\count300
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box63
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+elayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+erdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+shapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box64
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+plot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen197
+\pgf@nodesepend=\dimen198
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
+y
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
+ty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
+code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen199
+\pgffor@skip=\dimen256
+\pgffor@stack=\toks36
+\pgffor@toks=\toks37
+))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z\tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count301
+\pgfplotmarksize=\dimen257
+)
+\tikz@lastx=\dimen258
+\tikz@lasty=\dimen259
+\tikz@lastxsaved=\dimen260
+\tikz@lastysaved=\dimen261
+\tikz@lastmovetox=\dimen262
+\tikz@lastmovetoy=\dimen263
+\tikzleveldistance=\dimen264
+\tikzsiblingdistance=\dimen265
+\tikz@figbox=\box65
+\tikz@figbox@bg=\box66
+\tikz@tempbox=\box67
+\tikz@tempbox@bg=\box68
+\tikztreelevel=\count302
+\tikznumberofchildren=\count303
+\tikznumberofcurrentchild=\count304
+\tikz@fig@count=\count305
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+matrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count306
+\pgfmatrixcurrentcolumn=\count307
+\pgf@matrix@numberofcolumns=\count308
+)
+\tikz@expandcount=\count309
+
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrary3d.code.tex
+File: tikzlibrary3d.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowinset=\dimen266
+\pgfarrowlength=\dimen267
+\pgfarrowwidth=\dimen268
+\pgfarrowlinewidth=\dimen269
+)
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count289
-\Gm@cntv=\count290
-\c@Gm@tempcnt=\count291
-\Gm@bindingoffset=\dimen160
-\Gm@wd@mp=\dimen161
-\Gm@odd@mp=\dimen162
-\Gm@even@mp=\dimen163
-\Gm@layoutwidth=\dimen164
-\Gm@layoutheight=\dimen165
-\Gm@layouthoffset=\dimen166
-\Gm@layoutvoffset=\dimen167
-\Gm@dimlist=\toks26
+\Gm@cnth=\count310
+\Gm@cntv=\count311
+\c@Gm@tempcnt=\count312
+\Gm@bindingoffset=\dimen270
+\Gm@wd@mp=\dimen271
+\Gm@odd@mp=\dimen272
+\Gm@even@mp=\dimen273
+\Gm@layoutwidth=\dimen274
+\Gm@layoutheight=\dimen275
+\Gm@layouthoffset=\dimen276
+\Gm@layoutvoffset=\dimen277
+\Gm@dimlist=\toks38
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.sty
@@ -375,7 +689,7 @@ Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count292
+\lrq@indent=\count313
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
@@ -383,49 +697,49 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
-\c@tabx@nest=\count293
-\c@listtotal=\count294
-\c@listcount=\count295
-\c@liststart=\count296
-\c@liststop=\count297
-\c@citecount=\count298
-\c@citetotal=\count299
-\c@multicitecount=\count300
-\c@multicitetotal=\count301
-\c@instcount=\count302
-\c@maxnames=\count303
-\c@minnames=\count304
-\c@maxitems=\count305
-\c@minitems=\count306
-\c@citecounter=\count307
-\c@maxcitecounter=\count308
-\c@savedcitecounter=\count309
-\c@uniquelist=\count310
-\c@uniquename=\count311
-\c@refsection=\count312
-\c@refsegment=\count313
-\c@maxextratitle=\count314
-\c@maxextratitleyear=\count315
-\c@maxextraname=\count316
-\c@maxextradate=\count317
-\c@maxextraalpha=\count318
-\c@abbrvpenalty=\count319
-\c@highnamepenalty=\count320
-\c@lownamepenalty=\count321
-\c@maxparens=\count322
-\c@parenlevel=\count323
-\blx@tempcnta=\count324
-\blx@tempcntb=\count325
-\blx@tempcntc=\count326
-\c@blx@maxsection=\count327
-\blx@maxsegment@0=\count328
-\blx@notetype=\count329
-\blx@parenlevel@text=\count330
-\blx@parenlevel@foot=\count331
-\blx@sectionciteorder@0=\count332
-\blx@sectionciteorderinternal@0=\count333
-\blx@entrysetcounter=\count334
-\blx@biblioinstance=\count335
+\c@tabx@nest=\count314
+\c@listtotal=\count315
+\c@listcount=\count316
+\c@liststart=\count317
+\c@liststop=\count318
+\c@citecount=\count319
+\c@citetotal=\count320
+\c@multicitecount=\count321
+\c@multicitetotal=\count322
+\c@instcount=\count323
+\c@maxnames=\count324
+\c@minnames=\count325
+\c@maxitems=\count326
+\c@minitems=\count327
+\c@citecounter=\count328
+\c@maxcitecounter=\count329
+\c@savedcitecounter=\count330
+\c@uniquelist=\count331
+\c@uniquename=\count332
+\c@refsection=\count333
+\c@refsegment=\count334
+\c@maxextratitle=\count335
+\c@maxextratitleyear=\count336
+\c@maxextraname=\count337
+\c@maxextradate=\count338
+\c@maxextraalpha=\count339
+\c@abbrvpenalty=\count340
+\c@highnamepenalty=\count341
+\c@lownamepenalty=\count342
+\c@maxparens=\count343
+\c@parenlevel=\count344
+\blx@tempcnta=\count345
+\blx@tempcntb=\count346
+\blx@tempcntc=\count347
+\c@blx@maxsection=\count348
+\blx@maxsegment@0=\count349
+\blx@notetype=\count350
+\blx@parenlevel@text=\count351
+\blx@parenlevel@foot=\count352
+\blx@sectionciteorder@0=\count353
+\blx@sectionciteorderinternal@0=\count354
+\blx@entrysetcounter=\count355
+\blx@biblioinstance=\count356
 \labelnumberwidth=\skip55
 \labelalphawidth=\skip56
 \biblabelsep=\skip57
@@ -434,12 +748,12 @@ Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 \bibinitsep=\skip60
 \bibparsep=\skip61
 \bibhang=\skip62
-\blx@bcfin=\read3
-\blx@bcfout=\write3
+\blx@bcfin=\read4
+\blx@bcfout=\write4
 \blx@langwohyphens=\language80
-\c@mincomprange=\count336
-\c@maxcomprange=\count337
-\c@mincompwidth=\count338
+\c@mincomprange=\count357
+\c@maxcomprange=\count358
+\c@mincompwidth=\count359
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
@@ -450,74 +764,74 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count339
-\c@savedafterword=\count340
-\c@annotator=\count341
-\c@savedannotator=\count342
-\c@author=\count343
-\c@savedauthor=\count344
-\c@bookauthor=\count345
-\c@savedbookauthor=\count346
-\c@commentator=\count347
-\c@savedcommentator=\count348
-\c@editor=\count349
-\c@savededitor=\count350
-\c@editora=\count351
-\c@savededitora=\count352
-\c@editorb=\count353
-\c@savededitorb=\count354
-\c@editorc=\count355
-\c@savededitorc=\count356
-\c@foreword=\count357
-\c@savedforeword=\count358
-\c@holder=\count359
-\c@savedholder=\count360
-\c@introduction=\count361
-\c@savedintroduction=\count362
-\c@namea=\count363
-\c@savednamea=\count364
-\c@nameb=\count365
-\c@savednameb=\count366
-\c@namec=\count367
-\c@savednamec=\count368
-\c@translator=\count369
-\c@savedtranslator=\count370
-\c@shortauthor=\count371
-\c@savedshortauthor=\count372
-\c@shorteditor=\count373
-\c@savedshorteditor=\count374
-\c@labelname=\count375
-\c@savedlabelname=\count376
-\c@institution=\count377
-\c@savedinstitution=\count378
-\c@lista=\count379
-\c@savedlista=\count380
-\c@listb=\count381
-\c@savedlistb=\count382
-\c@listc=\count383
-\c@savedlistc=\count384
-\c@listd=\count385
-\c@savedlistd=\count386
-\c@liste=\count387
-\c@savedliste=\count388
-\c@listf=\count389
-\c@savedlistf=\count390
-\c@location=\count391
-\c@savedlocation=\count392
-\c@organization=\count393
-\c@savedorganization=\count394
-\c@origlocation=\count395
-\c@savedoriglocation=\count396
-\c@origpublisher=\count397
-\c@savedorigpublisher=\count398
-\c@publisher=\count399
-\c@savedpublisher=\count400
-\c@language=\count401
-\c@savedlanguage=\count402
-\c@origlanguage=\count403
-\c@savedoriglanguage=\count404
-\c@pageref=\count405
-\c@savedpageref=\count406
+\c@afterword=\count360
+\c@savedafterword=\count361
+\c@annotator=\count362
+\c@savedannotator=\count363
+\c@author=\count364
+\c@savedauthor=\count365
+\c@bookauthor=\count366
+\c@savedbookauthor=\count367
+\c@commentator=\count368
+\c@savedcommentator=\count369
+\c@editor=\count370
+\c@savededitor=\count371
+\c@editora=\count372
+\c@savededitora=\count373
+\c@editorb=\count374
+\c@savededitorb=\count375
+\c@editorc=\count376
+\c@savededitorc=\count377
+\c@foreword=\count378
+\c@savedforeword=\count379
+\c@holder=\count380
+\c@savedholder=\count381
+\c@introduction=\count382
+\c@savedintroduction=\count383
+\c@namea=\count384
+\c@savednamea=\count385
+\c@nameb=\count386
+\c@savednameb=\count387
+\c@namec=\count388
+\c@savednamec=\count389
+\c@translator=\count390
+\c@savedtranslator=\count391
+\c@shortauthor=\count392
+\c@savedshortauthor=\count393
+\c@shorteditor=\count394
+\c@savedshorteditor=\count395
+\c@labelname=\count396
+\c@savedlabelname=\count397
+\c@institution=\count398
+\c@savedinstitution=\count399
+\c@lista=\count400
+\c@savedlista=\count401
+\c@listb=\count402
+\c@savedlistb=\count403
+\c@listc=\count404
+\c@savedlistc=\count405
+\c@listd=\count406
+\c@savedlistd=\count407
+\c@liste=\count408
+\c@savedliste=\count409
+\c@listf=\count410
+\c@savedlistf=\count411
+\c@location=\count412
+\c@savedlocation=\count413
+\c@organization=\count414
+\c@savedorganization=\count415
+\c@origlocation=\count416
+\c@savedoriglocation=\count417
+\c@origpublisher=\count418
+\c@savedorigpublisher=\count419
+\c@publisher=\count420
+\c@savedpublisher=\count421
+\c@language=\count422
+\c@savedlanguage=\count423
+\c@origlanguage=\count424
+\c@savedoriglanguage=\count425
+\c@pageref=\count426
+\c@savedpageref=\count427
 \shorthandwidth=\skip63
 \shortjournalwidth=\skip64
 \shortserieswidth=\skip65
@@ -542,19 +856,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.def
 File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
-\c@textcitecount=\count407
-\c@textcitetotal=\count408
-\c@textcitemaxnames=\count409
-\c@biburlbigbreakpenalty=\count410
-\c@biburlbreakpenalty=\count411
-\c@biburlnumpenalty=\count412
-\c@biburlucpenalty=\count413
-\c@biburllcpenalty=\count414
+\c@textcitecount=\count428
+\c@textcitetotal=\count429
+\c@textcitemaxnames=\count430
+\c@biburlbigbreakpenalty=\count431
+\c@biburlbreakpenalty=\count432
+\c@biburlnumpenalty=\count433
+\c@biburlucpenalty=\count434
+\c@biburllcpenalty=\count435
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count415
+\c@smartand=\count436
 )
 Package biblatex Info: Trying to load bibliography style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.bbx' found.
@@ -568,8 +882,8 @@ Package biblatex Info: ... file 'standard.bbx' found.
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.b
 bx
 File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count416
-\c@bbx:relatedtotal=\count417
+\c@bbx:relatedcount=\count437
+\c@bbx:relatedtotal=\count438
 ))
 Package biblatex Info: Trying to load citation style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.cbx' found.
@@ -600,8 +914,8 @@ Package: expl3 2024-01-04 L3 programming layer (loader)
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count418
-\l__pdf_internal_box=\box58
+\l__color_backend_stack_int=\count439
+\l__pdf_internal_box=\box69
 ))
 Package biblatex Info: ... and expl3
 (biblatex)             2024-01-04 L3 programming layer (loader) 
@@ -617,51 +931,51 @@ Package: xparse 2023-10-10 L3 Experimental document command parser
 Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
 ))
 Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
- overwriting on input line 20.
-Package hyperref Info: Option `colorlinks' set `true' on input line 29.
+ overwriting on input line 23.
+Package hyperref Info: Option `colorlinks' set `true' on input line 32.
 
 
 Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (biblatex)                Loading 'csquotes' recommended.
 
-\@quotelevel=\count419
-\@quotereset=\count420
+\@quotelevel=\count440
+\@quotereset=\count441
 (document.aux)
 \openout1 = `document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count421
-\scratchdimen=\dimen168
-\scratchbox=\box59
-\nofMPsegments=\count422
-\nofMParguments=\count423
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count424
-\MPscratchDim=\dimen169
-\MPnumerator=\count425
-\makeMPintoPDFobject=\count426
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count442
+\scratchdimen=\dimen278
+\scratchbox=\box70
+\nofMPsegments=\count443
+\nofMParguments=\count444
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count445
+\MPscratchDim=\dimen279
+\MPnumerator=\count446
+\makeMPintoPDFobject=\count447
+\everyMPtoPDFconversion=\toks40
 )
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
@@ -673,10 +987,10 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 38.
+Package hyperref Info: Link coloring ON on input line 41.
  (document.out) (document.out)
-\@outlinefile=\write4
-\openout4 = `document.out'.
+\@outlinefile=\write5
+\openout5 = `document.out'.
 
 
 *geometry* driver: auto-detecting
@@ -723,595 +1037,577 @@ File: english.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout3 = `document.bcf'.
+\openout4 = `document.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'document.bbl' found.
  (document.bbl)
-Package biblatex Info: Reference section=0 on input line 38.
-Package biblatex Info: Reference segment=0 on input line 38.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 41.
+Package biblatex Info: Reference section=0 on input line 41.
+Package biblatex Info: Reference segment=0 on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
 
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
 
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<s3k4 3p.png, id=115, 190.7928pt x 190.7928pt>
+<s3k4 3p.png, id=118, 190.7928pt x 190.7928pt>
 File: s3k4 3p.png Graphic file (type png)
 <use s3k4 3p.png>
-Package pdftex.def Info: s3k4 3p.png  used on input line 46.
+Package pdftex.def Info: s3k4 3p.png  used on input line 49.
 (pdftex.def)             Requested size: 317.19185pt x 317.20793pt.
-<John-Abbott.png, id=117, 678.535pt x 333.245pt>
+<John-Abbott.png, id=120, 678.535pt x 333.245pt>
 File: John-Abbott.png Graphic file (type png)
 <use John-Abbott.png>
-Package pdftex.def Info: John-Abbott.png  used on input line 57.
+Package pdftex.def Info: John-Abbott.png  used on input line 60.
 (pdftex.def)             Requested size: 122.34789pt x 60.0832pt.
 
 [1
 
 {C:/Users/willd/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./s3k4 3p.pn
 g> <./John-Abbott.png>] (document.toc [2])
-\tf@toc=\write5
-\openout5 = `document.toc'.
+\tf@toc=\write6
+\openout6 = `document.toc'.
 
  [3] [4] [5]
-<./prob graph.png, id=213, 722.7pt x 460.8417pt>
+<./prob graph.png, id=217, 722.7pt x 460.8417pt>
 File: ./prob graph.png Graphic file (type png)
 <use ./prob graph.png>
-Package pdftex.def Info: ./prob graph.png  used on input line 100.
+Package pdftex.def Info: ./prob graph.png  used on input line 103.
 (pdftex.def)             Requested size: 317.19185pt x 202.26468pt.
 
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 110.
+(amsmath)                 on input line 113.
 
 [6
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.119 
+l.122 
        <./prob graph.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 126--129
+Underfull \hbox (badness 10000) in paragraph at lines 129--132
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--179
+Underfull \hbox (badness 10000) in paragraph at lines 147--182
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 193--211
+Underfull \hbox (badness 10000) in paragraph at lines 196--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--211
+Underfull \hbox (badness 10000) in paragraph at lines 196--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--211
+Underfull \hbox (badness 10000) in paragraph at lines 196--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--211
+Underfull \hbox (badness 10000) in paragraph at lines 196--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--248
+Underfull \hbox (badness 10000) in paragraph at lines 215--251
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
+Underfull \hbox (badness 10000) in paragraph at lines 252--270
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
+Underfull \hbox (badness 10000) in paragraph at lines 252--270
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--267
+Underfull \hbox (badness 10000) in paragraph at lines 252--270
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--271
+Underfull \hbox (badness 10000) in paragraph at lines 271--274
 
  []
 
 [10] [11] [12]
-Overfull \hbox (10.10439pt too wide) in paragraph at lines 374--374
+Overfull \hbox (10.10439pt too wide) in paragraph at lines 377--377
 []\T1/cmr/bx/n/17.28 Extending to games with se-quences of dif-fer-ent lengths 
 
  []
 
 [13] [14] [15]
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--527
+Underfull \hbox (badness 10000) in paragraph at lines 485--530
 
  []
 
 [16]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 549.
+(hyperref)                removing `math shift' on input line 552.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 575--578
+Underfull \hbox (badness 10000) in paragraph at lines 578--581
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 591--594
+Underfull \hbox (badness 10000) in paragraph at lines 594--597
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 605--608
+Underfull \hbox (badness 10000) in paragraph at lines 608--611
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 605--608
+Underfull \hbox (badness 10000) in paragraph at lines 608--611
 
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\not' on input line 611.
+(hyperref)                removing `\not' on input line 614.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 611.
+(hyperref)                removing `math shift' on input line 614.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 613--662
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 616--665
 
  []
 
 [18]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 663.
+(hyperref)                removing `math shift' on input line 666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 663.
+(hyperref)                removing `math shift' on input line 666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 663.
+(hyperref)                removing `math shift' on input line 666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 663.
+(hyperref)                removing `math shift' on input line 666.
 
 [19]
-Overfull \hbox (6.79767pt too wide) in paragraph at lines 689--689
+Overfull \hbox (6.79767pt too wide) in paragraph at lines 692--692
 []\T1/cmr/bx/n/17.28 Using the prob-a-bil-ity bounds to study ex-treme games. 
  []
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 727--819
+Underfull \hbox (badness 10000) in paragraph at lines 730--822
 
  []
 
 [21] [22] [23] [24] [25]
-<s2k3.png, id=387, 167.9073pt x 167.9073pt>
+<s2k3.png, id=391, 167.9073pt x 167.9073pt>
 File: s2k3.png Graphic file (type png)
 <use s2k3.png>
-Package pdftex.def Info: s2k3.png  used on input line 952.
+Package pdftex.def Info: s2k3.png  used on input line 955.
 (pdftex.def)             Requested size: 226.56659pt x 226.56512pt.
-<s3k4.png, id=388, 190.7928pt x 190.7928pt>
+<s3k4.png, id=392, 190.7928pt x 190.7928pt>
 File: s3k4.png Graphic file (type png)
 <use s3k4.png>
-Package pdftex.def Info: s3k4.png  used on input line 959.
+Package pdftex.def Info: s3k4.png  used on input line 962.
 (pdftex.def)             Requested size: 226.56659pt x 226.57751pt.
-<s3k4 uneven.png, id=389, 190.7928pt x 190.7928pt>
+<s3k4 uneven.png, id=393, 190.7928pt x 190.7928pt>
 File: s3k4 uneven.png Graphic file (type png)
 <use s3k4 uneven.png>
-Package pdftex.def Info: s3k4 uneven.png  used on input line 966.
+Package pdftex.def Info: s3k4 uneven.png  used on input line 969.
 (pdftex.def)             Requested size: 407.81711pt x 407.83836pt.
  [26
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.970 
+l.973 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.970 
+l.973 
        <./s2k3.png> <./s3k4.png>]
 File: s3k4 3p.png Graphic file (type png)
 <use s3k4 3p.png>
-Package pdftex.def Info: s3k4 3p.png  used on input line 975.
+Package pdftex.def Info: s3k4 3p.png  used on input line 978.
 (pdftex.def)             Requested size: 317.19185pt x 317.20793pt.
  [27
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.979 
+l.982 
        <./s3k4 uneven.png>]
-Overfull \hbox (26.09128pt too wide) in paragraph at lines 980--981
+Overfull \hbox (26.09128pt too wide) in paragraph at lines 983--984
 [][]\T1/cmr/m/n/12 https://github.com/Will-Drac/Penneys-Game/blob/main/paper/3d
 %20table%20render.mp4[][].
  []
 
-<3d.png, id=415, 3408.735pt x 1082.0425pt>
+<3d.png, id=419, 3408.735pt x 1082.0425pt>
 File: 3d.png Graphic file (type png)
 <use 3d.png>
-Package pdftex.def Info: 3d.png  used on input line 984.
+Package pdftex.def Info: 3d.png  used on input line 987.
 (pdftex.def)             Requested size: 407.81711pt x 129.44324pt.
 [28
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.990 
+l.993 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.990 
-       <./3d.png>]
-<loadedDie.png, id=426, 502.87875pt x 496.85625pt>
-File: loadedDie.png Graphic file (type png)
-<use loadedDie.png>
-Package pdftex.def Info: loadedDie.png  used on input line 1011.
-(pdftex.def)             Requested size: 226.56659pt x 223.84859pt.
- [29] [30
+l.993 
+       <./3d.png>] [29] [30
 pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1049 \end{equation}
-                      <./loadedDie.png>]
-<loadedDie3d.png, id=442, 624.08156pt x 645.16031pt>
-File: loadedDie3d.png Graphic file (type png)
-<use loadedDie3d.png>
-Package pdftex.def Info: loadedDie3d.png  used on input line 1057.
-(pdftex.def)             Requested size: 317.19185pt x 327.90514pt.
- [31
+l.1068 \end{equation}
+                     ] [31
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1069 \end{enumerate}
-                       <./loadedDie3d.png>] [32]
+l.1124 \end{enumerate}
+                      ] [32]
 <flippingCoin.png, id=471, 347.04657pt x 347.04657pt>
 File: flippingCoin.png Graphic file (type png)
 <use flippingCoin.png>
-Package pdftex.def Info: flippingCoin.png  used on input line 1175.
+Package pdftex.def Info: flippingCoin.png  used on input line 1230.
 (pdftex.def)             Requested size: 317.19185pt x 317.20029pt.
- [33]
-<coinCoords.png, id=481, 524.71031pt x 487.06969pt>
-File: coinCoords.png Graphic file (type png)
-<use coinCoords.png>
-Package pdftex.def Info: coinCoords.png  used on input line 1194.
-(pdftex.def)             Requested size: 317.19185pt x 294.44395pt.
- [34
+ [33] [34
 pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1198 
+l.1271 
         <./flippingCoin.png>] [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.10}) h
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1219 \begin{equation*}
-                         <./coinCoords.png>] [36]
+l.1316 \end{equation*}
+                      ] [36]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
-276.
+349.
 
 (C:\Users\willd\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
@@ -1328,13 +1624,13 @@ Package logreq Info: Writing requests to 'document.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19747 strings out of 474486
- 341080 string characters out of 5743755
+ 30189 strings out of 474486
+ 574812 string characters out of 5743755
  1951542 words of memory out of 5000000
- 41661 multiletter control sequences out of 15000+600000
+ 51894 multiletter control sequences out of 15000+600000
  584384 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 66i,10n,81p,1371b,2193s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,87p,1371b,2193s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
 1200.pk> <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\eccc1200.pk> <C:\Users\willd\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
@@ -1369,9 +1665,9 @@ iKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/willd/AppData/Local/P
 rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/willd/AppData
 /Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/willd
 /AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on document.pdf (37 pages, 4515856 bytes).
+Output written on document.pdf (37 pages, 4391671 bytes).
 PDF statistics:
- 1121 PDF objects out of 1200 (max. 8388607)
+ 1120 PDF objects out of 1200 (max. 8388607)
  122 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 277 words of extra memory for PDF output out of 10000 (max. 10000000)
 

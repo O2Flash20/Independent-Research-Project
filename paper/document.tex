@@ -10,10 +10,13 @@
 \usepackage{parskip}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{3d, arrows.meta}
 \usepackage[a4paper, total={6.27in, 9.69in}]{geometry}
 
 \definecolor{OliveGreen}{rgb}{0,0.6,0}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+\definecolor{DarkBlue}{rgb}{0.1, 0.3, 0.5}
 
 \usepackage[backend=biber, style=authoryear]{biblatex}
 \addbibresource{bibliography.bib}
@@ -1008,9 +1011,25 @@ Our goal in this section is to find a formula for the probability that a loaded 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{loadedDie}
-	\caption[A loaded die teetering on one of its edges]{A side view of a loaded die teetering on one of its edges. We are assuming that the die is currently at rest. Therefore, it will fall to whichever side the centre of mass (C.O.M) is on. In this case, it will rotate clockwise until it lands on the lower face.}
 	\label{fig:loadeddie}
+	\begin{tikzpicture}[scale=6, every node/.style={scale=1.5}]
+		\draw [->, ultra thick] (-0.25, 0) -- (1, 0) node[right] {$x$};
+		\draw [->, ultra thick] (0, -0.25) -- (0, 1) node[above] {$z$};
+		
+		\begin{scope}[rotate=30]
+			\draw[ultra thick, DarkBlue] (0, 0) -- (0.75, 0) -- (0.75, 0.75) -- (0, 0.75) --cycle;
+		\end{scope}
+		
+		\filldraw [black] (0.1, 0.6) circle (0.5pt) node[right] { c.o.m $(x_e, y_e, z_e)$};
+		
+		\draw [->, ultra thick, OliveGreen] (0, 0) -- (0.095, 0.57);
+		
+		\draw [->, ultra thick, OliveGreen] (0.5, 0) arc (0: 28: 0.5);
+		
+		\draw (0.55, 0.15) node[right, OliveGreen] {$\theta$};
+	\end{tikzpicture}
+	
+	\caption[A loaded die teetering on one of its edges]{A side view of a loaded die teetering on one of its edges. We are assuming that the die is currently at rest. Therefore, it will fall to whichever side the centre of mass (C.O.M) is on. In this case, it will rotate clockwise until it lands on the lower face.}
 \end{figure}
 
 Let's take the centre of mass to be at the point $(x_e, y_e, z_e)$ ($e$ indicating that it's the position when the die is aligned at an edge, as seen in Figure \ref{fig:loadeddie}). After a rotation by $\theta$, its new position $(x_{\theta}, y_{\theta}, z_{\theta})$ will be:
@@ -1054,7 +1073,43 @@ Let's imagine a die of side length $s$ and $r=\frac{s}{2}$. We will place the di
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{loadedDie3d}
+	\begin{tikzpicture}[scale=2.5, 
+		y={(1cm,0cm)}, z={(0cm,1cm)}, x={(-0.5cm,-0.5cm)},
+		>=Latex, every node/.style={scale=1.5}]
+		
+		% cube
+		\draw[ultra thick, DarkBlue] (-1,-1,0) -- (1,-1,0) -- (1,1,0) -- (-1,1,0) -- cycle; % bottom face
+		\draw[ultra thick, DarkBlue] (-1,-1,2) -- (1,-1,2) -- (1,1,2) -- (-1,1,2) -- cycle; % top face
+		\draw[ultra thick, DarkBlue] (-1,-1,0) -- (-1,-1,2);
+		\draw[ultra thick, DarkBlue] (1,-1,0) -- (1,-1,2);
+		\draw[ultra thick, DarkBlue] (1,1,0) -- (1,1,2);
+		\draw[ultra thick, DarkBlue] (-1,1,0) -- (-1,1,2);
+		
+		% axes
+		\draw[->, ultra thick] (-2,0,0) -- (2,0,0) node[below] {$x$};
+		\draw[->, ultra thick] (0,-2,0) -- (0,2,0) node[right] {$y$};
+		\draw[->, ultra thick] (0,0,-0.6) -- (0,0,3) node[above]{$z$};
+		
+		% COM marker
+		\filldraw[red] (0.5,-0.75,1.2) circle (1pt) node[left] {c.o.m $(x_f,y_f,z_f)$};
+		
+		% center marker
+		\filldraw[red] (0,0,1) circle (1.2pt) node[right] {$(0,0,r)$};
+		
+		% r measurements
+		\draw[red, <->] (-1,1.1,0) -- (0,1.1,0);
+		\node[red, right] at (-0.5, 1.1, 0) {$r$};
+		
+		\draw[red, <->] (0,1.1,0) -- (1,1.1,0);
+		\node[red, right] at (0.5, 1.1, 0) {$r$};
+		
+		% green rotation arrow on the z-axis
+		\draw[OliveGreen, ->, thick] (0.4,0,2.2) arc (0:355:0.4);
+		
+		% green movement arrow towards +x
+		\draw[OliveGreen, ->, thick] (-1, -0.6, 0) -- (0,-0.6,0);
+		
+	\end{tikzpicture}
 	\caption{Setup for calculating the probability of a loaded dice landing on the down-facing "selected face". The green arrows represent the rotation and translation which are used to line up the selected edge with the y-axis.}
 	\label{fig:loadeddie3d}
 \end{figure}
@@ -1191,8 +1246,26 @@ We imagine a coin with mass $M$ and radius $R$ receiving a force $\vec{F}$ which
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{coinCoords}
-	\caption{Coordinate system set up to determine the force vector $F$ required to give the coin a particular probability $p$. The origin is placed at the center of the coin and the force lies on the x-axis.}
+	\begin{tikzpicture}[scale=3.7, ultra thick, every node/.style={scale=2.5}]
+		\draw [->] (-1, 1) -- (1, -1) node[right] {$x$};
+		
+		\draw [->] (-1, -1) -- (1, 1) node[right] {$y$};
+		
+		\filldraw (-0.2, 0) circle (0.55pt) node[left] {$z$};
+		
+		\draw (-0.13, 0) arc (0:360:0.07); 
+		
+		\draw [DarkBlue] (0.95, 0) arc (0:360:0.95);
+		\draw [DarkBlue] (0.88, 0) arc (0:360:0.88);
+		
+		\begin{scope}[rotate=-45]
+			\draw [<->, red] (0, -0.075) -- (0.6, -0.1);
+			\node [red, below] at (0.3, -0.1) {$\vec{r}$};
+			
+			\draw [->, OliveGreen] (0.6, 0) -- (0.5, 0.5) node[above] {$\vec{F}$};
+		\end{scope}
+	\end{tikzpicture}
+	\caption{Coordinate system set up to determine the force vector $\vec{F}$ required to give the coin a particular probability $p$. The origin is placed at the centre of the coin and the point at which the force is applied lies on the x-axis.}
 	\label{fig:coincoords}
 \end{figure}
 
