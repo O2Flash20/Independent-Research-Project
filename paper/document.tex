@@ -1011,7 +1011,6 @@ Our goal in this section is to find a formula for the probability that a loaded 
 
 \begin{figure}[H]
 	\centering
-	\label{fig:loadeddie}
 	\begin{tikzpicture}[scale=6, every node/.style={scale=1.5}]
 		\draw [->, ultra thick] (-0.25, 0) -- (1, 0) node[right] {$x$};
 		\draw [->, ultra thick] (0, -0.25) -- (0, 1) node[above] {$z$};
@@ -1020,7 +1019,7 @@ Our goal in this section is to find a formula for the probability that a loaded 
 			\draw[ultra thick, DarkBlue] (0, 0) -- (0.75, 0) -- (0.75, 0.75) -- (0, 0.75) --cycle;
 		\end{scope}
 		
-		\filldraw [black] (0.1, 0.6) circle (0.5pt) node[right] { c.o.m $(x_e, y_e, z_e)$};
+		\filldraw [red] (0.1, 0.6) circle (0.5pt) node[right] { c.o.m $(x_e, y_e, z_e)$};
 		
 		\draw [->, ultra thick, OliveGreen] (0, 0) -- (0.095, 0.57);
 		
@@ -1030,6 +1029,7 @@ Our goal in this section is to find a formula for the probability that a loaded 
 	\end{tikzpicture}
 	
 	\caption[A loaded die teetering on one of its edges]{A side view of a loaded die teetering on one of its edges. We are assuming that the die is currently at rest. Therefore, it will fall to whichever side the centre of mass (C.O.M) is on. In this case, it will rotate clockwise until it lands on the lower face.}
+	\label{fig:loadeddie}
 \end{figure}
 
 Let's take the centre of mass to be at the point $(x_e, y_e, z_e)$ ($e$ indicating that it's the position when the die is aligned at an edge, as seen in Figure \ref{fig:loadeddie}). After a rotation by $\theta$, its new position $(x_{\theta}, y_{\theta}, z_{\theta})$ will be:
